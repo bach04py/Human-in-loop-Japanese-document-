@@ -19,13 +19,46 @@ Week 1 leader deliverables covered here:
 cp .env.example .env
 ```
 
-2. Start the backend and database:
+2. Create and activate a Python virtual environment.
+
+Windows PowerShell:
+
+```powershell
+cd backend
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+cd ..
+```
+
+macOS/Linux:
+
+```bash
+cd backend
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+cd ..
+```
+
+Use Python 3.11 for this project. The dependency versions in `backend/requirements.txt` are pinned for FastAPI with Pydantic 2 to avoid version conflicts.
+
+3. Run the backend locally:
+
+```bash
+cd backend
+uvicorn app.main:app --reload
+```
+
+4. Or start the backend and database with Docker:
 
 ```bash
 docker compose up --build
 ```
 
-3. Open the API docs:
+5. Open the API docs:
 
 ```text
 http://localhost:8000/docs
