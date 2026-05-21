@@ -1,0 +1,39 @@
+flowchart TD
+  subgraph Frontend
+    U[User Upload UI]
+  end
+  subgraph Backend
+    API[FastAPI API Server]
+    Agents[Multi-Agent Orchestrator\n(LangGraph)]
+    OCR[OCR Agent\n(PaddleOCR / custom)]
+    EX[Extraction Agent\n(LayoutLMv3 / LLMs)]
+    VAL[Validation Agent]
+    MEM[Correction Memory\n(Postgres / Vector DB)]
+    DB[Postgres]
+    VS[Vector Store (FAISS)]
+  end
+  subgraph Models
+    PAD[PaddleOCR]
+    LAY[LayoutLMv3]
+    LLM[LLMs (Phi-3 / Qwen)]
+  end
+
+  U -->|upload| API
+  API --> Agents
+  Agents --> OCR
+  Agents --> EX
+  OCR --> API
+  OCR --> MEM
+  EX --> VAL
+  VAL --> API
+  API --> U
+  PAD --> OCR
+  LAY --> EX
+  LLM --> EX
+  MEM --> DB
+  MEM --> VS
+  VS --> EX
+  DB --> API
+
+  classDef infra fill:#f9f,stroke:#333,stroke-width:1px;
+  class DB,VS,MEM infra
