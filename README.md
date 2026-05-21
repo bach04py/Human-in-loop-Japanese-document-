@@ -44,3 +44,4 @@ GET http://localhost:8000/api/v1/healthz
 - `backend/app/services`: week 1 service stubs for agents and orchestration
 - `docs/API_CONTRACT.md`: endpoint contract for frontend, OCR, extraction, and feedback modules
 - `docs/WEEK1_LEADER_DELIVERABLES.md`: checklist against the team leader plan
+- `docs/WEEK1_TEAM_HANDOFF.md`: week 1 task files for every team member
