@@ -1,27 +1,51 @@
+﻿from pathlib import Path
+
+from app.core.config import settings
 from app.schemas import OcrBlock, OcrResult
+from app.services.ocr_helpers import (
+    IMAGE_EXTS,
+    PDF_EXTS,
+    init_ocr,
+    run_ocr_on_image,
+    run_ocr_on_pdf,
+)
 
 
 class OcrService:
-    """Week 1 baseline stub for the future PaddleOCR Japanese agent."""
+    """OCR service that routes uploaded documents to PaddleOCR processing."""
+
+    def __init__(self) -> None:
+        self.ocr = init_ocr()
 
     async def run(self, document_id: str, include_boxes: bool = True) -> OcrResult:
-        blocks = [
-            OcrBlock(
-                text="株式会社ABC",
-                confidence=0.94,
-                bbox=[48, 80, 220, 112] if include_boxes else [],
-                orientation="horizontal",
-            ),
-            OcrBlock(
-                text="請求書番号: INV001",
-                confidence=0.91,
-                bbox=[48, 122, 260, 154] if include_boxes else [],
-                orientation="horizontal",
-            ),
-        ]
+        file_path = self._find_uploaded_document(document_id)
+
+        if file_path.suffix.lower() in PDF_EXTS:
+            raw_result = run_ocr_on_pdf(self.ocr, file_path, include_boxes=include_boxes)
+        elif file_path.suffix.lower() in IMAGE_EXTS:
+            raw_result = run_ocr_on_image(self.ocr, file_path, include_boxes=include_boxes)
+        else:
+            raise ValueError(f"Unsupported file type: {file_path.suffix}")
+
+        if raw_result.get("status") != "ocr_completed":
+            raise RuntimeError(raw_result.get("error", "OCR processing failed"))
+
+        blocks = [OcrBlock(**block) for block in raw_result["blocks"]]
+
         return OcrResult(
             document_id=document_id,
-            text="\n".join(block.text for block in blocks),
+            text=raw_result["text"],
             blocks=blocks,
-            confidence=0.92,
+            confidence=raw_result["confidence"],
         )
+
+    def _find_uploaded_document(self, document_id: str) -> Path:
+        upload_dir = settings.upload_dir
+        if not upload_dir.exists():
+            raise FileNotFoundError(f"Upload directory not found: {upload_dir}")
+
+        candidates = list(upload_dir.glob(f"{document_id}.*"))
+        if not candidates:
+            raise FileNotFoundError(f"Document not found: {document_id}")
+
+        return candidates[0]
