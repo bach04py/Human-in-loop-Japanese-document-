@@ -80,10 +80,17 @@ async def upload_document(file: UploadFile = File(...)) -> UploadResponse:
 
 @router.post("/ocr", response_model=OcrResult, tags=["agents"])
 async def run_ocr(request: OcrRequest) -> OcrResult:
-    return await ocr_service.run(
-        document_id=request.document_id,
-        include_boxes=request.include_boxes,
-    )
+    try:
+        return await ocr_service.run(
+            document_id=request.document_id,
+            include_boxes=request.include_boxes,
+        )
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc))
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except RuntimeError as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
 
 
 @router.post("/extract", response_model=ExtractionResult, tags=["agents"])
