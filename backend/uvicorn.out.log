@@ -1,0 +1,16 @@
+INFO:     127.0.0.1:63419 - "GET /api/v1/healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63419 - "POST /api/v1/pipeline/run HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:63419 - "POST /api/v1/feedback HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:62527 - "POST /api/v1/documents HTTP/1.1" 201 Created
+INFO:     127.0.0.1:62531 - "POST /api/v1/documents HTTP/1.1" 201 Created
+INFO:     127.0.0.1:51470 - "POST /api/v1/pipeline/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51470 - "POST /api/v1/feedback HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63359 - "GET /api/v1/healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58290 - "GET /api/v1/healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51078 - "POST /api/v1/documents HTTP/1.1" 201 Created
+INFO:     127.0.0.1:54362 - "OPTIONS /api/v1/pipeline/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54362 - "POST /api/v1/pipeline/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60930 - "POST /api/v1/pipeline/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53705 - "POST /api/v1/pipeline/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49827 - "POST /api/v1/documents HTTP/1.1" 201 Created
+INFO:     127.0.0.1:53234 - "POST /api/v1/pipeline/run HTTP/1.1" 200 OK

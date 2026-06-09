@@ -5,7 +5,6 @@ import {
   FileText, 
   UploadCloud, 
   Database, 
-  Settings, 
   CheckCircle2, 
   AlertCircle, 
   Sparkles, 
@@ -22,10 +21,28 @@ import {
   FileCheck,
   ExternalLink
 } from 'lucide-react';
-import { apiService, UploadResponse, PipelineRunResponse, ValidationIssue } from '../lib/api';
+import { apiService, UploadResponse, PipelineRunResponse, ValidationIssue, OcrBlock, HealthResponse } from '../lib/api';
+
+type ExtractedData = Record<string, unknown>;
+
+interface LocalDocument {
+  document_id: string;
+  filename: string;
+  status: string;
+  content_type: string;
+  uploaded_at: string;
+  document_type: string;
+  ocr_text: string;
+  ocr_blocks: OcrBlock[];
+  data: ExtractedData;
+  validation: {
+    valid: boolean;
+    issues: ValidationIssue[];
+  };
+}
 
 // Simple mock initial documents to populate the workspace on first load
-const INITIAL_MOCK_DOCUMENTS = [
+const INITIAL_MOCK_DOCUMENTS: LocalDocument[] = [
   {
     document_id: 'doc_invoice_902f',
     filename: 'tokyo_energy_june.pdf',
@@ -34,6 +51,11 @@ const INITIAL_MOCK_DOCUMENTS = [
     uploaded_at: '2026-05-30T00:10:00Z',
     document_type: 'invoice',
     ocr_text: '東京電力エナジーパートナー株式会社\n請求書番号: 2026-990812\nご請求金額: ￥145,200',
+    ocr_blocks: [
+      { text: '東京電力エナジーパートナー株式会社', confidence: 0.94, bbox: [42, 72, 310, 105], page: 1, orientation: 'horizontal' },
+      { text: '請求書番号: 2026-990812', confidence: 0.91, bbox: [42, 132, 245, 162], page: 1, orientation: 'horizontal' },
+      { text: 'ご請求金額: ￥145,200', confidence: 0.89, bbox: [42, 224, 240, 258], page: 1, orientation: 'horizontal' }
+    ],
     data: {
       company: '東京電力エナジーパートナー株式会社',
       invoice_id: '2026-990812',
@@ -54,6 +76,12 @@ const INITIAL_MOCK_DOCUMENTS = [
     uploaded_at: '2026-05-29T18:32:00Z',
     document_type: 'contract',
     ocr_text: '賃貸借契約書\n貸主: 渋谷不動産開発株式会社\n借主: 株式会社AIシステムズ\n月額賃料: ￥350,000',
+    ocr_blocks: [
+      { text: '賃貸借契約書', confidence: 0.93, bbox: [115, 48, 236, 82], page: 1, orientation: 'horizontal' },
+      { text: '貸主: 渋谷不動産開発株式会社', confidence: 0.88, bbox: [42, 130, 286, 162], page: 1, orientation: 'horizontal' },
+      { text: '借主: 株式会社AIシステムズ', confidence: 0.9, bbox: [42, 180, 266, 212], page: 1, orientation: 'horizontal' },
+      { text: '月額賃料: ￥350,000', confidence: 0.86, bbox: [42, 258, 224, 292], page: 1, orientation: 'horizontal' }
+    ],
     data: {
       company: '渋谷不動産開発株式会社',
       invoice_id: 'CONTRACT-2026-X',
@@ -80,6 +108,7 @@ const INITIAL_MOCK_DOCUMENTS = [
     uploaded_at: '2026-05-30T00:15:23Z',
     document_type: 'unknown',
     ocr_text: '',
+    ocr_blocks: [],
     data: {},
     validation: {
       valid: false,
@@ -90,27 +119,26 @@ const INITIAL_MOCK_DOCUMENTS = [
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'dashboard' | 'upload' | 'correction' | 'thesis'>('dashboard');
-  const [documents, setDocuments] = useState<any[]>(INITIAL_MOCK_DOCUMENTS);
-  const [selectedDocId, setSelectedDocId] = useState<string>('doc_invoice_902f');
+  const [documents, setDocuments] = useState<LocalDocument[]>(INITIAL_MOCK_DOCUMENTS);
+  const [selectedDocId, setSelectedDocId] = useState<string>(INITIAL_MOCK_DOCUMENTS[0].document_id);
   
   // Backend connection status
   const [backendConnected, setBackendConnected] = useState<boolean | null>(null);
-  const [healthInfo, setHealthInfo] = useState<any>(null);
+  const [healthInfo, setHealthInfo] = useState<HealthResponse | null>(null);
   
   // Upload State
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadedResult, setUploadedResult] = useState<UploadResponse | null>(null);
   
   // Correction / Review workspace state
-  const [ocrText, setOcrText] = useState('');
-  const [extractedData, setExtractedData] = useState<Record<string, any>>({});
-  const [validationIssues, setValidationIssues] = useState<ValidationIssue[]>([]);
-  const [isValidating, setIsValidating] = useState(false);
+  const [ocrText, setOcrText] = useState(INITIAL_MOCK_DOCUMENTS[0].ocr_text);
+  const [ocrBlocks, setOcrBlocks] = useState<OcrBlock[]>(INITIAL_MOCK_DOCUMENTS[0].ocr_blocks);
+  const [extractedData, setExtractedData] = useState<ExtractedData>(INITIAL_MOCK_DOCUMENTS[0].data);
+  const [validationIssues, setValidationIssues] = useState<ValidationIssue[]>(INITIAL_MOCK_DOCUMENTS[0].validation.issues);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notes, setNotes] = useState('');
-  const [reviewer, setReviewer] = useState('admin@human-in-the-loop.ai');
+  const reviewer = 'admin@human-in-the-loop.ai';
   const [pipelineRunning, setPipelineRunning] = useState(false);
 
   // Stats for Thesis Outline tab
@@ -133,23 +161,13 @@ export default function Home() {
         const health = await apiService.getHealth();
         setBackendConnected(true);
         setHealthInfo(health);
-      } catch (error) {
+      } catch {
         console.warn("FastAPI backend is offline, running in mock simulation mode.");
         setBackendConnected(false);
       }
     }
     checkHealth();
   }, []);
-
-  // Update Workspace elements when selected document changes
-  useEffect(() => {
-    const doc = documents.find(d => d.document_id === selectedDocId);
-    if (doc) {
-      setOcrText(doc.ocr_text || '');
-      setExtractedData(doc.data || {});
-      setValidationIssues(doc.validation?.issues || []);
-    }
-  }, [selectedDocId, documents]);
 
   // Handle Drag & Drop events
   const [dragOver, setDragOver] = useState(false);
@@ -176,6 +194,16 @@ export default function Home() {
     if (e.target.files && e.target.files[0]) {
       setUploadFile(e.target.files[0]);
     }
+  };
+
+  const selectDocument = (docId: string) => {
+    const doc = documents.find(d => d.document_id === docId);
+    setSelectedDocId(docId);
+    if (!doc) return;
+    setOcrText(doc.ocr_text || '');
+    setOcrBlocks(doc.ocr_blocks || []);
+    setExtractedData(doc.data || {});
+    setValidationIssues(doc.validation?.issues || []);
   };
 
   // Perform document upload
@@ -207,10 +235,9 @@ export default function Home() {
 
       clearInterval(timer);
       setUploadProgress(100);
-      setUploadedResult(result);
       
       // Append to local docs list
-      const newDoc = {
+      const newDoc: LocalDocument = {
         document_id: result.document_id,
         filename: result.filename,
         status: 'uploaded',
@@ -218,6 +245,7 @@ export default function Home() {
         uploaded_at: new Date().toISOString(),
         document_type: 'unknown',
         ocr_text: '',
+        ocr_blocks: [],
         data: {},
         validation: { valid: false, issues: [] }
       };
@@ -229,7 +257,6 @@ export default function Home() {
       setTimeout(() => {
         setUploading(false);
         setUploadFile(null);
-        setUploadedResult(null);
         setActiveTab('correction');
       }, 1000);
 
@@ -259,7 +286,9 @@ export default function Home() {
             text: '株式会社ABC\n請求書番号: INV001\nご請求金額: ￥120,000\n消費税率: 10%',
             blocks: [
               { text: '株式会社ABC', confidence: 0.94, bbox: [48, 80, 220, 112], page: 1, orientation: 'horizontal' },
-              { text: '請求書番号: INV001', confidence: 0.91, bbox: [48, 122, 260, 154], page: 1, orientation: 'horizontal' }
+              { text: '請求書番号: INV001', confidence: 0.91, bbox: [48, 122, 260, 154], page: 1, orientation: 'horizontal' },
+              { text: 'ご請求金額: ￥120,000', confidence: 0.9, bbox: [48, 210, 260, 246], page: 1, orientation: 'horizontal' },
+              { text: '消費税率: 10%', confidence: 0.86, bbox: [48, 260, 180, 292], page: 1, orientation: 'horizontal' }
             ],
             confidence: 0.92,
             status: 'ocr_completed'
@@ -295,6 +324,7 @@ export default function Home() {
             status: 'validated',
             document_type: docType,
             ocr_text: pipelineResult.ocr.text,
+            ocr_blocks: pipelineResult.ocr.blocks,
             data: pipelineResult.extraction.data,
             validation: pipelineResult.validation
           };
@@ -304,6 +334,7 @@ export default function Home() {
 
       // Update active Workspace input states
       setOcrText(pipelineResult.ocr.text);
+      setOcrBlocks(pipelineResult.ocr.blocks);
       setExtractedData(pipelineResult.extraction.data);
       setValidationIssues(pipelineResult.validation.issues);
 
@@ -337,6 +368,7 @@ export default function Home() {
             ...d,
             status: 'feedback_received',
             ocr_text: ocrText,
+            ocr_blocks: ocrBlocks,
             data: extractedData,
             validation: {
               valid: true,
@@ -382,6 +414,29 @@ export default function Home() {
       default:
         return <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">{status}</span>;
     }
+  };
+
+  const selectedDocument = documents.find(d => d.document_id === selectedDocId);
+  const visibleOcrBlocks = ocrBlocks.filter(block => block.bbox.length === 4);
+  const maxBoxX = Math.max(360, ...visibleOcrBlocks.map(block => block.bbox[2]));
+  const maxBoxY = Math.max(460, ...visibleOcrBlocks.map(block => block.bbox[3]));
+  const averageOcrConfidence = visibleOcrBlocks.length
+    ? visibleOcrBlocks.reduce((sum, block) => sum + block.confidence, 0) / visibleOcrBlocks.length
+    : 0;
+
+  const getBoxStyle = (block: OcrBlock): React.CSSProperties => {
+    const [x1, y1, x2, y2] = block.bbox;
+    return {
+      left: `${(x1 / maxBoxX) * 100}%`,
+      top: `${(y1 / maxBoxY) * 100}%`,
+      width: `${Math.max(((x2 - x1) / maxBoxX) * 100, 12)}%`,
+      height: `${Math.max(((y2 - y1) / maxBoxY) * 100, 6)}%`,
+    };
+  };
+
+  const resetOcrText = () => {
+    setOcrText(selectedDocument?.ocr_text || '');
+    setOcrBlocks(selectedDocument?.ocr_blocks || []);
   };
 
   return (
@@ -604,7 +659,7 @@ export default function Home() {
                           <div className="flex items-center justify-end gap-2">
                             <button
                               onClick={() => {
-                                setSelectedDocId(doc.document_id);
+                                selectDocument(doc.document_id);
                                 setActiveTab('correction');
                               }}
                               className="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-xs font-medium text-slate-200 transition-all"
@@ -627,7 +682,7 @@ export default function Home() {
                 </table>
                 {documents.length === 0 && (
                   <div className="p-12 text-center text-slate-500">
-                    No documents found. Click "Upload Document" to add files.
+                    No documents found. Click &quot;Upload Document&quot; to add files.
                   </div>
                 )}
               </div>
@@ -731,7 +786,7 @@ export default function Home() {
                   <span className="text-xs text-slate-500 font-semibold uppercase">Active Document:</span>
                   <select
                     value={selectedDocId}
-                    onChange={(e) => setSelectedDocId(e.target.value)}
+                    onChange={(e) => selectDocument(e.target.value)}
                     className="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs font-semibold text-slate-200 focus:outline-none focus:border-indigo-500"
                   >
                     {documents.map(d => (
@@ -749,54 +804,58 @@ export default function Home() {
                 {/* LEFT SIDE: OCR VISUALIZATION & RAW TEXT */}
                 <div className="lg:col-span-5 space-y-4 flex flex-col">
                   
-                  {/* DOCUMENT VISUAL REPRESENTATION (MOCK WORKSPACE SCREENPLACE) */}
+                  {/* DOCUMENT VISUAL REPRESENTATION WITH OCR BOUNDING BOXES */}
                   <div className="p-5 rounded-2xl bg-slate-950 border border-slate-900 flex flex-col gap-4 aspect-[4/3] justify-between relative overflow-hidden group">
-                    
-                    {/* Visual glowing border accent */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none group-hover:bg-indigo-500/25 transition-all duration-300" />
-                    
                     <div className="flex items-center justify-between z-10">
                       <span className="text-[11px] font-semibold tracking-wider text-indigo-400 uppercase bg-indigo-500/10 border border-indigo-500/25 px-2 py-0.5 rounded">
-                        Document Scan Preview
+                        OCR Box Preview
                       </span>
-                      <span className="text-xs font-mono text-slate-500">Page 1 of 1</span>
+                      <span className="text-xs font-mono text-slate-500">
+                        {visibleOcrBlocks.length} boxes
+                      </span>
                     </div>
 
-                    {/* MOCK INVOICE LAYOUT WITH OCR GLOWING BOUNDING BOXES */}
-                    <div className="border border-slate-800/80 bg-slate-900/10 rounded-xl flex-1 p-6 flex flex-col justify-between font-serif select-none z-10">
-                      <div className="flex justify-between items-start border-b border-slate-800 pb-3">
-                        <div className="space-y-1">
-                          {/* Hoverable bounding box */}
-                          <div className="px-2 py-1 rounded bg-indigo-500/10 border border-indigo-500/35 text-[14px] text-white font-sans inline-block cursor-help hover:bg-indigo-500/20 transition-all font-bold" title="Confidence: 94%">
-                            株式会社ABC
-                          </div>
-                          <p className="text-[10px] text-slate-500 font-sans">東京都新宿区西新宿 1-1-1</p>
-                        </div>
-                        <div className="text-right">
-                          <h4 className="text-lg font-bold text-slate-400 tracking-wider">請求書</h4>
-                          <div className="mt-1 px-1.5 py-0.5 rounded bg-indigo-500/10 border border-indigo-500/35 text-[10px] text-white font-sans inline-block cursor-help hover:bg-indigo-500/20 transition-all" title="Confidence: 91%">
-                            INV-001
-                          </div>
-                        </div>
+                    <div className="border border-slate-800/80 bg-slate-100 rounded-xl flex-1 relative overflow-hidden select-none z-10 shadow-inner">
+                      <div className="absolute inset-0 bg-[linear-gradient(#e2e8f0_1px,transparent_1px),linear-gradient(90deg,#e2e8f0_1px,transparent_1px)] bg-[size:24px_24px] opacity-35" />
+                      <div className="absolute inset-x-8 top-7 h-px bg-slate-300" />
+                      <div className="absolute inset-x-8 bottom-7 h-px bg-slate-300" />
+                      <div className="absolute left-8 top-10 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                        {selectedDocument?.filename || 'No document selected'}
                       </div>
 
-                      <div className="my-4 space-y-2">
-                        <div className="h-2 w-full bg-slate-800 rounded-full" />
-                        <div className="h-2 w-3/4 bg-slate-800 rounded-full" />
-                        <div className="h-2 w-5/6 bg-slate-800 rounded-full" />
-                      </div>
-
-                      <div className="flex justify-between items-end border-t border-slate-850 pt-3">
-                        <span className="text-[10px] uppercase text-slate-500 font-sans tracking-wide">Total Amount Due:</span>
-                        <span className="text-lg font-bold text-slate-200 tracking-tight font-sans">￥120,000</span>
-                      </div>
+                      {visibleOcrBlocks.length > 0 ? (
+                        visibleOcrBlocks.map((block, idx) => (
+                          <div
+                            key={`${block.text}-${idx}`}
+                            style={getBoxStyle(block)}
+                            className="absolute rounded border-2 border-indigo-500/80 bg-indigo-500/15 shadow-[0_0_20px_rgba(99,102,241,0.2)] transition-all hover:z-20 hover:border-emerald-500 hover:bg-emerald-400/20"
+                            title={`${block.text} | Confidence: ${(block.confidence * 100).toFixed(1)}% | ${block.orientation}`}
+                          >
+                            <span className="absolute -top-5 left-0 max-w-[220px] truncate rounded bg-slate-950 px-1.5 py-0.5 text-[10px] font-semibold text-slate-100 shadow">
+                              {(block.confidence * 100).toFixed(0)}% · {block.text}
+                            </span>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center p-8 text-center">
+                          <div>
+                            <FileCheck className="mx-auto h-8 w-8 text-slate-400" />
+                            <p className="mt-3 text-sm font-semibold text-slate-600">No OCR boxes yet</p>
+                            <p className="mt-1 text-xs text-slate-500">Run the agent pipeline to render detected bounding boxes.</p>
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     <div className="flex items-center justify-between text-xs text-slate-500 border-t border-slate-900 pt-3 z-10">
-                      <span>PaddleOCR confidence: <b className="text-slate-300">92.0%</b></span>
+                      <span>
+                        OCR confidence: <b className="text-slate-300">
+                          {averageOcrConfidence ? `${(averageOcrConfidence * 100).toFixed(1)}%` : 'N/A'}
+                        </b>
+                      </span>
                       <span className="flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                        Interactive zones enabled
+                        Bounding boxes enabled
                       </span>
                     </div>
                   </div>
@@ -806,7 +865,7 @@ export default function Home() {
                     <div className="flex justify-between items-center">
                       <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Detected OCR Text Area</label>
                       <button 
-                        onClick={() => setOcrText(prev => prev + '\n# Modified manually')}
+                        onClick={resetOcrText}
                         className="text-[11px] text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1 transition-all"
                       >
                         Reset text
@@ -867,7 +926,7 @@ export default function Home() {
                         <label className="text-xs font-semibold text-slate-400">Extracted Company (取引先)</label>
                         <input
                           type="text"
-                          value={extractedData.company || ''}
+                          value={String(extractedData.company || '')}
                           onChange={(e) => setExtractedData(prev => ({ ...prev, company: e.target.value }))}
                           placeholder="Empty"
                           className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
@@ -879,7 +938,7 @@ export default function Home() {
                         <label className="text-xs font-semibold text-slate-400">Invoice / Contract Number (番号)</label>
                         <input
                           type="text"
-                          value={extractedData.invoice_id || ''}
+                          value={String(extractedData.invoice_id || '')}
                           onChange={(e) => setExtractedData(prev => ({ ...prev, invoice_id: e.target.value }))}
                           placeholder="Empty"
                           className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
@@ -891,7 +950,7 @@ export default function Home() {
                         <label className="text-xs font-semibold text-slate-400">Total Amount (ご請求金額)</label>
                         <input
                           type="number"
-                          value={extractedData.amount || ''}
+                          value={typeof extractedData.amount === 'number' ? extractedData.amount : ''}
                           onChange={(e) => setExtractedData(prev => ({ ...prev, amount: Number(e.target.value) }))}
                           placeholder="0"
                           className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
@@ -902,7 +961,7 @@ export default function Home() {
                       <div className="space-y-1.5">
                         <label className="text-xs font-semibold text-slate-400">Currency Code</label>
                         <select
-                          value={extractedData.currency || 'JPY'}
+                          value={String(extractedData.currency || 'JPY')}
                           onChange={(e) => setExtractedData(prev => ({ ...prev, currency: e.target.value }))}
                           className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
                         >
@@ -953,6 +1012,7 @@ export default function Home() {
                             if (doc) {
                               setExtractedData(doc.data || {});
                               setOcrText(doc.ocr_text || '');
+                              setOcrBlocks(doc.ocr_blocks || []);
                               setNotes('');
                             }
                           }}
@@ -1143,7 +1203,7 @@ export default function Home() {
                   <div className="space-y-2">
                     <h4 className="font-bold text-slate-200">Evaluation Plan Drafted (docs/EVALUATION_PLAN.md)</h4>
                     <p className="leading-relaxed">
-                      Establishes validation baselines on the NDL (National Diet Library) OCR Dataset and receipt forms. Key research focus is "Correction Reduction Rate" (CRR) - evaluating how memory caches limit future human intervention.
+                      Establishes validation baselines on the NDL (National Diet Library) OCR Dataset and receipt forms. Key research focus is &quot;Correction Reduction Rate&quot; (CRR) - evaluating how memory caches limit future human intervention.
                     </p>
                     <a 
                       href="#" 

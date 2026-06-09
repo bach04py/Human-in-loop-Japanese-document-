@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api/v1';
 
 export const apiClient = axios.create({
   baseURL: BASE_URL,
@@ -41,7 +41,7 @@ export interface OcrResult {
 
 export interface ExtractionResult {
   document_id: string;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
   confidence: number;
   status: string;
 }
@@ -69,7 +69,7 @@ export interface PipelineRunResponse {
 
 export interface FeedbackRequest {
   document_id: string;
-  corrections: Record<string, any>;
+  corrections: Record<string, unknown>;
   user?: string;
   notes?: string;
 }
