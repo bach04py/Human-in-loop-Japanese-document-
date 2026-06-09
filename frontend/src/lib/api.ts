@@ -81,6 +81,10 @@ export interface FeedbackResponse {
 }
 
 export const apiService = {
+  getDocumentFileUrl(documentId: string): string {
+    return `${BASE_URL}/documents/${documentId}/file`;
+  },
+
   /**
    * Get system health status
    */

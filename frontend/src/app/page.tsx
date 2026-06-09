@@ -19,7 +19,9 @@ import {
   Trash2,
   AlertTriangle,
   FileCheck,
-  ExternalLink
+  ExternalLink,
+  Maximize2,
+  X
 } from 'lucide-react';
 import { apiService, UploadResponse, PipelineRunResponse, ValidationIssue, OcrBlock, HealthResponse } from '../lib/api';
 
@@ -30,6 +32,7 @@ interface LocalDocument {
   filename: string;
   status: string;
   content_type: string;
+  file_url?: string;
   uploaded_at: string;
   document_type: string;
   ocr_text: string;
@@ -140,6 +143,8 @@ export default function Home() {
   const [notes, setNotes] = useState('');
   const reviewer = 'admin@human-in-the-loop.ai';
   const [pipelineRunning, setPipelineRunning] = useState(false);
+  const [fullscreenViewerOpen, setFullscreenViewerOpen] = useState(false);
+  const [documentImageSize, setDocumentImageSize] = useState<{ width: number; height: number } | null>(null);
 
   // Stats for Thesis Outline tab
   const [stats, setStats] = useState({
@@ -204,6 +209,7 @@ export default function Home() {
     setOcrBlocks(doc.ocr_blocks || []);
     setExtractedData(doc.data || {});
     setValidationIssues(doc.validation?.issues || []);
+    setDocumentImageSize(null);
   };
 
   // Perform document upload
@@ -242,6 +248,7 @@ export default function Home() {
         filename: result.filename,
         status: 'uploaded',
         content_type: result.content_type || 'unknown',
+        file_url: backendConnected ? apiService.getDocumentFileUrl(result.document_id) : undefined,
         uploaded_at: new Date().toISOString(),
         document_type: 'unknown',
         ocr_text: '',
@@ -252,6 +259,11 @@ export default function Home() {
       
       setDocuments(prev => [newDoc, ...prev]);
       setSelectedDocId(result.document_id);
+      setOcrText('');
+      setOcrBlocks([]);
+      setExtractedData({});
+      setValidationIssues([]);
+      setDocumentImageSize(null);
       
       // Move tab to Workspace to let them process
       setTimeout(() => {
@@ -417,9 +429,14 @@ export default function Home() {
   };
 
   const selectedDocument = documents.find(d => d.document_id === selectedDocId);
+  const selectedDocumentFileUrl = selectedDocument?.file_url;
+  const selectedDocumentIsImage = Boolean(selectedDocument?.content_type?.startsWith('image/'));
+  const selectedDocumentIsPdf = selectedDocument?.content_type === 'application/pdf' || selectedDocument?.filename.toLowerCase().endsWith('.pdf');
   const visibleOcrBlocks = ocrBlocks.filter(block => block.bbox.length === 4);
   const maxBoxX = Math.max(360, ...visibleOcrBlocks.map(block => block.bbox[2]));
   const maxBoxY = Math.max(460, ...visibleOcrBlocks.map(block => block.bbox[3]));
+  const overlayWidth = Math.max(documentImageSize?.width || 0, maxBoxX);
+  const overlayHeight = Math.max(documentImageSize?.height || 0, maxBoxY);
   const averageOcrConfidence = visibleOcrBlocks.length
     ? visibleOcrBlocks.reduce((sum, block) => sum + block.confidence, 0) / visibleOcrBlocks.length
     : 0;
@@ -427,10 +444,10 @@ export default function Home() {
   const getBoxStyle = (block: OcrBlock): React.CSSProperties => {
     const [x1, y1, x2, y2] = block.bbox;
     return {
-      left: `${(x1 / maxBoxX) * 100}%`,
-      top: `${(y1 / maxBoxY) * 100}%`,
-      width: `${Math.max(((x2 - x1) / maxBoxX) * 100, 12)}%`,
-      height: `${Math.max(((y2 - y1) / maxBoxY) * 100, 6)}%`,
+      left: `${(x1 / overlayWidth) * 100}%`,
+      top: `${(y1 / overlayHeight) * 100}%`,
+      width: `${Math.max(((x2 - x1) / overlayWidth) * 100, 2)}%`,
+      height: `${Math.max(((y2 - y1) / overlayHeight) * 100, 2)}%`,
     };
   };
 
@@ -438,6 +455,80 @@ export default function Home() {
     setOcrText(selectedDocument?.ocr_text || '');
     setOcrBlocks(selectedDocument?.ocr_blocks || []);
   };
+
+  const renderOcrBoxes = () => (
+    <>
+      {visibleOcrBlocks.map((block, idx) => (
+        <div
+          key={`${block.text}-${idx}`}
+          style={getBoxStyle(block)}
+          className="absolute rounded-sm border-2 border-indigo-500/90 bg-indigo-500/15 shadow-[0_0_18px_rgba(99,102,241,0.32)] transition-all hover:z-20 hover:border-emerald-500 hover:bg-emerald-400/20"
+          title={`${block.text} | Confidence: ${(block.confidence * 100).toFixed(1)}% | ${block.orientation}`}
+        >
+          <span className="absolute -top-5 left-0 max-w-[260px] truncate rounded bg-slate-950 px-1.5 py-0.5 text-[10px] font-semibold text-slate-100 shadow">
+            {(block.confidence * 100).toFixed(0)}% · {block.text}
+          </span>
+        </div>
+      ))}
+    </>
+  );
+
+  const renderDocumentSurface = (fullscreen = false) => (
+    <div className={`relative flex h-full w-full items-center justify-center overflow-auto bg-slate-950 ${fullscreen ? 'p-6' : 'p-3'}`}>
+      <div
+        className="relative max-h-full max-w-full overflow-hidden bg-white shadow-2xl"
+        style={{ aspectRatio: `${overlayWidth} / ${overlayHeight}`, width: 'min(100%, 920px)' }}
+      >
+        {selectedDocumentFileUrl && selectedDocumentIsImage ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={selectedDocumentFileUrl}
+            alt={selectedDocument?.filename || 'Uploaded document'}
+            className="absolute inset-0 h-full w-full object-fill"
+            onLoad={(event) => {
+              const image = event.currentTarget;
+              setDocumentImageSize({ width: image.naturalWidth, height: image.naturalHeight });
+            }}
+          />
+        ) : selectedDocumentFileUrl && selectedDocumentIsPdf ? (
+          <iframe
+            src={selectedDocumentFileUrl}
+            title={selectedDocument?.filename || 'Uploaded PDF'}
+            className="absolute inset-0 h-full w-full bg-white"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-slate-100">
+            <div className="absolute inset-0 bg-[linear-gradient(#e2e8f0_1px,transparent_1px),linear-gradient(90deg,#e2e8f0_1px,transparent_1px)] bg-[size:24px_24px] opacity-35" />
+            <div className="absolute inset-x-8 top-7 h-px bg-slate-300" />
+            <div className="absolute inset-x-8 bottom-7 h-px bg-slate-300" />
+            <div className="absolute left-8 top-10 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+              {selectedDocument?.filename || 'No document selected'}
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center p-8 text-center">
+              <div>
+                <FileCheck className="mx-auto h-8 w-8 text-slate-400" />
+                <p className="mt-3 text-sm font-semibold text-slate-600">No document preview file</p>
+                <p className="mt-1 text-xs text-slate-500">Upload a document to view the original scan behind OCR boxes.</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {visibleOcrBlocks.length > 0 ? (
+          <div className="absolute inset-0 z-10">
+            {renderOcrBoxes()}
+          </div>
+        ) : (
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-slate-950/5 p-8 text-center">
+            <div className="rounded border border-slate-300/80 bg-white/90 px-4 py-3 shadow">
+              <p className="text-sm font-semibold text-slate-700">No OCR boxes yet</p>
+              <p className="mt-1 text-xs text-slate-500">Run the agent pipeline to render detected bounding boxes.</p>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <div className="flex flex-1 min-h-screen bg-slate-950 text-slate-100 font-sans">
@@ -807,44 +898,31 @@ export default function Home() {
                   {/* DOCUMENT VISUAL REPRESENTATION WITH OCR BOUNDING BOXES */}
                   <div className="p-5 rounded-2xl bg-slate-950 border border-slate-900 flex flex-col gap-4 aspect-[4/3] justify-between relative overflow-hidden group">
                     <div className="flex items-center justify-between z-10">
-                      <span className="text-[11px] font-semibold tracking-wider text-indigo-400 uppercase bg-indigo-500/10 border border-indigo-500/25 px-2 py-0.5 rounded">
-                        OCR Box Preview
-                      </span>
-                      <span className="text-xs font-mono text-slate-500">
-                        {visibleOcrBlocks.length} boxes
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[11px] font-semibold tracking-wider text-indigo-400 uppercase bg-indigo-500/10 border border-indigo-500/25 px-2 py-0.5 rounded">
+                          OCR Box Preview
+                        </span>
+                        <span className="max-w-[180px] truncate text-xs text-slate-500" title={selectedDocument?.filename}>
+                          {selectedDocument?.filename || 'No document selected'}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-mono text-slate-500">
+                          {visibleOcrBlocks.length} boxes
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setFullscreenViewerOpen(true)}
+                          className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-800 bg-slate-900 text-slate-300 transition-all hover:border-indigo-500 hover:text-white"
+                          title="Open fullscreen document viewer"
+                        >
+                          <Maximize2 className="h-4 w-4" />
+                        </button>
+                      </div>
                     </div>
 
-                    <div className="border border-slate-800/80 bg-slate-100 rounded-xl flex-1 relative overflow-hidden select-none z-10 shadow-inner">
-                      <div className="absolute inset-0 bg-[linear-gradient(#e2e8f0_1px,transparent_1px),linear-gradient(90deg,#e2e8f0_1px,transparent_1px)] bg-[size:24px_24px] opacity-35" />
-                      <div className="absolute inset-x-8 top-7 h-px bg-slate-300" />
-                      <div className="absolute inset-x-8 bottom-7 h-px bg-slate-300" />
-                      <div className="absolute left-8 top-10 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
-                        {selectedDocument?.filename || 'No document selected'}
-                      </div>
-
-                      {visibleOcrBlocks.length > 0 ? (
-                        visibleOcrBlocks.map((block, idx) => (
-                          <div
-                            key={`${block.text}-${idx}`}
-                            style={getBoxStyle(block)}
-                            className="absolute rounded border-2 border-indigo-500/80 bg-indigo-500/15 shadow-[0_0_20px_rgba(99,102,241,0.2)] transition-all hover:z-20 hover:border-emerald-500 hover:bg-emerald-400/20"
-                            title={`${block.text} | Confidence: ${(block.confidence * 100).toFixed(1)}% | ${block.orientation}`}
-                          >
-                            <span className="absolute -top-5 left-0 max-w-[220px] truncate rounded bg-slate-950 px-1.5 py-0.5 text-[10px] font-semibold text-slate-100 shadow">
-                              {(block.confidence * 100).toFixed(0)}% · {block.text}
-                            </span>
-                          </div>
-                        ))
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center p-8 text-center">
-                          <div>
-                            <FileCheck className="mx-auto h-8 w-8 text-slate-400" />
-                            <p className="mt-3 text-sm font-semibold text-slate-600">No OCR boxes yet</p>
-                            <p className="mt-1 text-xs text-slate-500">Run the agent pipeline to render detected bounding boxes.</p>
-                          </div>
-                        </div>
-                      )}
+                    <div className="border border-slate-800/80 rounded-xl flex-1 relative overflow-hidden select-none z-10 shadow-inner">
+                      {renderDocumentSurface(false)}
                     </div>
 
                     <div className="flex items-center justify-between text-xs text-slate-500 border-t border-slate-900 pt-3 z-10">
@@ -1221,6 +1299,32 @@ export default function Home() {
 
         </div>
       </main>
+
+      {fullscreenViewerOpen && (
+        <div className="fixed inset-0 z-50 flex flex-col bg-slate-950 text-slate-100">
+          <div className="flex h-14 shrink-0 items-center justify-between border-b border-slate-800 bg-slate-950 px-5">
+            <div className="min-w-0">
+              <div className="truncate text-sm font-semibold text-white">
+                {selectedDocument?.filename || 'Document viewer'}
+              </div>
+              <div className="mt-0.5 text-xs text-slate-500">
+                {visibleOcrBlocks.length} OCR boxes · confidence {averageOcrConfidence ? `${(averageOcrConfidence * 100).toFixed(1)}%` : 'N/A'}
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setFullscreenViewerOpen(false)}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-800 bg-slate-900 text-slate-300 transition-all hover:border-rose-500 hover:text-white"
+              title="Close fullscreen document viewer"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+          <div className="min-h-0 flex-1">
+            {renderDocumentSurface(true)}
+          </div>
+        </div>
+      )}
 
     </div>
   );

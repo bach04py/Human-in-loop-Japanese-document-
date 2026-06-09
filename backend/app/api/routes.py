@@ -2,6 +2,7 @@ from pathlib import Path
 from uuid import uuid4
 
 from fastapi import APIRouter, File, HTTPException, UploadFile, status
+from fastapi.responses import FileResponse
 
 from app.core.config import settings
 from app.schemas import (
@@ -75,6 +76,20 @@ async def upload_document(file: UploadFile = File(...)) -> UploadResponse:
         document_id=document_id,
         filename=file.filename,
         content_type=file.content_type,
+    )
+
+
+@router.get("/documents/{document_id}/file", tags=["documents"])
+async def get_document_file(document_id: str) -> FileResponse:
+    candidates = list(settings.upload_dir.glob(f"{document_id}.*"))
+    if not candidates:
+        raise HTTPException(status_code=404, detail=f"Document not found: {document_id}")
+
+    file_path = candidates[0]
+    return FileResponse(
+        path=file_path,
+        filename=file_path.name,
+        media_type=None,
     )
 
 
