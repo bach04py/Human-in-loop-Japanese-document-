@@ -4,7 +4,7 @@ import os
 from typing import Any, Dict
 import httpx
 from app.schemas.documents import ExtractionResult, DocumentStatus
-
+import re
 logger = logging.getLogger(__name__)
 SYSTEM_PROMPT = """
 **Role / System Prompt:**
@@ -19,7 +19,10 @@ You are an expert Data Extraction AI specialized in Japanese business documents.
 4. **JAPANESE COMPANY NAMES:** Extract the exact vendor/billing company name including legal entities like 株式会社 (Co., Ltd.) or 合同会社 (LLC). Strip any extra whitespace.
 5. **DATES:** Convert all dates to ISO 8601 format (`YYYY-MM-DD`). Convert Japanese era dates (e.g., 令和5年 = 2023) automatically.
 6. **AMOUNTS & CURRENCY:** Extract the **Grand Total** numerical value as a clean integer/float. Remove commas and symbols (¥, 円). Default the `currency` to "JPY" unless another currency (like USD) is explicitly stated.
-
+7. **USE COORDINATES:** Use the bounding box (bbox) coordinates provided in the Layout JSON to figure out what text is next to what. If two blocks have a very similar Y-coordinate, they are likely on the same line.
+8. **NO CALCULATION:** Never calculate, divide, or deduce missing numbers (e.g., do not divide a subtotal by a quantity to invent a unit price). Only extract exact values explicitly printed on the document. If a number is missing, leave it as `null`.
+9. **FLEXIBLE DATES:** Actively look for dates in standard formats and Japanese formats (e.g., "2025年 7月12日"). Always convert the final extracted value to the ISO 8601 format (`YYYY-MM-DD`).
+10. **ZERO GUESSING:** If the OCR text for a field like the company name is garbled, illegible, or missing, you must return `null`. Do NOT invent, assume, or guess placeholder names (like "Takashimaya") just to fill the field.
 **JSON Schema:**
 {
   "type": "object",
@@ -46,11 +49,15 @@ You are an expert Data Extraction AI specialized in Japanese business documents.
 {"invoice_id": {"value": "INV-992", "confidence": 1.0}, "company": {"value": "株式会社テストベンダー", "confidence": 1.0}, "amount": {"value": 15000, "confidence": 1.0}, "currency": {"value": "JPY", "confidence": 1.0}, "date": {"value": "2023-10-05", "confidence": 1.0}, "line_items": []}
 
 **User Request:**
-Extract the structured data from the following OCR text, adhering strictly to the schema and rules.
+Extract the structured data using the raw text and the coordinate JSON below.
 
-<document>
+<raw_text>
 {ocr_text}
-</document>
+</raw_text>
+
+<layout_json>
+{layout_json}
+</layout_json>
 """
 
 class ExtractionService:
@@ -70,18 +77,24 @@ class ExtractionService:
             self,
             document_id: str,
             ocr_text: str | None = None,
+            layout_blocks: list | None = None,  # 1. Accept the blocks here
             document_type: str = "unknown",
             use_layoutlm: bool = False
     ) -> ExtractionResult:
         if not ocr_text or not ocr_text.strip():
             return self._get_empty_result(document_id)
 
+        # 2. Serialize the Pydantic blocks into a clean JSON string
+        if layout_blocks:
+            layout_json_string = json.dumps([b.model_dump() for b in layout_blocks], ensure_ascii=False)
+        else:
+            layout_json_string = "[]"
+
         if use_layoutlm:
-            logger.info(f"Routing document {document_id} to layoutLMv3 server...")
             parsed_data = await self._cal_layoutlm_v3(document_id, ocr_text)
         else:
-            logger.info(f"Routing document {document_id} to {self.model_name}... ")
-            parsed_data = await self._call_open_weights(ocr_text)
+            # 3. Pass both the text and the layout JSON to your LLM caller
+            parsed_data = await self._call_open_weights(ocr_text, layout_json_string)
 
         overall_confidence = self._calculate_overall_confidence(parsed_data)
 
@@ -94,17 +107,32 @@ class ExtractionService:
 
 #--------------------------------------------------------------------------
 # OPEN-WEIGHTS BASELINE (QWEN 2.5)
-    async def _call_open_weights(self, ocr_text: str) -> Dict[str, Any]:
-        """Handles extraction with JSON cleaning"""
+    async def _call_open_weights(self, ocr_text: str, layout_json_string: str) -> Dict[str, Any]:
 
-        full_prompt = f"{SYSTEM_PROMPT}\n\nUser Request: Extract structured data from the following OCR text:\n\n{ocr_text}"
+        # We are completely removing the <layout_json> block to stop confusing the AI
+        full_prompt = (
+            f"{SYSTEM_PROMPT}\n\n"
+            f"<raw_text>\n{ocr_text}\n</raw_text>\n\n"
+            f"CRITICAL INSTRUCTION: Output ONLY valid JSON matching this exact blueprint schema structural shell:\n"
+            f"{{\n"
+            f'  "invoice_id": {{"value": null, "confidence": 0.0}},\n'
+            f'  "company": {{"value": null, "confidence": 0.0}},\n'
+            f'  "amount": {{"value": null, "confidence": 0.0}},\n'
+            f'  "currency": {{"value": "JPY", "confidence": 1.0}},\n'
+            f'  "date": {{"value": null, "confidence": 0.0}},\n'
+            f'  "line_items": []\n'
+            f"}}"
+        )
 
         payload = {
             "model": self.model_name,
             "prompt": full_prompt,
+            "format": "json",
             "stream": False,
             "options": {
-                "temperature": 0.0
+                "temperature": 0.1,  # <-- Change to 0.1 to clear Ollama's cache
+                "top_p": 0.9,  # <-- Add this to help it think
+                "seed": 42  # <-- Add a random seed to force a fresh run
             }
         }
 
@@ -122,20 +150,25 @@ class ExtractionService:
             if not raw_json_string:
                 return {}
 
-            # MARKDOWN STRIPPING
-            if raw_json_string.startswith("```json"):
-                raw_json_string = raw_json_string[7:]
-            elif raw_json_string.startswith("```"):
-                raw_json_string = raw_json_string[3:]
+            # 1. TEMPORARY DEBUG: Let's see exactly what Qwen is doing
+            print("\n" + "*" * 40)
+            print("RAW LLM OUTPUT:")
+            print(raw_json_string)
+            print("*" * 40 + "\n")
 
-            if raw_json_string.endswith("```"):
-                raw_json_string = raw_json_string[:-3]
-
-            raw_json_string = raw_json_string.strip()
-
+            # 2. SMARTER JSON EXTRACTION (Regex)
+            # This looks for the very first '{' and the very last '}'
+            # and ignores all conversational text outside of them.
             try:
-                return json.loads(raw_json_string)
-            except json.JSONDecodeError:
+                match = re.search(r'\{.*\}', raw_json_string, re.DOTALL)
+                if match:
+                    clean_json = match.group(0)
+                    return json.loads(clean_json)
+                else:
+                    logger.error("No JSON brackets found in the LLM output.")
+                    return {}
+            except json.JSONDecodeError as e:
+                logger.error(f"Failed to parse LLM JSON: {e}")
                 return {}
 
 #--------------------------------------------------------------------------

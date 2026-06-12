@@ -17,11 +17,9 @@ async def run_mock_tests():
         print("Add mock .txt files.")
         return
 
-    # 1. Initialize your service
     service = ExtractionService()
     print(f"Starting Extraction Tests with {service.model_name} (via Ollama)...\n")
 
-    # 2. Loop through all .txt files in the mock directory
     for filename in os.listdir(mock_dir):
         if filename.endswith(".txt"):
             filepath = os.path.join(mock_dir, filename)
@@ -36,13 +34,11 @@ async def run_mock_tests():
 
             print(f"Processing: {filename}")
 
-            # --- REMOVED TRY/EXCEPT. LET IT CRASH! ---
             result = await service.extract(
                 document_id=filename.replace(".txt", ""),
                 ocr_text=ocr_text
             )
 
-            # 4. Format the output based on your ExtractionResult schema
             output = {
                 "document_id": result.document_id,
                 "status": result.status.value if hasattr(result.status, 'value') else result.status,
@@ -50,11 +46,9 @@ async def run_mock_tests():
                 "data": result.data
             }
 
-            # Print the nicely formatted Japanese-compatible JSON
             print(json.dumps(output, indent=2, ensure_ascii=False))
             print("-" * 50 + "\n")
 
 
 if __name__ == "__main__":
-    # Because your module uses async/await, we must run it via asyncio
     asyncio.run(run_mock_tests())
