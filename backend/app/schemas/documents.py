@@ -26,6 +26,15 @@ class UploadResponse(BaseModel):
     status: DocumentStatus = DocumentStatus.uploaded
 
 
+class DocumentSummary(BaseModel):
+    document_id: str
+    filename: str
+    content_type: str | None = None
+    uploaded_at: str
+    document_type: Literal["invoice", "contract", "form", "unknown"] = "unknown"
+    status: DocumentStatus = DocumentStatus.uploaded
+
+
 class OcrRequest(BaseModel):
     document_id: str = Field(..., examples=["doc_invoice_001"])
     language: str = Field(default="ja", examples=["ja"])

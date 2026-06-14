@@ -1,0 +1,7624 @@
+[
+  {
+    "document_id": "doc_01",
+    "file": "doc_01.pdf",
+    "text": "(19）日本国特許庁(JP)\n再公表特許(A1)\n（11）国际公開番号\nW02008/015779\n発行日\n平成21年12月17日（2009.12.17）\n（43）国際公開日\n平成20年2月7日（2008.2.7)\n(51) Int.C1.\nF1\nマド(参考）\nHO1M\n4/62\n(2006.01)\nHO1M\n4/62\nZ\n5HO50\n審查請求未請求\n予備審查請求有\n（全16頁）\n出题番号\n特2008-527650（P2008-527650）\n(71)出题人\n000006644\n(21)国际出题番号\nPCT/JP2007/000806\n新日化学株式会社\n(22）国际出题日\n平成19年7月30日（2007.7.30）\n東京都千代田区外神田四丁目14番1号\n（31)優先權主張番号\n特2006-210803（P2006-210803）\n(71）出题人\n595008928\n(32)優先日\n平成18年8月2日（2006.8.2）\n落合常巳\n(33)優先権主張国\n日本国（JP）\n大阪府高槻市东上牧2-3-6\n（74）代理人\n100112771\n弁理士内田勝\n(72)発明者\n瓦田贵之\n福岡鼎北九州市户烟区大字中原先の滨46\n番地の80新日鐵化学株式会社総合研\n究所内\n最終頁にく\n（54）【発明名称】電池用炭素贸導電材お電池\n0.10\n0.08\n0.06\n施例1\n(\n尖\n0.04\n比数例\n0.02\n0.00\n-0.02\n2.5\n3.0\n3.5\n電压（V)\n4.0\n4.5\n5.0\n5.5\nAA CUMENT(m)\nte vo.tn on\nOCEXPUE1\nDO EXAIPURE",
+    "blocks": [
+      {
+        "text": "(19）日本国特許庁(JP)",
+        "confidence": 0.8254,
+        "bbox": [
+          196.5,
+          255.0,
+          446.8,
+          287.7
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "再公表特許(A1)",
+        "confidence": 0.9112,
+        "bbox": [
+          652.7,
+          243.3,
+          991.9,
+          290.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "（11）国际公開番号",
+        "confidence": 0.8673,
+        "bbox": [
+          1155.7,
+          255.0,
+          1352.2,
+          285.4
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "W02008/015779",
+        "confidence": 0.9744,
+        "bbox": [
+          1256.3,
+          292.4,
+          1459.8,
+          325.1
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "発行日",
+        "confidence": 0.9852,
+        "bbox": [
+          189.5,
+          364.9,
+          273.7,
+          397.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "平成21年12月17日（2009.12.17）",
+        "confidence": 0.9636,
+        "bbox": [
+          290.1,
+          362.5,
+          641.0,
+          393.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "（43）国際公開日",
+        "confidence": 0.8044,
+        "bbox": [
+          961.5,
+          367.2,
+          1130.0,
+          393.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "平成20年2月7日（2008.2.7)",
+        "confidence": 0.9269,
+        "bbox": [
+          1151.0,
+          362.5,
+          1457.5,
+          395.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(51) Int.C1.",
+        "confidence": 0.8278,
+        "bbox": [
+          191.8,
+          421.0,
+          329.9,
+          463.1
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "F1",
+        "confidence": 0.9574,
+        "bbox": [
+          673.8,
+          423.4,
+          727.6,
+          463.1
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "マド(参考）",
+        "confidence": 0.7234,
+        "bbox": [
+          1160.4,
+          425.7,
+          1394.3,
+          458.4
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "HO1M",
+        "confidence": 0.9824,
+        "bbox": [
+          229.3,
+          463.1,
+          339.2,
+          495.9
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "4/62",
+        "confidence": 0.9973,
+        "bbox": [
+          357.9,
+          465.5,
+          423.4,
+          495.9
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(2006.01)",
+        "confidence": 0.9385,
+        "bbox": [
+          474.9,
+          463.1,
+          584.9,
+          498.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "HO1M",
+        "confidence": 0.9656,
+        "bbox": [
+          713.5,
+          463.1,
+          816.5,
+          495.9
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "4/62",
+        "confidence": 0.9929,
+        "bbox": [
+          844.5,
+          465.5,
+          903.0,
+          493.5
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "Z",
+        "confidence": 0.9146,
+        "bbox": [
+          1017.7,
+          463.1,
+          1048.1,
+          495.9
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "5HO50",
+        "confidence": 0.9193,
+        "bbox": [
+          1162.7,
+          463.1,
+          1286.7,
+          495.9
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "審查請求未請求",
+        "confidence": 0.9048,
+        "bbox": [
+          898.4,
+          633.9,
+          1085.5,
+          666.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "予備審查請求有",
+        "confidence": 0.8763,
+        "bbox": [
+          1097.2,
+          633.9,
+          1289.0,
+          666.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "（全16頁）",
+        "confidence": 0.8544,
+        "bbox": [
+          1321.8,
+          633.9,
+          1445.8,
+          666.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "出题番号",
+        "confidence": 0.8407,
+        "bbox": [
+          241.0,
+          692.3,
+          348.6,
+          725.1
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "特2008-527650（P2008-527650）",
+        "confidence": 0.9733,
+        "bbox": [
+          439.8,
+          694.7,
+          797.8,
+          725.1
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(71)出题人",
+        "confidence": 0.7883,
+        "bbox": [
+          830.5,
+          694.7,
+          956.8,
+          727.4
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "000006644",
+        "confidence": 0.9975,
+        "bbox": [
+          968.5,
+          697.0,
+          1085.5,
+          722.8
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(21)国际出题番号",
+        "confidence": 0.852,
+        "bbox": [
+          194.2,
+          725.1,
+          393.0,
+          760.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "PCT/JP2007/000806",
+        "confidence": 0.9766,
+        "bbox": [
+          439.8,
+          727.4,
+          657.4,
+          760.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "新日化学株式会社",
+        "confidence": 0.9864,
+        "bbox": [
+          970.9,
+          727.4,
+          1197.8,
+          760.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(22）国际出题日",
+        "confidence": 0.7493,
+        "bbox": [
+          196.5,
+          764.9,
+          369.6,
+          797.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "平成19年7月30日（2007.7.30）",
+        "confidence": 0.9498,
+        "bbox": [
+          439.8,
+          764.9,
+          760.3,
+          795.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "東京都千代田区外神田四丁目14番1号",
+        "confidence": 0.9692,
+        "bbox": [
+          970.9,
+          764.9,
+          1422.4,
+          795.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "（31)優先權主張番号",
+        "confidence": 0.7851,
+        "bbox": [
+          196.5,
+          799.9,
+          423.4,
+          830.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "特2006-210803（P2006-210803）",
+        "confidence": 0.9484,
+        "bbox": [
+          439.8,
+          799.9,
+          797.8,
+          830.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(71）出题人",
+        "confidence": 0.7769,
+        "bbox": [
+          830.5,
+          802.3,
+          952.2,
+          828.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "595008928",
+        "confidence": 0.9985,
+        "bbox": [
+          968.5,
+          795.3,
+          1090.2,
+          828.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(32)優先日",
+        "confidence": 0.8336,
+        "bbox": [
+          191.8,
+          828.0,
+          320.5,
+          865.4
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "平成18年8月2日（2006.8.2）",
+        "confidence": 0.9548,
+        "bbox": [
+          439.8,
+          832.7,
+          736.9,
+          863.1
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "落合常巳",
+        "confidence": 0.7622,
+        "bbox": [
+          973.2,
+          835.0,
+          1099.5,
+          860.8
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(33)優先権主張国",
+        "confidence": 0.8167,
+        "bbox": [
+          196.5,
+          867.8,
+          395.4,
+          900.5
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "日本国（JP）",
+        "confidence": 0.9101,
+        "bbox": [
+          439.8,
+          867.8,
+          563.8,
+          900.5
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "大阪府高槻市东上牧2-3-6",
+        "confidence": 0.8458,
+        "bbox": [
+          970.9,
+          867.8,
+          1319.5,
+          898.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "（74）代理人",
+        "confidence": 0.8771,
+        "bbox": [
+          830.5,
+          900.5,
+          954.5,
+          933.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "100112771",
+        "confidence": 0.9975,
+        "bbox": [
+          970.9,
+          902.9,
+          1085.5,
+          928.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "弁理士内田勝",
+        "confidence": 0.8575,
+        "bbox": [
+          970.9,
+          935.6,
+          1174.4,
+          966.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(72)発明者",
+        "confidence": 0.9136,
+        "bbox": [
+          830.5,
+          968.3,
+          954.5,
+          1001.1
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "瓦田贵之",
+        "confidence": 0.8895,
+        "bbox": [
+          966.2,
+          968.3,
+          1101.9,
+          1001.1
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "福岡鼎北九州市户烟区大字中原先の滨46",
+        "confidence": 0.8919,
+        "bbox": [
+          970.9,
+          1003.4,
+          1445.8,
+          1036.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "番地の80新日鐵化学株式会社総合研",
+        "confidence": 0.8538,
+        "bbox": [
+          970.9,
+          1040.9,
+          1448.1,
+          1071.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "究所内",
+        "confidence": 0.9985,
+        "bbox": [
+          968.5,
+          1073.6,
+          1052.8,
+          1108.7
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "最終頁にく",
+        "confidence": 0.7699,
+        "bbox": [
+          1263.3,
+          1204.6,
+          1420.1,
+          1244.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "（54）【発明名称】電池用炭素贸導電材お電池",
+        "confidence": 0.8673,
+        "bbox": [
+          198.9,
+          1265.4,
+          753.3,
+          1295.8
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "0.10",
+        "confidence": 0.9952,
+        "bbox": [
+          912.4,
+          1391.7,
+          954.5,
+          1417.4
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "0.08",
+        "confidence": 0.9822,
+        "bbox": [
+          912.4,
+          1426.8,
+          954.5,
+          1452.5
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "0.06",
+        "confidence": 0.9893,
+        "bbox": [
+          912.4,
+          1461.9,
+          954.5,
+          1487.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "施例1",
+        "confidence": 0.9156,
+        "bbox": [
+          1127.6,
+          1440.8,
+          1214.2,
+          1466.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(",
+        "confidence": 0.3419,
+        "bbox": [
+          882.0,
+          1468.9,
+          907.7,
+          1560.1
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "尖",
+        "confidence": 0.2438,
+        "bbox": [
+          1087.9,
+          1468.9,
+          1181.4,
+          1506.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "0.04",
+        "confidence": 0.982,
+        "bbox": [
+          912.4,
+          1494.6,
+          954.5,
+          1520.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "比数例",
+        "confidence": 0.7211,
+        "bbox": [
+          1029.4,
+          1506.3,
+          1111.2,
+          1532.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "0.02",
+        "confidence": 0.9706,
+        "bbox": [
+          912.4,
+          1529.7,
+          954.5,
+          1555.4
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "0.00",
+        "confidence": 0.9963,
+        "bbox": [
+          912.4,
+          1564.8,
+          954.5,
+          1590.5
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "-0.02",
+        "confidence": 0.968,
+        "bbox": [
+          905.4,
+          1597.5,
+          954.5,
+          1625.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "2.5",
+        "confidence": 0.997,
+        "bbox": [
+          949.8,
+          1625.6,
+          977.9,
+          1646.7
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "3.0",
+        "confidence": 0.9728,
+        "bbox": [
+          1015.3,
+          1620.9,
+          1050.4,
+          1649.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "3.5",
+        "confidence": 0.9943,
+        "bbox": [
+          1085.5,
+          1620.9,
+          1118.3,
+          1649.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "電压（V)",
+        "confidence": 0.5829,
+        "bbox": [
+          1137.0,
+          1642.0,
+          1209.5,
+          1674.7
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "4.0",
+        "confidence": 0.99,
+        "bbox": [
+          1153.4,
+          1620.9,
+          1186.1,
+          1649.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "4.5",
+        "confidence": 0.9966,
+        "bbox": [
+          1225.9,
+          1625.6,
+          1254.0,
+          1646.7
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "5.0",
+        "confidence": 0.9955,
+        "bbox": [
+          1291.4,
+          1620.9,
+          1326.5,
+          1649.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "5.5",
+        "confidence": 0.9946,
+        "bbox": [
+          1359.2,
+          1620.9,
+          1396.7,
+          1649.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "AA CUMENT(m)",
+        "confidence": 0.5348,
+        "bbox": [
+          903.0,
+          1674.7,
+          1008.3,
+          1698.1
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "te vo.tn on",
+        "confidence": 0.4722,
+        "bbox": [
+          903.0,
+          1691.1,
+          999.0,
+          1714.5
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "OCEXPUE1",
+        "confidence": 0.5674,
+        "bbox": [
+          903.0,
+          1705.1,
+          991.9,
+          1728.5
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "DO EXAIPURE",
+        "confidence": 0.5457,
+        "bbox": [
+          907.7,
+          1726.2,
+          989.6,
+          1742.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      }
+    ],
+    "confidence": 0.8715,
+    "status": "ocr_completed",
+    "elapsed_seconds": 72.55,
+    "pages": 3
+  },
+  {
+    "document_id": "doc_02",
+    "file": "doc_02.pdf",
+    "text": "III\n3\n0000000000\n\neeg eeped\n\n顧客第一の信念にし、社業を通じて社会の進歩に貢献する\n誠実を旨とし、和重んじ公私の別明にする\n世界的視野に立ち、経営の革新と技術の開発に努める\nSustainability &\nHR Strategies\n長い歴史の中で培われた技術に最先端の知見を取り入れ、変化する社会課題の解決に挑み、人の豊暮らしを実現する\n1970年6月1日制定\n\n-\n\n社是\n-\nGovernance\nμ\n5\n\nBusiness Strategies\nSpecial Feature\nミツション\n事業通じ、物心共豊社会の実現に努力す\nと同時に、かけがえのい地球環境維持も貢献\nMessages from\n三菱第四代社長である岩崎小太によつて制定された三菱グル一プの経営理念です。\n公明正大品格のあ行動旨、活動公開性、\nManagement\n全世界的、宇宙的視野立脚し事業展開図る。\n三菱の歴史の中で、連綿引き継がれてきた精神表ものです。\nOverview\n盆\n透明性を堅持する。\n期奉公\n三\n废事光明\n2\nSREE LIESEEHINEGE SETNATNAAHSISE\n立業貿易\n谈\n\n2\n\nSCnCRCG\nccn\nじこうめい\n経営理念\n所期奉公\n処事光明\n立業貿易\nIII\n4\n\n\n\n\n会に向けて貢献しいます。2021年には、力一\n二-卜宣言MISSIONNETZERO発表し\n\nカタールで全自動無人運転都市\n铁道ド八X行同始\nPerformance Data\n持続可能な社会の実現に貢献\n2019\n三菱自動車工業\n株式会社\n970\n卜（原油增取用）完成\nSustainability &\n三菱重工業株式会社\nHR Strategies\n米国で世界最大級CO回収\n三菱重エグ一は、エン二アリグとものづ<りのグロ一バルリ一ダ一と、1884年の創立以来、社会課題に真撃に向き合い、人々の暮らしを支えきした。\n2000年\nました。\n合併\n1964\n2016\n三菱日本重工業\nI\nCovernance\n1964年、分割され3社が再度合併し、新生·三菱\n重工業が発足。急増する電力需要や旺盛民間設備\n投資対応し、高度经済成長支。の後、\n深刻造船不況見舞わ当社は、発電設備航\n空機等の成長分野に注力するとともに、海外に活路\nを求め事業のグ口一パ化を推進まし。ま\nた、宇宙開発に代表され高度技術力時代切\n株式会社\n1952\n新三菱重工業\n世界最高効率の形ガスタピ\nが実運転で世界最高の夕ービ\n株式会社\n入口温度1.600℃成\n東日本重工\n1952\n三重工合併よ、大規模開発事業\n056\n\n不\n三\n开\nseifenr ssesng\n中日本重工業\n1952\n株式会社\n2011\n950\n西日本重工業\n1964-1999年\n式会社\n1950\nり拓きました。\n三菱工票\n株式会社\nH-卜初号\nSpecial Feature\n1934\n1986\n打上げ成功\n長い歴史の中で培われた高い技術力に最先端の知見を取り入れ、人々の豊かな暮らしを実現します。\n戦後はさま民生品の開発・製造軸足移\n、日本の復興支ま。1950年、GHQ財閥\n解体方針よ3社分割さ、製品規模\nに拡大·多様化し、技術競争力高めま。後の\n重厚長大産業のリーデイグカパニー成長す\n三菱航空機\n株式会社\n1928\n三菱電機株式会社\nMessages frem\nPWR原子力発電ブラト\nManagement\n三菱内燃\n式会社\n関西電力美浜1号機\n1921\n1921\n戦後復興を支える民生品の世界へ\n©\n0461\n\n三\n\n\n2061\n\ne\n1590-1470\n\n4161\n三菱合会社\n船部\nニッポン世界一周\n三菱合资会社\n1907\n親飛行成功\n1893\n1939\n1886\n三菱社\n1884年、創業者であ岩崎彌太郎が明治政府から\n長崎造船局借り受け事業開始。日本初の鉄製\n汽船をはじめとする技術力を活して夕一ビ、内\n燃機、航空機、自動車等のさ機械分野進\n出し、事業の多角化進めま。不安世界情勢\nの下、当時最先端の技術は軍需でも活用される時代\nMITSUBISHIHEAVYINDUSTRIESGROUPIMHIREPORT2O25\n日本の気夕ピ製作\n造船業をベース輸送製造\n1884\n長崎造船所\n创立\n部便汽船三藏会社\n三菱汽舱会社\n1908\n1875\n三菱商会\n1884-1945年\n1873\n遗船史残1万卜卷\n超え日本初の大型客船\n沿革\n1870\n三菱の起源\n九十九商会\n岩崎强太郎\n天洋丸建造\nでした。\n初代社長\n创案\n1908\nIII\n5\neeg ered\n Aqeueisns\nAS S\n2--422\n三菱重工環境·化学エグ(株)\n物流·冷熱·ドド\n三菱重工ヤヤ(株)\nPrimetals Technoloqies, Limited\nGovernance\n三菱重エマム(株)\n三菱重工航空工(株)\n三菱重エコサ(株)\n三菱重工ママシ(株）\nラト・イ\n機械システメ\n三菱重工機械テ(株)\n社内組織主要子会社\n社内組織主要子会社\n社内組織主要子会社\n三菱ト(株)\n社内組織と主要子会社\n防衛·宇宙グメ\n• MHI RJ Aviation Ic.\nエナヅードメイ\n原子カ\n民間機セグメント\nBusiness Strategies\nGXグメン\n三菱造船(株)\n·火力発電ステ\n原子力発電\nSpecial Feature\nエソニアリグ\n・\n特殊機械（魚雷）\n航空エジ\nレサ\n機械\nカーエアコン\n·舶用機械\n·冷熱製品\n民間航空機\n防衛航空機\n製鉄機械\n·環境設備\nCO回收\n·物流機器\n飛しよう体\n·エンジ\n·特殊車両\n主事業\n主事業\n主な事業\n·宇宙機器\n主な事業\n·商船\n艦艇\nMessages from\nManagement\nエナジー\nプラント・\nイソフラ\n物流·冷熱·\nドライブ\nシステム\n航空·防衛·\n宇宙\nOverview\n三菱重工グ一は、3つの事業ドメイおよ5つのグメ\n置き、事業を管理しいます。この事業ドメイおよびセグメ卜そ\nれれの客および製品特性の類似性等を踏まえ集約し、エ\nーブト・イ「物流・冷熱・ドテム」およ\n36.1%\nセグ卜別売上収益構成比(2024年度)\nエナヅー\n「航空·防衛·宇宙」の4つ報告メトしいます。\nプラト・イソフラ\n17.0%\nMITSUBISHIHEAVYINDUSTRIESGROUPIMHI REPORT2O25\n50,271\n壳上収益\n億円\nグループ概要\n航空·防衛·宇宙\n20.5%\n物流·冷热·\nドライブシステム\n26.0%",
+    "blocks": [
+      {
+        "text": "III",
+        "confidence": 0.8353,
+        "bbox": [
+          105.6,
+          24.2,
+          136.4,
+          59.4
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "3",
+        "confidence": 0.8757,
+        "bbox": [
+          110.0,
+          81.4,
+          134.2,
+          103.4
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "0000000000",
+        "confidence": 0.3598,
+        "bbox": [
+          376.1,
+          96.8,
+          404.7,
+          288.2
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          706.0,
+          112.2,
+          736.7,
+          1049.4
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "eeg eeped",
+        "confidence": 0.3885,
+        "bbox": [
+          112.2,
+          193.6,
+          134.2,
+          321.2
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          657.6,
+          220.0,
+          697.2,
+          939.4
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "顧客第一の信念にし、社業を通じて社会の進歩に貢献する",
+        "confidence": 0.8898,
+        "bbox": [
+          1273.4,
+          202.4,
+          1304.1,
+          897.6
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "誠実を旨とし、和重んじ公私の別明にする",
+        "confidence": 0.8645,
+        "bbox": [
+          1332.7,
+          277.2,
+          1363.5,
+          897.6
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "世界的視野に立ち、経営の革新と技術の開発に努める",
+        "confidence": 0.8989,
+        "bbox": [
+          1392.1,
+          277.2,
+          1420.7,
+          897.6
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "Sustainability &",
+        "confidence": 0.9367,
+        "bbox": [
+          96.8,
+          398.2,
+          118.8,
+          510.4
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "HR Strategies",
+        "confidence": 0.9417,
+        "bbox": [
+          118.8,
+          404.8,
+          142.9,
+          503.8
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "長い歴史の中で培われた技術に最先端の知見を取り入れ、変化する社会課題の解決に挑み、人の豊暮らしを実現する",
+        "confidence": 0.8301,
+        "bbox": [
+          426.6,
+          391.6,
+          457.4,
+          1804.0
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "1970年6月1日制定",
+        "confidence": 0.9983,
+        "bbox": [
+          769.7,
+          387.2,
+          800.5,
+          550.0
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          890.7,
+          402.6,
+          1002.8,
+          455.4
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "-",
+        "confidence": 0.3434,
+        "bbox": [
+          826.9,
+          484.0,
+          1183.2,
+          514.8
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          846.7,
+          510.4,
+          1071.0,
+          552.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "社是",
+        "confidence": 0.9995,
+        "bbox": [
+          582.8,
+          539.0,
+          626.8,
+          620.4
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "-",
+        "confidence": 0.3477,
+        "bbox": [
+          826.9,
+          585.2,
+          1183.2,
+          616.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "Governance",
+        "confidence": 0.9292,
+        "bbox": [
+          112.2,
+          607.2,
+          134.2,
+          695.2
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "μ",
+        "confidence": 0.2142,
+        "bbox": [
+          848.9,
+          616.0,
+          1038.0,
+          646.8
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "5",
+        "confidence": 0.2555,
+        "bbox": [
+          826.9,
+          673.2,
+          1181.0,
+          712.8
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          844.5,
+          706.2,
+          1044.6,
+          750.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "Business Strategies",
+        "confidence": 0.9571,
+        "bbox": [
+          112.2,
+          776.6,
+          134.2,
+          917.4
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "Special Feature",
+        "confidence": 0.9713,
+        "bbox": [
+          112.2,
+          987.8,
+          134.2,
+          1097.8
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "ミツション",
+        "confidence": 0.7383,
+        "bbox": [
+          321.1,
+          1023.0,
+          360.7,
+          1174.8
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "事業通じ、物心共豊社会の実現に努力す",
+        "confidence": 0.8812,
+        "bbox": [
+          1082.0,
+          1157.2,
+          1112.8,
+          1645.6
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "と同時に、かけがえのい地球環境維持も貢献",
+        "confidence": 0.8116,
+        "bbox": [
+          1117.2,
+          1157.2,
+          1148.0,
+          1643.4
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "Messages from",
+        "confidence": 0.9199,
+        "bbox": [
+          96.8,
+          1181.4,
+          121.0,
+          1293.6
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "三菱第四代社長である岩崎小太によつて制定された三菱グル一プの経営理念です。",
+        "confidence": 0.9324,
+        "bbox": [
+          657.6,
+          1179.2,
+          697.2,
+          2052.6
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "公明正大品格のあ行動旨、活動公開性、",
+        "confidence": 0.8978,
+        "bbox": [
+          1258.0,
+          1161.6,
+          1286.5,
+          1643.4
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "Management",
+        "confidence": 0.9183,
+        "bbox": [
+          116.6,
+          1185.8,
+          147.3,
+          1287.0
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "全世界的、宇宙的視野立脚し事業展開図る。",
+        "confidence": 0.8651,
+        "bbox": [
+          1411.9,
+          1179.2,
+          1442.7,
+          1643.4
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "三菱の歴史の中で、連綿引き継がれてきた精神表ものです。",
+        "confidence": 0.7885,
+        "bbox": [
+          701.6,
+          1258.4,
+          741.1,
+          1977.8
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "Overview",
+        "confidence": 0.9918,
+        "bbox": [
+          112.2,
+          1399.2,
+          134.2,
+          1467.4
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "盆",
+        "confidence": 0.2214,
+        "bbox": [
+          833.5,
+          1443.2,
+          941.3,
+          1504.8
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "透明性を堅持する。",
+        "confidence": 0.8745,
+        "bbox": [
+          1288.7,
+          1460.8,
+          1323.9,
+          1643.4
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "期奉公",
+        "confidence": 0.9968,
+        "bbox": [
+          807.1,
+          1518.0,
+          978.7,
+          1581.8
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "三",
+        "confidence": 0.6426,
+        "bbox": [
+          582.8,
+          1566.4,
+          624.6,
+          1667.6
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "废事光明",
+        "confidence": 0.7846,
+        "bbox": [
+          804.9,
+          1584.0,
+          983.1,
+          1652.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "2",
+        "confidence": 0.6568,
+        "bbox": [
+          1154.6,
+          1588.4,
+          1187.6,
+          1645.6
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "SREE LIESEEHINEGE SETNATNAAHSISE",
+        "confidence": 0.1997,
+        "bbox": [
+          110.0,
+          1667.6,
+          132.0,
+          2114.2
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "立業貿易",
+        "confidence": 0.9535,
+        "bbox": [
+          807.1,
+          1663.2,
+          985.3,
+          1722.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "谈",
+        "confidence": 0.6186,
+        "bbox": [
+          859.9,
+          1742.4,
+          983.1,
+          1799.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          1145.8,
+          1733.6,
+          1183.2,
+          2076.8
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "2",
+        "confidence": 0.5875,
+        "bbox": [
+          1440.5,
+          1757.8,
+          1477.9,
+          2074.6
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          1299.7,
+          1795.2,
+          1337.1,
+          2076.8
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "SCnCRCG",
+        "confidence": 0.4954,
+        "bbox": [
+          1387.7,
+          1797.4,
+          1411.9,
+          1933.8
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "ccn",
+        "confidence": 0.3502,
+        "bbox": [
+          1093.0,
+          1828.2,
+          1117.2,
+          1936.0
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "じこうめい",
+        "confidence": 0.717,
+        "bbox": [
+          1249.2,
+          1826.0,
+          1273.4,
+          1933.8
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "経営理念",
+        "confidence": 0.9942,
+        "bbox": [
+          215.5,
+          1955.8,
+          261.7,
+          2114.2
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "所期奉公",
+        "confidence": 0.9998,
+        "bbox": [
+          1084.2,
+          1938.2,
+          1121.6,
+          2074.6
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "処事光明",
+        "confidence": 0.9661,
+        "bbox": [
+          1240.4,
+          1940.4,
+          1279.9,
+          2074.6
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "立業貿易",
+        "confidence": 0.9816,
+        "bbox": [
+          1378.9,
+          1944.8,
+          1418.5,
+          2074.6
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "III",
+        "confidence": 0.8353,
+        "bbox": [
+          105.6,
+          24.2,
+          136.4,
+          59.4
+        ],
+        "orientation": "horizontal",
+        "page": 2
+      },
+      {
+        "text": "4",
+        "confidence": 0.99,
+        "bbox": [
+          110.0,
+          81.4,
+          134.2,
+          103.4
+        ],
+        "orientation": "horizontal",
+        "page": 2
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          514.6,
+          81.4,
+          549.8,
+          558.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          556.4,
+          83.6,
+          587.2,
+          558.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          591.6,
+          83.6,
+          622.4,
+          561.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          629.0,
+          83.6,
+          659.8,
+          561.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "会に向けて貢献しいます。2021年には、力一",
+        "confidence": 0.8225,
+        "bbox": [
+          666.4,
+          85.8,
+          695.0,
+          561.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "二-卜宣言MISSIONNETZERO発表し",
+        "confidence": 0.8636,
+        "bbox": [
+          703.8,
+          85.8,
+          732.3,
+          561.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          1216.2,
+          66.0,
+          1411.9,
+          1117.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "カタールで全自動無人運転都市",
+        "confidence": 0.9235,
+        "bbox": [
+          1420.7,
+          94.6,
+          1449.3,
+          321.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "铁道ド八X行同始",
+        "confidence": 0.5874,
+        "bbox": [
+          1447.1,
+          101.2,
+          1469.1,
+          321.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "Performance Data",
+        "confidence": 0.9676,
+        "bbox": [
+          112.2,
+          193.6,
+          134.2,
+          321.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "持続可能な社会の実現に貢献",
+        "confidence": 0.8968,
+        "bbox": [
+          481.6,
+          268.4,
+          512.4,
+          561.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "2019",
+        "confidence": 0.9995,
+        "bbox": [
+          1392.1,
+          253.0,
+          1425.1,
+          321.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三菱自動車工業",
+        "confidence": 0.7496,
+        "bbox": [
+          910.5,
+          281.6,
+          934.7,
+          393.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "株式会社",
+        "confidence": 0.9307,
+        "bbox": [
+          932.5,
+          323.4,
+          954.5,
+          393.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "970",
+        "confidence": 0.9956,
+        "bbox": [
+          892.9,
+          349.8,
+          910.5,
+          391.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "卜（原油增取用）完成",
+        "confidence": 0.767,
+        "bbox": [
+          1447.1,
+          356.4,
+          1469.1,
+          578.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "Sustainability &",
+        "confidence": 0.9367,
+        "bbox": [
+          96.8,
+          398.2,
+          118.8,
+          510.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三菱重工業株式会社",
+        "confidence": 0.9537,
+        "bbox": [
+          1112.8,
+          378.4,
+          1141.4,
+          578.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "HR Strategies",
+        "confidence": 0.8315,
+        "bbox": [
+          116.6,
+          402.6,
+          147.3,
+          503.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "米国で世界最大級CO回収",
+        "confidence": 0.8021,
+        "bbox": [
+          1420.7,
+          382.8,
+          1449.3,
+          578.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三菱重エグ一は、エン二アリグとものづ<りのグロ一バルリ一ダ一と、1884年の創立以来、社会課題に真撃に向き合い、人々の暮らしを支えきした。",
+        "confidence": 0.8248,
+        "bbox": [
+          305.7,
+          451.0,
+          347.5,
+          2114.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "2000年",
+        "confidence": 0.9995,
+        "bbox": [
+          435.4,
+          455.4,
+          475.0,
+          558.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "ました。",
+        "confidence": 0.7998,
+        "bbox": [
+          738.9,
+          488.4,
+          769.7,
+          561.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "合併",
+        "confidence": 0.8091,
+        "bbox": [
+          1000.6,
+          506.0,
+          1033.6,
+          563.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1964",
+        "confidence": 0.9994,
+        "bbox": [
+          1073.2,
+          495.0,
+          1115.0,
+          578.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "2016",
+        "confidence": 0.9997,
+        "bbox": [
+          1394.3,
+          512.6,
+          1425.1,
+          578.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三菱日本重工業",
+        "confidence": 0.9078,
+        "bbox": [
+          870.9,
+          550.0,
+          895.1,
+          662.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "I",
+        "confidence": 0.1162,
+        "bbox": [
+          1013.8,
+          556.6,
+          1024.8,
+          569.8
+        ],
+        "orientation": "horizontal",
+        "page": 2
+      },
+      {
+        "text": "Covernance",
+        "confidence": 0.8969,
+        "bbox": [
+          110.0,
+          607.2,
+          134.2,
+          697.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1964年、分割され3社が再度合併し、新生·三菱",
+        "confidence": 0.8809,
+        "bbox": [
+          521.2,
+          600.6,
+          549.8,
+          1073.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "重工業が発足。急増する電力需要や旺盛民間設備",
+        "confidence": 0.8966,
+        "bbox": [
+          556.4,
+          600.6,
+          585.0,
+          1075.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "投資対応し、高度经済成長支。の後、",
+        "confidence": 0.824,
+        "bbox": [
+          591.6,
+          607.2,
+          622.4,
+          1078.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "深刻造船不況見舞わ当社は、発電設備航",
+        "confidence": 0.8998,
+        "bbox": [
+          629.0,
+          600.6,
+          659.8,
+          1078.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "空機等の成長分野に注力するとともに、海外に活路",
+        "confidence": 0.8562,
+        "bbox": [
+          666.4,
+          600.6,
+          695.0,
+          1078.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "を求め事業のグ口一パ化を推進まし。ま",
+        "confidence": 0.7565,
+        "bbox": [
+          701.6,
+          600.6,
+          732.3,
+          1078.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "た、宇宙開発に代表され高度技術力時代切",
+        "confidence": 0.865,
+        "bbox": [
+          738.9,
+          600.6,
+          769.7,
+          1075.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "株式会社",
+        "confidence": 0.8913,
+        "bbox": [
+          892.9,
+          591.8,
+          914.9,
+          664.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1952",
+        "confidence": 0.9455,
+        "bbox": [
+          855.5,
+          616.0,
+          873.1,
+          660.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "新三菱重工業",
+        "confidence": 0.8833,
+        "bbox": [
+          1108.4,
+          613.8,
+          1130.4,
+          717.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "世界最高効率の形ガスタピ",
+        "confidence": 0.8088,
+        "bbox": [
+          1420.7,
+          600.6,
+          1449.3,
+          833.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "が実運転で世界最高の夕ービ",
+        "confidence": 0.7926,
+        "bbox": [
+          1447.1,
+          609.4,
+          1469.1,
+          833.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "株式会社",
+        "confidence": 0.9846,
+        "bbox": [
+          1130.4,
+          644.6,
+          1152.4,
+          717.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "入口温度1.600℃成",
+        "confidence": 0.9141,
+        "bbox": [
+          1471.3,
+          644.6,
+          1493.3,
+          833.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "東日本重工",
+        "confidence": 0.8457,
+        "bbox": [
+          864.3,
+          666.6,
+          895.1,
+          770.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1952",
+        "confidence": 0.9882,
+        "bbox": [
+          1090.8,
+          666.6,
+          1108.4,
+          715.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三重工合併よ、大規模開発事業",
+        "confidence": 0.9327,
+        "bbox": [
+          475.0,
+          704.0,
+          516.8,
+          1078.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "056",
+        "confidence": 0.9811,
+        "bbox": [
+          853.3,
+          721.6,
+          870.9,
+          767.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          892.9,
+          701.8,
+          914.9,
+          770.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "不",
+        "confidence": 0.3415,
+        "bbox": [
+          1000.6,
+          748.0,
+          1031.4,
+          818.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三",
+        "confidence": 0.8101,
+        "bbox": [
+          1108.4,
+          737.0,
+          1130.4,
+          807.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "开",
+        "confidence": 0.1726,
+        "bbox": [
+          1130.4,
+          737.0,
+          1152.4,
+          809.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "seifenr ssesng",
+        "confidence": 0.3368,
+        "bbox": [
+          112.2,
+          776.6,
+          134.2,
+          915.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "中日本重工業",
+        "confidence": 0.9064,
+        "bbox": [
+          917.1,
+          763.4,
+          941.3,
+          862.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1952",
+        "confidence": 0.9861,
+        "bbox": [
+          1090.8,
+          759.0,
+          1108.4,
+          805.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "株式会社",
+        "confidence": 0.9897,
+        "bbox": [
+          939.1,
+          789.8,
+          963.3,
+          862.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "2011",
+        "confidence": 0.9991,
+        "bbox": [
+          1394.3,
+          774.4,
+          1422.9,
+          836.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "950",
+        "confidence": 0.9968,
+        "bbox": [
+          899.5,
+          816.2,
+          917.1,
+          858.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "西日本重工業",
+        "confidence": 0.9267,
+        "bbox": [
+          1108.4,
+          825.0,
+          1130.4,
+          928.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1964-1999年",
+        "confidence": 0.958,
+        "bbox": [
+          431.0,
+          871.2,
+          477.2,
+          1073.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "式会社",
+        "confidence": 0.9693,
+        "bbox": [
+          1130.4,
+          858.0,
+          1152.4,
+          930.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1950",
+        "confidence": 0.8921,
+        "bbox": [
+          1090.8,
+          882.2,
+          1108.4,
+          926.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "り拓きました。",
+        "confidence": 0.8984,
+        "bbox": [
+          776.3,
+          941.6,
+          807.1,
+          1075.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三菱工票",
+        "confidence": 0.8298,
+        "bbox": [
+          917.1,
+          941.6,
+          939.1,
+          1027.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "株式会社",
+        "confidence": 0.9786,
+        "bbox": [
+          939.1,
+          952.6,
+          961.1,
+          1029.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "H-卜初号",
+        "confidence": 0.8715,
+        "bbox": [
+          1425.1,
+          954.8,
+          1447.1,
+          1089.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "Special Feature",
+        "confidence": 0.9787,
+        "bbox": [
+          110.0,
+          987.8,
+          134.2,
+          1097.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1934",
+        "confidence": 0.9987,
+        "bbox": [
+          897.3,
+          979.0,
+          921.5,
+          1029.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1986",
+        "confidence": 0.9997,
+        "bbox": [
+          1392.1,
+          1023.0,
+          1425.1,
+          1086.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "打上げ成功",
+        "confidence": 0.9213,
+        "bbox": [
+          1447.1,
+          1003.2,
+          1471.3,
+          1089.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "長い歴史の中で培われた高い技術力に最先端の知見を取り入れ、人々の豊かな暮らしを実現します。",
+        "confidence": 0.8627,
+        "bbox": [
+          354.1,
+          1102.2,
+          384.9,
+          2109.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "戦後はさま民生品の開発・製造軸足移",
+        "confidence": 0.8375,
+        "bbox": [
+          519.0,
+          1117.6,
+          549.8,
+          1595.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "、日本の復興支ま。1950年、GHQ財閥",
+        "confidence": 0.9065,
+        "bbox": [
+          556.4,
+          1119.8,
+          587.2,
+          1590.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "解体方針よ3社分割さ、製品規模",
+        "confidence": 0.8535,
+        "bbox": [
+          591.6,
+          1117.6,
+          622.4,
+          1597.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "に拡大·多様化し、技術競争力高めま。後の",
+        "confidence": 0.8253,
+        "bbox": [
+          629.0,
+          1117.6,
+          659.8,
+          1597.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "重厚長大産業のリーデイグカパニー成長す",
+        "confidence": 0.7603,
+        "bbox": [
+          664.2,
+          1117.6,
+          695.0,
+          1595.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三菱航空機",
+        "confidence": 0.7317,
+        "bbox": [
+          1108.4,
+          1100.0,
+          1130.4,
+          1185.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "株式会社",
+        "confidence": 0.9093,
+        "bbox": [
+          1130.4,
+          1113.2,
+          1152.4,
+          1185.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1928",
+        "confidence": 0.9891,
+        "bbox": [
+          1090.8,
+          1137.4,
+          1108.4,
+          1183.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三菱電機株式会社",
+        "confidence": 0.8623,
+        "bbox": [
+          930.3,
+          1159.4,
+          952.3,
+          1293.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "Messages frem",
+        "confidence": 0.9699,
+        "bbox": [
+          99.0,
+          1183.6,
+          123.2,
+          1293.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "PWR原子力発電ブラト",
+        "confidence": 0.8407,
+        "bbox": [
+          1420.7,
+          1163.8,
+          1449.3,
+          1346.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "Management",
+        "confidence": 0.9183,
+        "bbox": [
+          116.6,
+          1185.8,
+          147.3,
+          1287.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三菱内燃",
+        "confidence": 0.8705,
+        "bbox": [
+          1108.4,
+          1192.4,
+          1130.4,
+          1280.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "式会社",
+        "confidence": 0.987,
+        "bbox": [
+          1130.4,
+          1207.8,
+          1152.4,
+          1282.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "関西電力美浜1号機",
+        "confidence": 0.8854,
+        "bbox": [
+          1447.1,
+          1188.0,
+          1471.3,
+          1342.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1921",
+        "confidence": 0.998,
+        "bbox": [
+          908.3,
+          1245.2,
+          932.5,
+          1291.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1921",
+        "confidence": 0.9984,
+        "bbox": [
+          1086.4,
+          1229.8,
+          1110.6,
+          1280.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "戦後復興を支える民生品の世界へ",
+        "confidence": 0.9484,
+        "bbox": [
+          475.0,
+          1254.0,
+          516.8,
+          1597.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "©",
+        "confidence": 0.2084,
+        "bbox": [
+          1046.8,
+          1258.4,
+          1062.2,
+          1273.8
+        ],
+        "orientation": "horizontal",
+        "page": 2
+      },
+      {
+        "text": "0461",
+        "confidence": 0.4069,
+        "bbox": [
+          1394.3,
+          1278.2,
+          1425.1,
+          1344.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          1471.3,
+          1276.0,
+          1493.3,
+          1344.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三",
+        "confidence": 0.294,
+        "bbox": [
+          1108.4,
+          1306.8,
+          1130.4,
+          1392.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          1150.2,
+          1322.2,
+          1172.2,
+          1394.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          967.7,
+          1346.4,
+          989.7,
+          1478.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "2061",
+        "confidence": 0.2433,
+        "bbox": [
+          1090.8,
+          1344.2,
+          1108.4,
+          1390.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          1132.6,
+          1355.2,
+          1150.2,
+          1390.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "e",
+        "confidence": 0.2593,
+        "bbox": [
+          112.2,
+          1399.2,
+          134.2,
+          1467.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1590-1470",
+        "confidence": 0.2068,
+        "bbox": [
+          435.4,
+          1390.4,
+          472.8,
+          1590.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          701.6,
+          1438.8,
+          732.3,
+          1597.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "4161",
+        "confidence": 0.7562,
+        "bbox": [
+          950.1,
+          1430.0,
+          967.7,
+          1476.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三菱合会社",
+        "confidence": 0.9309,
+        "bbox": [
+          1108.4,
+          1425.6,
+          1132.6,
+          1529.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "船部",
+        "confidence": 0.7646,
+        "bbox": [
+          1132.6,
+          1474.0,
+          1152.4,
+          1531.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "ニッポン世界一周",
+        "confidence": 0.7116,
+        "bbox": [
+          1418.5,
+          1452.0,
+          1453.7,
+          1599.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三菱合资会社",
+        "confidence": 0.7733,
+        "bbox": [
+          994.0,
+          1496.0,
+          1018.2,
+          1599.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1907",
+        "confidence": 0.9992,
+        "bbox": [
+          1086.4,
+          1478.4,
+          1110.6,
+          1529.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "親飛行成功",
+        "confidence": 0.8092,
+        "bbox": [
+          1447.1,
+          1482.8,
+          1471.3,
+          1601.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1893",
+        "confidence": 0.9993,
+        "bbox": [
+          974.3,
+          1548.8,
+          998.4,
+          1599.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1939",
+        "confidence": 0.9979,
+        "bbox": [
+          1396.5,
+          1537.8,
+          1422.9,
+          1595.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1886",
+        "confidence": 0.9987,
+        "bbox": [
+          1086.4,
+          1617.0,
+          1110.6,
+          1665.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三菱社",
+        "confidence": 0.8352,
+        "bbox": [
+          1106.2,
+          1612.6,
+          1130.4,
+          1665.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1884年、創業者であ岩崎彌太郎が明治政府から",
+        "confidence": 0.8848,
+        "bbox": [
+          521.2,
+          1634.6,
+          549.8,
+          2109.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "長崎造船局借り受け事業開始。日本初の鉄製",
+        "confidence": 0.8854,
+        "bbox": [
+          556.4,
+          1636.8,
+          587.2,
+          2112.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "汽船をはじめとする技術力を活して夕一ビ、内",
+        "confidence": 0.8035,
+        "bbox": [
+          593.8,
+          1636.8,
+          622.4,
+          2112.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "燃機、航空機、自動車等のさ機械分野進",
+        "confidence": 0.9006,
+        "bbox": [
+          629.0,
+          1634.6,
+          659.8,
+          2112.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "出し、事業の多角化進めま。不安世界情勢",
+        "confidence": 0.9081,
+        "bbox": [
+          666.4,
+          1634.6,
+          697.2,
+          2112.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "の下、当時最先端の技術は軍需でも活用される時代",
+        "confidence": 0.8851,
+        "bbox": [
+          701.6,
+          1634.6,
+          732.3,
+          2114.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "MITSUBISHIHEAVYINDUSTRIESGROUPIMHIREPORT2O25",
+        "confidence": 0.9671,
+        "bbox": [
+          110.0,
+          1665.4,
+          132.0,
+          2112.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "日本の気夕ピ製作",
+        "confidence": 0.7804,
+        "bbox": [
+          1420.7,
+          1663.2,
+          1447.1,
+          1856.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "造船業をベース輸送製造",
+        "confidence": 0.7674,
+        "bbox": [
+          481.6,
+          1740.2,
+          514.6,
+          2112.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1884",
+        "confidence": 0.9996,
+        "bbox": [
+          826.9,
+          1720.4,
+          870.9,
+          1815.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "長崎造船所",
+        "confidence": 0.8059,
+        "bbox": [
+          961.1,
+          1722.6,
+          985.3,
+          1810.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "创立",
+        "confidence": 0.6573,
+        "bbox": [
+          1044.6,
+          1742.4,
+          1062.2,
+          1790.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "部便汽船三藏会社",
+        "confidence": 0.7786,
+        "bbox": [
+          1145.8,
+          1738.0,
+          1167.8,
+          1870.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三菱汽舱会社",
+        "confidence": 0.8513,
+        "bbox": [
+          1123.8,
+          1766.6,
+          1148.0,
+          1870.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1908",
+        "confidence": 0.9988,
+        "bbox": [
+          1396.5,
+          1793.0,
+          1420.7,
+          1852.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1875",
+        "confidence": 0.9947,
+        "bbox": [
+          1108.4,
+          1821.6,
+          1126.0,
+          1867.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三菱商会",
+        "confidence": 0.9482,
+        "bbox": [
+          1126.0,
+          1885.4,
+          1148.0,
+          1958.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1884-1945年",
+        "confidence": 0.9858,
+        "bbox": [
+          435.4,
+          1911.8,
+          472.8,
+          2107.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1873",
+        "confidence": 0.9987,
+        "bbox": [
+          1104.0,
+          1907.4,
+          1128.2,
+          1955.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "遗船史残1万卜卷",
+        "confidence": 0.7772,
+        "bbox": [
+          1425.1,
+          1929.4,
+          1447.1,
+          2112.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "超え日本初の大型客船",
+        "confidence": 0.8835,
+        "bbox": [
+          1444.9,
+          1933.8,
+          1473.5,
+          2114.2
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "沿革",
+        "confidence": 0.9979,
+        "bbox": [
+          213.3,
+          2026.2,
+          263.9,
+          2116.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1870",
+        "confidence": 0.9999,
+        "bbox": [
+          826.9,
+          2026.2,
+          870.9,
+          2116.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "三菱の起源",
+        "confidence": 0.9454,
+        "bbox": [
+          866.5,
+          2013.0,
+          897.3,
+          2116.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "九十九商会",
+        "confidence": 0.9329,
+        "bbox": [
+          886.3,
+          2010.8,
+          925.9,
+          2116.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "岩崎强太郎",
+        "confidence": 0.8618,
+        "bbox": [
+          1029.2,
+          2021.8,
+          1053.4,
+          2112.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "天洋丸建造",
+        "confidence": 0.9018,
+        "bbox": [
+          1471.3,
+          2008.6,
+          1495.5,
+          2109.8
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "でした。",
+        "confidence": 0.977,
+        "bbox": [
+          738.9,
+          2035.0,
+          771.9,
+          2112.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "初代社長",
+        "confidence": 0.8423,
+        "bbox": [
+          1009.4,
+          2041.6,
+          1031.4,
+          2112.0
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "创案",
+        "confidence": 0.6041,
+        "bbox": [
+          1062.2,
+          2035.0,
+          1086.4,
+          2107.6
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "1908",
+        "confidence": 0.9895,
+        "bbox": [
+          1396.5,
+          2046.0,
+          1422.9,
+          2105.4
+        ],
+        "orientation": "vertical",
+        "page": 2
+      },
+      {
+        "text": "III",
+        "confidence": 0.8464,
+        "bbox": [
+          105.6,
+          24.2,
+          136.4,
+          61.6
+        ],
+        "orientation": "horizontal",
+        "page": 3
+      },
+      {
+        "text": "5",
+        "confidence": 0.9916,
+        "bbox": [
+          110.0,
+          81.4,
+          134.2,
+          103.4
+        ],
+        "orientation": "horizontal",
+        "page": 3
+      },
+      {
+        "text": "eeg ered",
+        "confidence": 0.3217,
+        "bbox": [
+          112.2,
+          195.8,
+          134.2,
+          323.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": " Aqeueisns",
+        "confidence": 0.6525,
+        "bbox": [
+          96.8,
+          398.2,
+          118.8,
+          510.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "AS S",
+        "confidence": 0.3517,
+        "bbox": [
+          116.6,
+          402.6,
+          147.3,
+          503.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "2--422",
+        "confidence": 0.3259,
+        "bbox": [
+          574.0,
+          514.8,
+          602.6,
+          1163.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "三菱重工環境·化学エグ(株)",
+        "confidence": 0.8621,
+        "bbox": [
+          844.5,
+          552.2,
+          877.5,
+          893.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "物流·冷熱·ドド",
+        "confidence": 0.7186,
+        "bbox": [
+          980.9,
+          554.4,
+          1011.6,
+          910.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "三菱重工ヤヤ(株)",
+        "confidence": 0.6883,
+        "bbox": [
+          1055.6,
+          550.0,
+          1086.4,
+          891.0
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "Primetals Technoloqies, Limited",
+        "confidence": 0.951,
+        "bbox": [
+          787.3,
+          585.2,
+          815.9,
+          893.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "Governance",
+        "confidence": 0.9292,
+        "bbox": [
+          112.2,
+          607.2,
+          134.2,
+          695.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "三菱重エマム(株)",
+        "confidence": 0.6737,
+        "bbox": [
+          1086.4,
+          611.6,
+          1117.2,
+          891.0
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "三菱重工航空工(株)",
+        "confidence": 0.8884,
+        "bbox": [
+          457.4,
+          662.2,
+          488.2,
+          893.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "三菱重エコサ(株)",
+        "confidence": 0.7534,
+        "bbox": [
+          488.2,
+          668.8,
+          521.2,
+          893.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "三菱重工ママシ(株）",
+        "confidence": 0.8034,
+        "bbox": [
+          519.0,
+          653.4,
+          549.8,
+          893.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "ラト・イ",
+        "confidence": 0.5447,
+        "bbox": [
+          677.4,
+          653.4,
+          708.2,
+          906.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "機械システメ",
+        "confidence": 0.72,
+        "bbox": [
+          752.1,
+          679.8,
+          780.7,
+          910.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "三菱重工機械テ(株)",
+        "confidence": 0.8448,
+        "bbox": [
+          875.3,
+          666.6,
+          906.1,
+          904.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "社内組織主要子会社",
+        "confidence": 0.9513,
+        "bbox": [
+          329.9,
+          690.8,
+          360.7,
+          913.0
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "社内組織主要子会社",
+        "confidence": 0.9395,
+        "bbox": [
+          635.6,
+          690.8,
+          666.4,
+          910.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "社内組織主要子会社",
+        "confidence": 0.9429,
+        "bbox": [
+          939.1,
+          690.8,
+          969.9,
+          910.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "三菱ト(株)",
+        "confidence": 0.6633,
+        "bbox": [
+          1027.0,
+          690.8,
+          1057.8,
+          893.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "社内組織と主要子会社",
+        "confidence": 0.9553,
+        "bbox": [
+          1238.2,
+          684.2,
+          1275.5,
+          913.0
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "防衛·宇宙グメ",
+        "confidence": 0.8009,
+        "bbox": [
+          1319.5,
+          706.2,
+          1350.3,
+          908.6
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "• MHI RJ Aviation Ic.",
+        "confidence": 0.9269,
+        "bbox": [
+          1370.1,
+          699.6,
+          1400.9,
+          906.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "エナヅードメイ",
+        "confidence": 0.7482,
+        "bbox": [
+          371.7,
+          741.4,
+          402.5,
+          906.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "原子カ",
+        "confidence": 0.8481,
+        "bbox": [
+          409.1,
+          741.4,
+          439.8,
+          910.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "民間機セグメント",
+        "confidence": 0.766,
+        "bbox": [
+          1282.1,
+          734.8,
+          1312.9,
+          908.6
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "Business Strategies",
+        "confidence": 0.9799,
+        "bbox": [
+          112.2,
+          776.6,
+          134.2,
+          917.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "GXグメン",
+        "confidence": 0.6756,
+        "bbox": [
+          714.7,
+          774.4,
+          745.5,
+          910.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "三菱造船(株)",
+        "confidence": 0.8319,
+        "bbox": [
+          813.7,
+          770.0,
+          851.1,
+          893.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "·火力発電ステ",
+        "confidence": 0.747,
+        "bbox": [
+          369.5,
+          957.0,
+          406.9,
+          1161.6
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "原子力発電",
+        "confidence": 0.9684,
+        "bbox": [
+          409.1,
+          959.2,
+          439.8,
+          1157.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "Special Feature",
+        "confidence": 0.9713,
+        "bbox": [
+          112.2,
+          987.8,
+          134.2,
+          1097.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "エソニアリグ",
+        "confidence": 0.6976,
+        "bbox": [
+          820.3,
+          974.6,
+          859.9,
+          1157.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "・",
+        "confidence": 0.4864,
+        "bbox": [
+          1051.2,
+          972.4,
+          1088.6,
+          1166.0
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "特殊機械（魚雷）",
+        "confidence": 0.8927,
+        "bbox": [
+          1409.7,
+          983.4,
+          1440.5,
+          1161.6
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "航空エジ",
+        "confidence": 0.7509,
+        "bbox": [
+          442.0,
+          1009.8,
+          479.4,
+          1159.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "レサ",
+        "confidence": 0.5513,
+        "bbox": [
+          479.4,
+          1016.4,
+          519.0,
+          1157.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "機械",
+        "confidence": 0.9259,
+        "bbox": [
+          859.9,
+          1009.8,
+          897.3,
+          1159.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "カーエアコン",
+        "confidence": 0.626,
+        "bbox": [
+          1123.8,
+          1014.2,
+          1161.2,
+          1163.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "·舶用機械",
+        "confidence": 0.8384,
+        "bbox": [
+          512.4,
+          1042.8,
+          556.4,
+          1163.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "·冷熱製品",
+        "confidence": 0.7504,
+        "bbox": [
+          1084.2,
+          1042.8,
+          1128.2,
+          1168.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "民間航空機",
+        "confidence": 0.9599,
+        "bbox": [
+          1277.7,
+          1023.0,
+          1315.1,
+          1152.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "防衛航空機",
+        "confidence": 0.959,
+        "bbox": [
+          1308.5,
+          1023.0,
+          1345.9,
+          1159.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "製鉄機械",
+        "confidence": 0.8087,
+        "bbox": [
+          677.4,
+          1049.4,
+          710.3,
+          1157.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "·環境設備",
+        "confidence": 0.8041,
+        "bbox": [
+          743.3,
+          1045.0,
+          787.3,
+          1166.0
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "CO回收",
+        "confidence": 0.8718,
+        "bbox": [
+          778.5,
+          1049.4,
+          824.7,
+          1161.6
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "·物流機器",
+        "confidence": 0.9259,
+        "bbox": [
+          978.7,
+          1047.2,
+          1016.0,
+          1168.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "飛しよう体",
+        "confidence": 0.7929,
+        "bbox": [
+          1341.5,
+          1031.8,
+          1378.9,
+          1161.6
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "·エンジ",
+        "confidence": 0.657,
+        "bbox": [
+          1016.0,
+          1056.0,
+          1051.2,
+          1168.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "·特殊車両",
+        "confidence": 0.8044,
+        "bbox": [
+          1440.5,
+          1045.0,
+          1477.9,
+          1166.0
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "主事業",
+        "confidence": 0.9592,
+        "bbox": [
+          325.5,
+          1069.2,
+          362.9,
+          1166.0
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "主事業",
+        "confidence": 0.9616,
+        "bbox": [
+          932.5,
+          1069.2,
+          972.1,
+          1166.0
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "主な事業",
+        "confidence": 0.8658,
+        "bbox": [
+          1231.6,
+          1067.0,
+          1277.7,
+          1168.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "·宇宙機器",
+        "confidence": 0.8436,
+        "bbox": [
+          1475.7,
+          1049.4,
+          1506.5,
+          1163.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "主な事業",
+        "confidence": 0.9281,
+        "bbox": [
+          633.4,
+          1071.4,
+          666.4,
+          1163.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "·商船",
+        "confidence": 0.804,
+        "bbox": [
+          708.2,
+          1089.0,
+          749.9,
+          1163.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "艦艇",
+        "confidence": 0.8641,
+        "bbox": [
+          1378.9,
+          1091.2,
+          1409.7,
+          1159.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "Messages from",
+        "confidence": 0.9665,
+        "bbox": [
+          96.8,
+          1181.4,
+          121.0,
+          1291.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "Management",
+        "confidence": 0.9183,
+        "bbox": [
+          116.6,
+          1185.8,
+          147.3,
+          1287.0
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "エナジー",
+        "confidence": 0.9378,
+        "bbox": [
+          435.4,
+          1225.4,
+          490.4,
+          1361.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "プラント・",
+        "confidence": 0.7836,
+        "bbox": [
+          719.1,
+          1223.2,
+          765.3,
+          1364.0
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "イソフラ",
+        "confidence": 0.8875,
+        "bbox": [
+          767.5,
+          1227.6,
+          813.7,
+          1361.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "物流·冷熱·",
+        "confidence": 0.8895,
+        "bbox": [
+          1005.0,
+          1216.6,
+          1044.6,
+          1377.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "ドライブ",
+        "confidence": 0.9507,
+        "bbox": [
+          1044.6,
+          1227.6,
+          1097.4,
+          1357.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "システム",
+        "confidence": 0.8896,
+        "bbox": [
+          1095.2,
+          1227.6,
+          1143.6,
+          1359.6
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "航空·防衛·",
+        "confidence": 0.9595,
+        "bbox": [
+          1328.3,
+          1216.6,
+          1374.5,
+          1377.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "宇宙",
+        "confidence": 0.9992,
+        "bbox": [
+          1372.3,
+          1254.0,
+          1422.9,
+          1335.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "Overview",
+        "confidence": 0.9216,
+        "bbox": [
+          107.8,
+          1397.0,
+          138.6,
+          1469.6
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "三菱重工グ一は、3つの事業ドメイおよ5つのグメ",
+        "confidence": 0.7606,
+        "bbox": [
+          312.3,
+          1452.0,
+          343.1,
+          2112.0
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "置き、事業を管理しいます。この事業ドメイおよびセグメ卜そ",
+        "confidence": 0.8199,
+        "bbox": [
+          351.9,
+          1452.0,
+          389.3,
+          2114.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "れれの客および製品特性の類似性等を踏まえ集約し、エ",
+        "confidence": 0.798,
+        "bbox": [
+          395.9,
+          1454.2,
+          433.2,
+          2114.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "ーブト・イ「物流・冷熱・ドテム」およ",
+        "confidence": 0.7108,
+        "bbox": [
+          439.8,
+          1452.0,
+          477.2,
+          2112.0
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "36.1%",
+        "confidence": 0.9914,
+        "bbox": [
+          844.5,
+          1491.6,
+          910.5,
+          1630.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "セグ卜別売上収益構成比(2024年度)",
+        "confidence": 0.9526,
+        "bbox": [
+          677.4,
+          1540.0,
+          721.3,
+          2028.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "エナヅー",
+        "confidence": 0.7705,
+        "bbox": [
+          807.1,
+          1529.0,
+          853.3,
+          1628.0
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "「航空·防衛·宇宙」の4つ報告メトしいます。",
+        "confidence": 0.7138,
+        "bbox": [
+          486.0,
+          1573.0,
+          525.6,
+          2107.6
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "プラト・イソフラ",
+        "confidence": 0.7478,
+        "bbox": [
+          1196.4,
+          1575.2,
+          1236.0,
+          1753.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "17.0%",
+        "confidence": 0.9983,
+        "bbox": [
+          1233.8,
+          1630.2,
+          1290.9,
+          1751.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "MITSUBISHIHEAVYINDUSTRIESGROUPIMHI REPORT2O25",
+        "confidence": 0.9568,
+        "bbox": [
+          110.0,
+          1667.6,
+          132.0,
+          2114.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "50,271",
+        "confidence": 0.9925,
+        "bbox": [
+          967.7,
+          1672.0,
+          1053.4,
+          1898.6
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "壳上収益",
+        "confidence": 0.8453,
+        "bbox": [
+          914.9,
+          1709.4,
+          961.1,
+          1852.4
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "億円",
+        "confidence": 0.9983,
+        "bbox": [
+          1051.2,
+          1735.8,
+          1101.8,
+          1823.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "グループ概要",
+        "confidence": 0.994,
+        "bbox": [
+          215.5,
+          1892.0,
+          261.7,
+          2114.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "航空·防衛·宇宙",
+        "confidence": 0.9536,
+        "bbox": [
+          765.3,
+          1894.2,
+          802.7,
+          2054.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "20.5%",
+        "confidence": 0.9995,
+        "bbox": [
+          796.1,
+          1889.8,
+          862.1,
+          2026.2
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "物流·冷热·",
+        "confidence": 0.823,
+        "bbox": [
+          1086.4,
+          1955.8,
+          1123.8,
+          2076.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "ドライブシステム",
+        "confidence": 0.8762,
+        "bbox": [
+          1119.4,
+          1953.6,
+          1156.8,
+          2123.0
+        ],
+        "orientation": "vertical",
+        "page": 3
+      },
+      {
+        "text": "26.0%",
+        "confidence": 0.9961,
+        "bbox": [
+          1150.2,
+          1949.2,
+          1214.0,
+          2087.8
+        ],
+        "orientation": "vertical",
+        "page": 3
+      }
+    ],
+    "confidence": 0.7724,
+    "status": "ocr_completed",
+    "elapsed_seconds": 196.18,
+    "pages": 3
+  },
+  {
+    "document_id": "real_invoice_01",
+    "file": "real_invoice_01.jpg",
+    "text": "INVOICE\n作成日(Date）：\nMay,12th.2017\n作成地（Place）：\nJAPAN\n依赖主（Sender）：\n郵便物番号（MailItem No.）：\nJapan Desisn Marketing Inc.\nEJ123456789JP\n2-17-1 Ueji Ckazaki Aichi\n送達手段（ShippedPer）：EMS\n444-0823 JAPAN\n支払条件(Termsof_Payment）:\nPayPal\nTEL+81584-73-3453\n考（Remarks）:\nお届先（Addressee）：\n有（Commercialvalue）\nTaro Japan\nO△.A street.San Francisco.Califomia 12345\n無（No Commercialvalue）\n□□赠物（Gift）□商品见本（Sample）の他（Other）\nTEL+00123-458\n单\n内容品の記\n正味重量\n数量\n(Unit Price)\n合計额\n(Description)\n(Net Weight)\n(Quantity）\n通货（Currency）\n(Total Amount)\nKg\nJPY日本円\nArita porcelain\n1.5Kg\n1\nY12.345\nY12.345\n総合計（Total）\n1.5k8\n1\nF.0.B.JAPAN\nY12.345\n郵便物個数(Number of pieces）\n1\n署名（Signature）\n重量(Gross weight）Ks\n:\n1.1kg\n原座国（Country ofOrigin）\n:\nJAPAN\nJapan Design Marketing Inc.",
+    "blocks": [
+      {
+        "text": "INVOICE",
+        "confidence": 0.9962,
+        "bbox": [
+          63.0,
+          3.0,
+          127.0,
+          24.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "作成日(Date）：",
+        "confidence": 0.8339,
+        "bbox": [
+          397.0,
+          9.0,
+          517.0,
+          23.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "May,12th.2017",
+        "confidence": 0.9329,
+        "bbox": [
+          574.0,
+          10.0,
+          634.0,
+          22.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "作成地（Place）：",
+        "confidence": 0.9125,
+        "bbox": [
+          441.0,
+          30.0,
+          516.0,
+          46.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "JAPAN",
+        "confidence": 0.9956,
+        "bbox": [
+          572.0,
+          31.0,
+          602.0,
+          46.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "依赖主（Sender）：",
+        "confidence": 0.7915,
+        "bbox": [
+          36.0,
+          45.0,
+          134.0,
+          58.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "郵便物番号（MailItem No.）：",
+        "confidence": 0.8545,
+        "bbox": [
+          320.0,
+          45.0,
+          466.0,
+          58.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "Japan Desisn Marketing Inc.",
+        "confidence": 0.9097,
+        "bbox": [
+          52.0,
+          58.0,
+          174.0,
+          72.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "EJ123456789JP",
+        "confidence": 0.996,
+        "bbox": [
+          444.0,
+          57.0,
+          527.0,
+          71.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "2-17-1 Ueji Ckazaki Aichi",
+        "confidence": 0.8923,
+        "bbox": [
+          52.0,
+          73.0,
+          166.0,
+          86.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "送達手段（ShippedPer）：EMS",
+        "confidence": 0.9117,
+        "bbox": [
+          319.0,
+          74.0,
+          491.0,
+          87.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "444-0823 JAPAN",
+        "confidence": 0.9839,
+        "bbox": [
+          53.0,
+          92.0,
+          122.0,
+          103.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "支払条件(Termsof_Payment）:",
+        "confidence": 0.8227,
+        "bbox": [
+          320.0,
+          90.0,
+          475.0,
+          103.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "PayPal",
+        "confidence": 0.9088,
+        "bbox": [
+          505.0,
+          91.0,
+          545.0,
+          102.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "TEL+81584-73-3453",
+        "confidence": 0.9275,
+        "bbox": [
+          53.0,
+          106.0,
+          145.0,
+          120.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "考（Remarks）:",
+        "confidence": 0.8698,
+        "bbox": [
+          319.0,
+          103.0,
+          412.0,
+          119.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "お届先（Addressee）：",
+        "confidence": 0.8256,
+        "bbox": [
+          36.0,
+          122.0,
+          149.0,
+          135.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "有（Commercialvalue）",
+        "confidence": 0.9047,
+        "bbox": [
+          319.0,
+          121.0,
+          444.0,
+          134.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "Taro Japan",
+        "confidence": 0.9462,
+        "bbox": [
+          35.0,
+          141.0,
+          83.0,
+          152.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "O△.A street.San Francisco.Califomia 12345",
+        "confidence": 0.9058,
+        "bbox": [
+          34.0,
+          152.0,
+          256.0,
+          166.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "無（No Commercialvalue）",
+        "confidence": 0.873,
+        "bbox": [
+          328.0,
+          155.0,
+          459.0,
+          169.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "□□赠物（Gift）□商品见本（Sample）の他（Other）",
+        "confidence": 0.7848,
+        "bbox": [
+          319.0,
+          171.0,
+          584.0,
+          184.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "TEL+00123-458",
+        "confidence": 0.919,
+        "bbox": [
+          54.0,
+          189.0,
+          126.0,
+          199.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "单",
+        "confidence": 0.7136,
+        "bbox": [
+          513.0,
+          203.0,
+          538.0,
+          219.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "内容品の記",
+        "confidence": 0.8706,
+        "bbox": [
+          142.0,
+          222.0,
+          202.0,
+          233.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "正味重量",
+        "confidence": 0.9955,
+        "bbox": [
+          337.0,
+          219.0,
+          378.0,
+          230.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "数量",
+        "confidence": 0.988,
+        "bbox": [
+          424.0,
+          220.0,
+          448.0,
+          235.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(Unit Price)",
+        "confidence": 0.9225,
+        "bbox": [
+          495.0,
+          222.0,
+          556.0,
+          233.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "合計额",
+        "confidence": 0.7668,
+        "bbox": [
+          598.0,
+          220.0,
+          630.0,
+          235.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(Description)",
+        "confidence": 0.9731,
+        "bbox": [
+          139.0,
+          232.0,
+          204.0,
+          244.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(Net Weight)",
+        "confidence": 0.9713,
+        "bbox": [
+          324.0,
+          235.0,
+          390.0,
+          247.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(Quantity）",
+        "confidence": 0.9033,
+        "bbox": [
+          411.0,
+          232.0,
+          460.0,
+          244.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "通货（Currency）",
+        "confidence": 0.9149,
+        "bbox": [
+          490.0,
+          239.0,
+          560.0,
+          250.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(Total Amount)",
+        "confidence": 0.8956,
+        "bbox": [
+          579.0,
+          232.0,
+          648.0,
+          244.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "Kg",
+        "confidence": 0.6637,
+        "bbox": [
+          349.0,
+          251.0,
+          365.0,
+          266.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "JPY日本円",
+        "confidence": 0.9511,
+        "bbox": [
+          502.0,
+          255.0,
+          548.0,
+          267.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "Arita porcelain",
+        "confidence": 0.9236,
+        "bbox": [
+          34.0,
+          273.0,
+          104.0,
+          283.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "1.5Kg",
+        "confidence": 0.8594,
+        "bbox": [
+          344.0,
+          272.0,
+          372.0,
+          285.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "1",
+        "confidence": 0.9828,
+        "bbox": [
+          432.0,
+          273.0,
+          440.0,
+          283.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "Y12.345",
+        "confidence": 0.9086,
+        "bbox": [
+          538.0,
+          271.0,
+          575.0,
+          285.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "Y12.345",
+        "confidence": 0.9276,
+        "bbox": [
+          617.0,
+          271.0,
+          654.0,
+          285.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "総合計（Total）",
+        "confidence": 0.8486,
+        "bbox": [
+          115.0,
+          319.0,
+          193.0,
+          333.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "1.5k8",
+        "confidence": 0.9061,
+        "bbox": [
+          342.0,
+          318.0,
+          372.0,
+          338.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "1",
+        "confidence": 0.9985,
+        "bbox": [
+          432.0,
+          320.0,
+          440.0,
+          331.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "F.0.B.JAPAN",
+        "confidence": 0.8971,
+        "bbox": [
+          498.0,
+          321.0,
+          552.0,
+          332.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "Y12.345",
+        "confidence": 0.9168,
+        "bbox": [
+          613.0,
+          318.0,
+          650.0,
+          332.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "郵便物個数(Number of pieces）",
+        "confidence": 0.8447,
+        "bbox": [
+          35.0,
+          338.0,
+          189.0,
+          351.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "1",
+        "confidence": 0.4223,
+        "bbox": [
+          256.0,
+          336.0,
+          263.0,
+          348.0
+        ],
+        "orientation": "vertical",
+        "page": 1
+      },
+      {
+        "text": "署名（Signature）",
+        "confidence": 0.9358,
+        "bbox": [
+          397.0,
+          339.0,
+          471.0,
+          350.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "重量(Gross weight）Ks",
+        "confidence": 0.8046,
+        "bbox": [
+          35.0,
+          351.0,
+          152.0,
+          365.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": ":",
+        "confidence": 0.9503,
+        "bbox": [
+          201.0,
+          355.0,
+          206.0,
+          362.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "1.1kg",
+        "confidence": 0.9206,
+        "bbox": [
+          244.0,
+          349.0,
+          275.0,
+          367.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "原座国（Country ofOrigin）",
+        "confidence": 0.8845,
+        "bbox": [
+          34.0,
+          366.0,
+          160.0,
+          379.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": ":",
+        "confidence": 0.9262,
+        "bbox": [
+          201.0,
+          371.0,
+          206.0,
+          378.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "JAPAN",
+        "confidence": 0.9958,
+        "bbox": [
+          239.0,
+          367.0,
+          270.0,
+          381.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "Japan Design Marketing Inc.",
+        "confidence": 0.9306,
+        "bbox": [
+          421.0,
+          367.0,
+          586.0,
+          380.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      }
+    ],
+    "confidence": 0.8931,
+    "status": "ocr_completed",
+    "elapsed_seconds": 29.12
+  },
+  {
+    "document_id": "real_invoice_02",
+    "file": "real_invoice_02.png",
+    "text": "概算お見積書\nお客名\n様\n5点\n店\n電话番号\n住\n所\n付日10/07/18\n营案担当\n分+点\n受付招\n番号\n動務電話\nDC\n管理号\n称STREAM\n型式類别\n绿年月19/09/25\n完成定09月24日\nお见積金额\n①4②+③\n125,1\nDBA-RN6\nE/型式R18A\n登番号\nF/番号\nE/番号\n走行距期\n25000\nk0\n\n代\n63.155\n次回点\n8,400\n22年09月\n24日\n車满了\n22年\n09月\n24日\n六\n3,407\n费用等計\n53.5\nNO\n整備内容（部品名又は作業名）\n作業数量\n部品·油脂代\n技術料\n検查+定期点検整借\n<検查项目>\n保安確認検查料\n7350\n一洗浄\n清掃\n5250\n<24月定期点検>\n15120\nスパーの状\n点1.0\nエ·クリーナ汚れ詰まり\n点换1.0\nレ一装置の機能、摩耗\n点検1.0\n夕の亀裂、損傷、摩耗\n点1.0\nマラの取付け緩み損傷\n点1.0\nその他は点検記録簿よる\nシヨートパーツ\n車検早期予約特别割引\n-3150\n車雨持特别割引\n-2100\n初回車検特别割引\n-2520\n2\nお勧め/お手入\nラLEOSM\n3.7\n一ト,オ7ル一（マ一レ15400RTA003\n1260\n892\nヤ一,レ7°ラ14MM\n9410914000\n7°V一才（DOT-4）\n0820399931\n1942\nヤリ°一セ卜.フロ\n01463S87A00\n4010\n6247\nキ一セツト,リ\n01473SZ3A00\n2394\n7140\n一セ，マス一(20.64MM)\n01462SDAA00\n5985\n8925\n-.7°-卜°（650HM）\n76622SMA004\n换1.0\n945\n-，7°-卜°（350MM）\n76632SMA004\n换1.0\n735\nn-，7b-\n76632SFA003\n换\n1.0\n630\nATF、￥14700.追加2\n重税\n30,000\n自\n22,470\n代等\n1,100\n整備代小計\n17901\n45254\n每度引立て預厚お礼申し上す。\n依頼赐わりた算お見精金は本書の通い。\n尚分解作等よ日程及算見積金変更生場合います。\n①お客控\n算お積有期限受付月日1月。",
+    "blocks": [
+      {
+        "text": "概算お見積書",
+        "confidence": 0.9893,
+        "bbox": [
+          244.0,
+          2.0,
+          384.0,
+          29.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "お客名",
+        "confidence": 0.8171,
+        "bbox": [
+          0.0,
+          55.0,
+          34.0,
+          69.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "様",
+        "confidence": 0.6781,
+        "bbox": [
+          232.0,
+          53.0,
+          251.0,
+          72.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "5点",
+        "confidence": 0.2943,
+        "bbox": [
+          360.0,
+          56.0,
+          390.0,
+          71.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "店",
+        "confidence": 0.9957,
+        "bbox": [
+          436.0,
+          56.0,
+          456.0,
+          73.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "電话番号",
+        "confidence": 0.7289,
+        "bbox": [
+          493.0,
+          55.0,
+          522.0,
+          71.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "住",
+        "confidence": 0.9293,
+        "bbox": [
+          1.0,
+          70.0,
+          12.0,
+          80.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "所",
+        "confidence": 0.9978,
+        "bbox": [
+          16.0,
+          69.0,
+          34.0,
+          81.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "付日10/07/18",
+        "confidence": 0.9187,
+        "bbox": [
+          359.0,
+          80.0,
+          457.0,
+          102.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "营案担当",
+        "confidence": 0.4983,
+        "bbox": [
+          494.0,
+          84.0,
+          522.0,
+          97.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "分+点",
+        "confidence": 0.7362,
+        "bbox": [
+          359.0,
+          94.0,
+          456.0,
+          115.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "受付招",
+        "confidence": 0.5621,
+        "bbox": [
+          494.0,
+          98.0,
+          522.0,
+          111.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "番号",
+        "confidence": 0.9776,
+        "bbox": [
+          0.0,
+          109.0,
+          34.0,
+          123.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "動務電話",
+        "confidence": 0.8659,
+        "bbox": [
+          149.0,
+          109.0,
+          187.0,
+          123.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "DC",
+        "confidence": 0.9851,
+        "bbox": [
+          314.0,
+          110.0,
+          336.0,
+          128.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "管理号",
+        "confidence": 0.9902,
+        "bbox": [
+          358.0,
+          108.0,
+          390.0,
+          126.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "称STREAM",
+        "confidence": 0.9322,
+        "bbox": [
+          0.0,
+          133.0,
+          87.0,
+          155.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "型式類别",
+        "confidence": 0.8089,
+        "bbox": [
+          117.0,
+          136.0,
+          153.0,
+          150.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "绿年月19/09/25",
+        "confidence": 0.9541,
+        "bbox": [
+          229.0,
+          134.0,
+          336.0,
+          156.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "完成定09月24日",
+        "confidence": 0.9176,
+        "bbox": [
+          359.0,
+          135.0,
+          454.0,
+          155.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "お见積金额",
+        "confidence": 0.7159,
+        "bbox": [
+          508.0,
+          134.0,
+          557.0,
+          149.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "①4②+③",
+        "confidence": 0.7028,
+        "bbox": [
+          509.0,
+          146.0,
+          556.0,
+          156.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "125,1",
+        "confidence": 0.9058,
+        "bbox": [
+          572.0,
+          137.0,
+          618.0,
+          155.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "DBA-RN6",
+        "confidence": 0.9926,
+        "bbox": [
+          0.0,
+          147.0,
+          94.0,
+          169.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "E/型式R18A",
+        "confidence": 0.9716,
+        "bbox": [
+          116.0,
+          148.0,
+          192.0,
+          168.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "登番号",
+        "confidence": 0.903,
+        "bbox": [
+          230.0,
+          150.0,
+          267.0,
+          164.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "F/番号",
+        "confidence": 0.9612,
+        "bbox": [
+          0.0,
+          162.0,
+          34.0,
+          177.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "E/番号",
+        "confidence": 0.9162,
+        "bbox": [
+          118.0,
+          163.0,
+          154.0,
+          177.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "走行距期",
+        "confidence": 0.7976,
+        "bbox": [
+          230.0,
+          164.0,
+          267.0,
+          178.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "25000",
+        "confidence": 0.9994,
+        "bbox": [
+          274.0,
+          166.0,
+          319.0,
+          180.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "k0",
+        "confidence": 0.2527,
+        "bbox": [
+          330.0,
+          165.0,
+          345.0,
+          177.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          358.0,
+          172.0,
+          392.0,
+          196.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "代",
+        "confidence": 0.592,
+        "bbox": [
+          360.0,
+          164.0,
+          390.0,
+          178.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "63.155",
+        "confidence": 0.9627,
+        "bbox": [
+          413.0,
+          165.0,
+          465.0,
+          179.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "次回点",
+        "confidence": 0.771,
+        "bbox": [
+          0.0,
+          188.0,
+          34.0,
+          205.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "8,400",
+        "confidence": 0.8904,
+        "bbox": [
+          415.0,
+          179.0,
+          465.0,
+          194.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "22年09月",
+        "confidence": 0.9887,
+        "bbox": [
+          39.0,
+          190.0,
+          116.0,
+          208.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "24日",
+        "confidence": 0.9967,
+        "bbox": [
+          116.0,
+          187.0,
+          156.0,
+          211.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "車满了",
+        "confidence": 0.4721,
+        "bbox": [
+          181.0,
+          189.0,
+          219.0,
+          206.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "22年",
+        "confidence": 0.9706,
+        "bbox": [
+          222.0,
+          189.0,
+          263.0,
+          210.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "09月",
+        "confidence": 0.9868,
+        "bbox": [
+          265.0,
+          191.0,
+          302.0,
+          209.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "24日",
+        "confidence": 0.9943,
+        "bbox": [
+          303.0,
+          189.0,
+          342.0,
+          210.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "六",
+        "confidence": 0.1381,
+        "bbox": [
+          360.0,
+          191.0,
+          390.0,
+          205.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "3,407",
+        "confidence": 0.984,
+        "bbox": [
+          420.0,
+          191.0,
+          466.0,
+          209.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "费用等計",
+        "confidence": 0.8375,
+        "bbox": [
+          509.0,
+          190.0,
+          554.0,
+          204.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "53.5",
+        "confidence": 0.8874,
+        "bbox": [
+          577.0,
+          187.0,
+          618.0,
+          211.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "NO",
+        "confidence": 0.9819,
+        "bbox": [
+          0.0,
+          219.0,
+          20.0,
+          235.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "整備内容（部品名又は作業名）",
+        "confidence": 0.8924,
+        "bbox": [
+          22.0,
+          220.0,
+          147.0,
+          234.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "作業数量",
+        "confidence": 0.8352,
+        "bbox": [
+          378.0,
+          220.0,
+          444.0,
+          237.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "部品·油脂代",
+        "confidence": 0.9715,
+        "bbox": [
+          446.0,
+          221.0,
+          505.0,
+          235.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "技術料",
+        "confidence": 0.9071,
+        "bbox": [
+          508.0,
+          220.0,
+          569.0,
+          237.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "検查+定期点検整借",
+        "confidence": 0.8316,
+        "bbox": [
+          35.0,
+          246.0,
+          178.0,
+          260.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "<検查项目>",
+        "confidence": 0.84,
+        "bbox": [
+          42.0,
+          259.0,
+          136.0,
+          273.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "保安確認検查料",
+        "confidence": 0.8386,
+        "bbox": [
+          42.0,
+          272.0,
+          154.0,
+          289.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "7350",
+        "confidence": 0.9962,
+        "bbox": [
+          523.0,
+          269.0,
+          571.0,
+          290.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "一洗浄",
+        "confidence": 0.6764,
+        "bbox": [
+          43.0,
+          287.0,
+          139.0,
+          301.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "清掃",
+        "confidence": 0.9355,
+        "bbox": [
+          379.0,
+          285.0,
+          415.0,
+          303.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "5250",
+        "confidence": 0.999,
+        "bbox": [
+          531.0,
+          285.0,
+          569.0,
+          303.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "<24月定期点検>",
+        "confidence": 0.8808,
+        "bbox": [
+          43.0,
+          300.0,
+          201.0,
+          314.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "15120",
+        "confidence": 0.9941,
+        "bbox": [
+          513.0,
+          299.0,
+          569.0,
+          317.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "スパーの状",
+        "confidence": 0.7686,
+        "bbox": [
+          43.0,
+          314.0,
+          203.0,
+          328.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "点1.0",
+        "confidence": 0.9924,
+        "bbox": [
+          380.0,
+          313.0,
+          447.0,
+          330.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "エ·クリーナ汚れ詰まり",
+        "confidence": 0.7382,
+        "bbox": [
+          40.0,
+          325.0,
+          234.0,
+          343.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "点换1.0",
+        "confidence": 0.8505,
+        "bbox": [
+          380.0,
+          326.0,
+          447.0,
+          344.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "レ一装置の機能、摩耗",
+        "confidence": 0.9056,
+        "bbox": [
+          41.0,
+          339.0,
+          236.0,
+          356.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "点検1.0",
+        "confidence": 0.8627,
+        "bbox": [
+          380.0,
+          340.0,
+          447.0,
+          358.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "夕の亀裂、損傷、摩耗",
+        "confidence": 0.8032,
+        "bbox": [
+          41.0,
+          355.0,
+          235.0,
+          369.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "点1.0",
+        "confidence": 0.9936,
+        "bbox": [
+          380.0,
+          353.0,
+          447.0,
+          370.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "マラの取付け緩み損傷",
+        "confidence": 0.8896,
+        "bbox": [
+          42.0,
+          367.0,
+          221.0,
+          381.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "点1.0",
+        "confidence": 0.9949,
+        "bbox": [
+          380.0,
+          367.0,
+          447.0,
+          384.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "その他は点検記録簿よる",
+        "confidence": 0.8023,
+        "bbox": [
+          41.0,
+          379.0,
+          234.0,
+          397.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "シヨートパーツ",
+        "confidence": 0.854,
+        "bbox": [
+          42.0,
+          395.0,
+          165.0,
+          409.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "車検早期予約特别割引",
+        "confidence": 0.8869,
+        "bbox": [
+          40.0,
+          405.0,
+          202.0,
+          423.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "-3150",
+        "confidence": 0.9987,
+        "bbox": [
+          523.0,
+          405.0,
+          570.0,
+          423.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "車雨持特别割引",
+        "confidence": 0.8072,
+        "bbox": [
+          40.0,
+          419.0,
+          201.0,
+          437.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "-2100",
+        "confidence": 0.9557,
+        "bbox": [
+          523.0,
+          419.0,
+          573.0,
+          438.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "初回車検特别割引",
+        "confidence": 0.9113,
+        "bbox": [
+          41.0,
+          435.0,
+          169.0,
+          448.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "-2520",
+        "confidence": 0.9948,
+        "bbox": [
+          524.0,
+          433.0,
+          570.0,
+          451.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "2",
+        "confidence": 0.9992,
+        "bbox": [
+          7.0,
+          448.0,
+          19.0,
+          463.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "お勧め/お手入",
+        "confidence": 0.7485,
+        "bbox": [
+          34.0,
+          448.0,
+          162.0,
+          462.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "ラLEOSM",
+        "confidence": 0.8939,
+        "bbox": [
+          41.0,
+          462.0,
+          126.0,
+          475.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "3.7",
+        "confidence": 0.9963,
+        "bbox": [
+          412.0,
+          461.0,
+          446.0,
+          476.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "一ト,オ7ル一（マ一レ15400RTA003",
+        "confidence": 0.726,
+        "bbox": [
+          41.0,
+          476.0,
+          342.0,
+          489.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "1260",
+        "confidence": 0.9991,
+        "bbox": [
+          467.0,
+          474.0,
+          504.0,
+          492.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "892",
+        "confidence": 0.9981,
+        "bbox": [
+          540.0,
+          475.0,
+          568.0,
+          491.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "ヤ一,レ7°ラ14MM",
+        "confidence": 0.6667,
+        "bbox": [
+          40.0,
+          489.0,
+          196.0,
+          502.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "9410914000",
+        "confidence": 0.9993,
+        "bbox": [
+          250.0,
+          489.0,
+          333.0,
+          503.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "7°V一才（DOT-4）",
+        "confidence": 0.7103,
+        "bbox": [
+          41.0,
+          502.0,
+          169.0,
+          516.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "0820399931",
+        "confidence": 0.9994,
+        "bbox": [
+          250.0,
+          503.0,
+          333.0,
+          516.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "1942",
+        "confidence": 0.9992,
+        "bbox": [
+          468.0,
+          502.0,
+          503.0,
+          517.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "ヤリ°一セ卜.フロ",
+        "confidence": 0.5963,
+        "bbox": [
+          24.0,
+          514.0,
+          155.0,
+          529.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "01463S87A00",
+        "confidence": 0.993,
+        "bbox": [
+          250.0,
+          516.0,
+          342.0,
+          529.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "4010",
+        "confidence": 0.9993,
+        "bbox": [
+          468.0,
+          516.0,
+          503.0,
+          530.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "6247",
+        "confidence": 0.9991,
+        "bbox": [
+          532.0,
+          515.0,
+          568.0,
+          530.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "キ一セツト,リ",
+        "confidence": 0.6759,
+        "bbox": [
+          24.0,
+          526.0,
+          148.0,
+          544.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "01473SZ3A00",
+        "confidence": 0.9915,
+        "bbox": [
+          250.0,
+          530.0,
+          342.0,
+          543.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "2394",
+        "confidence": 0.9985,
+        "bbox": [
+          468.0,
+          529.0,
+          503.0,
+          544.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "7140",
+        "confidence": 0.999,
+        "bbox": [
+          533.0,
+          529.0,
+          568.0,
+          544.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "一セ，マス一(20.64MM)",
+        "confidence": 0.7375,
+        "bbox": [
+          25.0,
+          539.0,
+          226.0,
+          558.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "01462SDAA00",
+        "confidence": 0.9742,
+        "bbox": [
+          250.0,
+          543.0,
+          341.0,
+          557.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "5985",
+        "confidence": 0.9982,
+        "bbox": [
+          468.0,
+          543.0,
+          503.0,
+          558.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "8925",
+        "confidence": 0.9988,
+        "bbox": [
+          533.0,
+          543.0,
+          568.0,
+          558.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "-.7°-卜°（650HM）",
+        "confidence": 0.7348,
+        "bbox": [
+          39.0,
+          555.0,
+          185.0,
+          570.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "76622SMA004",
+        "confidence": 0.9928,
+        "bbox": [
+          250.0,
+          556.0,
+          341.0,
+          570.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "换1.0",
+        "confidence": 0.9563,
+        "bbox": [
+          390.0,
+          554.0,
+          447.0,
+          571.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "945",
+        "confidence": 0.999,
+        "bbox": [
+          475.0,
+          556.0,
+          503.0,
+          571.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "-，7°-卜°（350MM）",
+        "confidence": 0.7359,
+        "bbox": [
+          39.0,
+          568.0,
+          185.0,
+          583.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "76632SMA004",
+        "confidence": 0.9758,
+        "bbox": [
+          250.0,
+          570.0,
+          341.0,
+          583.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "换1.0",
+        "confidence": 0.9427,
+        "bbox": [
+          393.0,
+          567.0,
+          447.0,
+          585.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "735",
+        "confidence": 0.9993,
+        "bbox": [
+          475.0,
+          569.0,
+          503.0,
+          584.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "n-，7b-",
+        "confidence": 0.6356,
+        "bbox": [
+          40.0,
+          582.0,
+          129.0,
+          596.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "76632SFA003",
+        "confidence": 0.9899,
+        "bbox": [
+          250.0,
+          583.0,
+          342.0,
+          597.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "换",
+        "confidence": 0.9401,
+        "bbox": [
+          396.0,
+          583.0,
+          412.0,
+          596.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "1.0",
+        "confidence": 0.9958,
+        "bbox": [
+          415.0,
+          583.0,
+          446.0,
+          598.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "630",
+        "confidence": 0.9993,
+        "bbox": [
+          475.0,
+          583.0,
+          503.0,
+          598.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "ATF、￥14700.追加2",
+        "confidence": 0.7566,
+        "bbox": [
+          218.0,
+          619.0,
+          437.0,
+          646.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "重税",
+        "confidence": 0.714,
+        "bbox": [
+          0.0,
+          661.0,
+          32.0,
+          675.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "30,000",
+        "confidence": 0.9781,
+        "bbox": [
+          48.0,
+          662.0,
+          99.0,
+          677.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "自",
+        "confidence": 0.9354,
+        "bbox": [
+          118.0,
+          663.0,
+          152.0,
+          674.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "22,470",
+        "confidence": 0.95,
+        "bbox": [
+          168.0,
+          664.0,
+          220.0,
+          678.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "代等",
+        "confidence": 0.9027,
+        "bbox": [
+          239.0,
+          661.0,
+          275.0,
+          675.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "1,100",
+        "confidence": 0.9754,
+        "bbox": [
+          297.0,
+          664.0,
+          342.0,
+          679.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "整備代小計",
+        "confidence": 0.8032,
+        "bbox": [
+          381.0,
+          662.0,
+          438.0,
+          673.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "17901",
+        "confidence": 0.9989,
+        "bbox": [
+          458.0,
+          662.0,
+          503.0,
+          680.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "45254",
+        "confidence": 0.9973,
+        "bbox": [
+          523.0,
+          664.0,
+          567.0,
+          679.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "每度引立て預厚お礼申し上す。",
+        "confidence": 0.8016,
+        "bbox": [
+          71.0,
+          733.0,
+          313.0,
+          746.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "依頼赐わりた算お見精金は本書の通い。",
+        "confidence": 0.6894,
+        "bbox": [
+          158.0,
+          748.0,
+          443.0,
+          758.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "尚分解作等よ日程及算見積金変更生場合います。",
+        "confidence": 0.7964,
+        "bbox": [
+          157.0,
+          760.0,
+          487.0,
+          773.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "①お客控",
+        "confidence": 0.7403,
+        "bbox": [
+          0.0,
+          777.0,
+          45.0,
+          788.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "算お積有期限受付月日1月。",
+        "confidence": 0.8569,
+        "bbox": [
+          158.0,
+          775.0,
+          374.0,
+          785.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      }
+    ],
+    "confidence": 0.8635,
+    "status": "ocr_completed",
+    "elapsed_seconds": 64.65
+  },
+  {
+    "document_id": "real_receipt_01",
+    "file": "real_receipt_01.jpg",
+    "text": "领收善\nステーキハウサ卜ウ\n武藏野市吉祥寺118\nTEL0422-21-6464\n2017年8月2日（水）NO0\n人数\n4名\n特選口一\n4個×单10.000\n￥40.000\nー\n2個X单300\n￥600\n一口茶\n￥300\n小計\n￥40.900\n合\n計十\n￥40,900\n(ち消费税\n￥3,029）\n￥41.000\nお預り\n￥100\nお釣り\n904319时26分\n1青",
+    "blocks": [
+      {
+        "text": "领收善",
+        "confidence": 0.584,
+        "bbox": [
+          129.0,
+          51.0,
+          198.0,
+          72.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "ステーキハウサ卜ウ",
+        "confidence": 0.7728,
+        "bbox": [
+          55.0,
+          61.0,
+          261.0,
+          96.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "武藏野市吉祥寺118",
+        "confidence": 0.9402,
+        "bbox": [
+          103.0,
+          87.0,
+          227.0,
+          109.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "TEL0422-21-6464",
+        "confidence": 0.9769,
+        "bbox": [
+          115.0,
+          101.0,
+          217.0,
+          122.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "2017年8月2日（水）NO0",
+        "confidence": 0.9427,
+        "bbox": [
+          70.0,
+          132.0,
+          236.0,
+          157.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "人数",
+        "confidence": 0.9959,
+        "bbox": [
+          36.0,
+          167.0,
+          91.0,
+          189.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "4名",
+        "confidence": 0.9981,
+        "bbox": [
+          253.0,
+          171.0,
+          278.0,
+          192.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "特選口一",
+        "confidence": 0.6786,
+        "bbox": [
+          45.0,
+          188.0,
+          136.0,
+          206.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "4個×单10.000",
+        "confidence": 0.9314,
+        "bbox": [
+          86.0,
+          205.0,
+          200.0,
+          225.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "￥40.000",
+        "confidence": 0.951,
+        "bbox": [
+          216.0,
+          204.0,
+          275.0,
+          225.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "ー",
+        "confidence": 0.3939,
+        "bbox": [
+          44.0,
+          222.0,
+          96.0,
+          243.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "2個X单300",
+        "confidence": 0.8616,
+        "bbox": [
+          83.0,
+          237.0,
+          180.0,
+          260.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "￥600",
+        "confidence": 0.918,
+        "bbox": [
+          244.0,
+          236.0,
+          279.0,
+          256.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "一口茶",
+        "confidence": 0.7628,
+        "bbox": [
+          42.0,
+          256.0,
+          132.0,
+          279.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "￥300",
+        "confidence": 0.93,
+        "bbox": [
+          246.0,
+          254.0,
+          282.0,
+          273.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "小計",
+        "confidence": 0.8302,
+        "bbox": [
+          30.0,
+          275.0,
+          90.0,
+          301.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "￥40.900",
+        "confidence": 0.8763,
+        "bbox": [
+          225.0,
+          270.0,
+          284.0,
+          292.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "合",
+        "confidence": 0.8902,
+        "bbox": [
+          37.0,
+          299.0,
+          68.0,
+          319.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "計十",
+        "confidence": 0.783,
+        "bbox": [
+          100.0,
+          293.0,
+          140.0,
+          320.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "￥40,900",
+        "confidence": 0.9044,
+        "bbox": [
+          185.0,
+          286.0,
+          301.0,
+          315.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "(ち消费税",
+        "confidence": 0.8422,
+        "bbox": [
+          31.0,
+          313.0,
+          133.0,
+          342.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "￥3,029）",
+        "confidence": 0.8116,
+        "bbox": [
+          234.0,
+          306.0,
+          294.0,
+          332.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "￥41.000",
+        "confidence": 0.9137,
+        "bbox": [
+          226.0,
+          325.0,
+          288.0,
+          351.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "お預り",
+        "confidence": 0.6943,
+        "bbox": [
+          31.0,
+          336.0,
+          88.0,
+          361.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "￥100",
+        "confidence": 0.9355,
+        "bbox": [
+          234.0,
+          341.0,
+          302.0,
+          369.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "お釣り",
+        "confidence": 0.8472,
+        "bbox": [
+          32.0,
+          355.0,
+          89.0,
+          380.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "904319时26分",
+        "confidence": 0.9591,
+        "bbox": [
+          192.0,
+          374.0,
+          299.0,
+          403.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "1青",
+        "confidence": 0.5763,
+        "bbox": [
+          43.0,
+          393.0,
+          74.0,
+          413.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      }
+    ],
+    "confidence": 0.8394,
+    "status": "ocr_completed",
+    "elapsed_seconds": 13.53
+  },
+  {
+    "document_id": "receipt_01",
+    "file": "receipt_01.png",
+    "text": "業務スーパー河内屋\n领収書\n青菜台店\n電話045-985-9603\n登録番号：17011701002269\nロの品質とうロの価格\n業務スーバーでは毎日が\nお買い得とっています。\n0010-0003-0003\n\n2025年7月12日\n担当：\n土田\n卵赤玉MSP10個人\n237\n0214901995400119\nマカ□ニ(セダニ一二）500G.138\n0218007290000330\nJUCOVIA（業）19--2418\n0214961681003581\n协同牛乳酪農牛乳1L\n199\n0214964228110063\nおめ納豆小粒二3\n76\n0214901160010143\n（=軽减税率対象）\n5点/小\n計\n￥1,068\n外税買上额\n8%\n1,068\n外税额\n8%\n85\n税额合計\n85\n合\n計\n¥1,153\n（8%对象\n1,068\n85)\nお預り\n￥5,000\nお釣り\n￥3,847\n上記正に領収いたました\n本書保管上のお願い\n財布·手帳等は保管頂<\n場合は、印刷面内側折保管\nをお願いします\n6829\n6821\n11:20",
+    "blocks": [
+      {
+        "text": "業務スーパー河内屋",
+        "confidence": 0.7994,
+        "bbox": [
+          34.8,
+          29.2,
+          361.5,
+          86.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "领収書",
+        "confidence": 0.7534,
+        "bbox": [
+          144.6,
+          16.7,
+          232.2,
+          47.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "青菜台店",
+        "confidence": 0.8292,
+        "bbox": [
+          147.4,
+          75.1,
+          228.1,
+          105.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "電話045-985-9603",
+        "confidence": 0.9463,
+        "bbox": [
+          104.3,
+          98.7,
+          315.7,
+          125.1
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "登録番号：17011701002269",
+        "confidence": 0.9305,
+        "bbox": [
+          114.0,
+          147.3,
+          374.1,
+          176.5
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "ロの品質とうロの価格",
+        "confidence": 0.7445,
+        "bbox": [
+          69.5,
+          191.8,
+          312.9,
+          234.9
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "業務スーバーでは毎日が",
+        "confidence": 0.7741,
+        "bbox": [
+          68.1,
+          219.6,
+          311.5,
+          259.9
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "お買い得とっています。",
+        "confidence": 0.8613,
+        "bbox": [
+          69.5,
+          247.4,
+          319.8,
+          286.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "0010-0003-0003",
+        "confidence": 0.9763,
+        "bbox": [
+          37.5,
+          298.8,
+          198.9,
+          332.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "",
+        "confidence": 0.0,
+        "bbox": [
+          203.0,
+          314.1,
+          222.5,
+          325.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "2025年7月12日",
+        "confidence": 0.999,
+        "bbox": [
+          214.1,
+          303.0,
+          375.5,
+          339.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "担当：",
+        "confidence": 0.954,
+        "bbox": [
+          34.8,
+          323.9,
+          108.5,
+          357.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "土田",
+        "confidence": 0.9904,
+        "bbox": [
+          141.8,
+          326.6,
+          198.9,
+          364.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "卵赤玉MSP10個人",
+        "confidence": 0.9808,
+        "bbox": [
+          26.4,
+          375.3,
+          248.9,
+          415.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "237",
+        "confidence": 0.9993,
+        "bbox": [
+          332.3,
+          385.0,
+          378.2,
+          418.4
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "0214901995400119",
+        "confidence": 0.9597,
+        "bbox": [
+          66.7,
+          401.7,
+          269.8,
+          440.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "マカ□ニ(セダニ一二）500G.138",
+        "confidence": 0.712,
+        "bbox": [
+          26.4,
+          428.1,
+          375.5,
+          468.4
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "0218007290000330",
+        "confidence": 0.9033,
+        "bbox": [
+          66.7,
+          454.5,
+          269.8,
+          493.4
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "JUCOVIA（業）19--2418",
+        "confidence": 0.7881,
+        "bbox": [
+          26.4,
+          480.9,
+          375.5,
+          519.9
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "0214961681003581",
+        "confidence": 0.9968,
+        "bbox": [
+          66.7,
+          507.3,
+          268.4,
+          542.1
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "协同牛乳酪農牛乳1L",
+        "confidence": 0.8953,
+        "bbox": [
+          27.8,
+          532.4,
+          267.0,
+          569.9
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "199",
+        "confidence": 0.999,
+        "bbox": [
+          335.1,
+          542.1,
+          375.5,
+          571.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "0214964228110063",
+        "confidence": 0.9788,
+        "bbox": [
+          66.7,
+          558.8,
+          269.8,
+          594.9
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "おめ納豆小粒二3",
+        "confidence": 0.9077,
+        "bbox": [
+          27.8,
+          583.8,
+          278.1,
+          621.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "76",
+        "confidence": 0.9989,
+        "bbox": [
+          342.1,
+          592.1,
+          376.8,
+          624.1
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "0214901160010143",
+        "confidence": 0.9584,
+        "bbox": [
+          68.1,
+          610.2,
+          269.8,
+          646.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "（=軽减税率対象）",
+        "confidence": 0.7661,
+        "bbox": [
+          41.7,
+          663.0,
+          275.3,
+          697.8
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "5点/小",
+        "confidence": 0.9838,
+        "bbox": [
+          57.0,
+          714.5,
+          133.5,
+          745.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "計",
+        "confidence": 0.8705,
+        "bbox": [
+          184.9,
+          715.8,
+          216.9,
+          749.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "￥1,068",
+        "confidence": 0.9172,
+        "bbox": [
+          237.8,
+          718.6,
+          371.3,
+          753.4
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "外税買上额",
+        "confidence": 0.8804,
+        "bbox": [
+          91.8,
+          764.5,
+          207.2,
+          799.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "8%",
+        "confidence": 0.9982,
+        "bbox": [
+          229.4,
+          771.4,
+          258.6,
+          799.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "1,068",
+        "confidence": 0.9974,
+        "bbox": [
+          315.7,
+          772.8,
+          374.1,
+          800.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "外税额",
+        "confidence": 0.9791,
+        "bbox": [
+          90.4,
+          789.5,
+          165.5,
+          824.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "8%",
+        "confidence": 0.9992,
+        "bbox": [
+          229.4,
+          796.5,
+          260.0,
+          825.7
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "85",
+        "confidence": 0.9992,
+        "bbox": [
+          344.9,
+          800.6,
+          374.1,
+          825.7
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "税额合計",
+        "confidence": 0.8793,
+        "bbox": [
+          90.4,
+          842.3,
+          183.6,
+          875.7
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "85",
+        "confidence": 0.999,
+        "bbox": [
+          346.3,
+          850.7,
+          374.1,
+          877.1
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "合",
+        "confidence": 0.9978,
+        "bbox": [
+          29.2,
+          893.8,
+          58.4,
+          923.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "計",
+        "confidence": 0.8365,
+        "bbox": [
+          109.9,
+          895.2,
+          143.2,
+          925.7
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "¥1,153",
+        "confidence": 0.8812,
+        "bbox": [
+          240.6,
+          897.9,
+          374.1,
+          932.7
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "（8%对象",
+        "confidence": 0.9332,
+        "bbox": [
+          76.5,
+          918.8,
+          172.4,
+          953.5
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "1,068",
+        "confidence": 0.9902,
+        "bbox": [
+          215.5,
+          923.0,
+          282.3,
+          957.7
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "85)",
+        "confidence": 0.8512,
+        "bbox": [
+          335.1,
+          929.9,
+          374.1,
+          956.3
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "お預り",
+        "confidence": 0.8911,
+        "bbox": [
+          27.8,
+          945.2,
+          116.8,
+          975.8
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "￥5,000",
+        "confidence": 0.9113,
+        "bbox": [
+          305.9,
+          956.3,
+          374.1,
+          982.7
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "お釣り",
+        "confidence": 0.9254,
+        "bbox": [
+          25.0,
+          970.2,
+          137.7,
+          1003.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "￥3,847",
+        "confidence": 0.8937,
+        "bbox": [
+          305.9,
+          981.3,
+          374.1,
+          1007.7
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "上記正に領収いたました",
+        "confidence": 0.8279,
+        "bbox": [
+          69.5,
+          1050.8,
+          328.2,
+          1084.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "本書保管上のお願い",
+        "confidence": 0.8157,
+        "bbox": [
+          27.8,
+          1100.9,
+          247.5,
+          1134.2
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "財布·手帳等は保管頂<",
+        "confidence": 0.8469,
+        "bbox": [
+          47.3,
+          1127.3,
+          369.9,
+          1163.4
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "場合は、印刷面内側折保管",
+        "confidence": 0.8982,
+        "bbox": [
+          48.7,
+          1152.3,
+          372.7,
+          1189.8
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "をお願いします",
+        "confidence": 0.8745,
+        "bbox": [
+          48.7,
+          1180.1,
+          203.0,
+          1210.7
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "6829",
+        "confidence": 0.9995,
+        "bbox": [
+          26.4,
+          1306.6,
+          77.9,
+          1333.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "6821",
+        "confidence": 0.9996,
+        "bbox": [
+          100.1,
+          1305.2,
+          148.8,
+          1331.6
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      },
+      {
+        "text": "11:20",
+        "confidence": 0.9845,
+        "bbox": [
+          310.1,
+          1305.2,
+          378.2,
+          1340.0
+        ],
+        "orientation": "horizontal",
+        "page": 1
+      }
+    ],
+    "confidence": 0.8976,
+    "status": "ocr_completed",
+    "elapsed_seconds": 28.44
+  }
+]

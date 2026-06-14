@@ -1,5 +1,6 @@
 from app.schemas.documents import (
     DocumentStatus,
+    DocumentSummary,
     ExtractionRequest,
     ExtractionResult,
     FeedbackRequest,
@@ -18,6 +19,7 @@ from app.schemas.documents import (
 
 __all__ = [
     "DocumentStatus",
+    "DocumentSummary",
     "ExtractionRequest",
     "ExtractionResult",
     "FeedbackRequest",

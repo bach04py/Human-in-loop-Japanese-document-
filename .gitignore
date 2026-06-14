@@ -11,3 +11,5 @@ node_modules/
 dist/
 build/
 data/uploads/
+myenv
+*.log

@@ -1,10 +1,14 @@
+from datetime import datetime
 from pathlib import Path
 from uuid import uuid4
+import mimetypes
 
 from fastapi import APIRouter, File, HTTPException, UploadFile, status
+from fastapi.responses import FileResponse
 
 from app.core.config import settings
 from app.schemas import (
+    DocumentSummary,
     ExtractionRequest,
     ExtractionResult,
     FeedbackRequest,
@@ -78,12 +82,54 @@ async def upload_document(file: UploadFile = File(...)) -> UploadResponse:
     )
 
 
+def _guess_content_type(file_path: Path) -> str | None:
+    content_type, _ = mimetypes.guess_type(file_path.name)
+    return content_type
+
+
+@router.get("/documents", response_model=list[DocumentSummary], tags=["documents"])
+async def list_documents() -> list[DocumentSummary]:
+    settings.upload_dir.mkdir(parents=True, exist_ok=True)
+    documents = []
+    for file_path in sorted(settings.upload_dir.glob("doc_*.*"), key=lambda path: path.stat().st_mtime, reverse=True):
+        documents.append(DocumentSummary(
+            document_id=file_path.stem,
+            filename=file_path.name,
+            content_type=_guess_content_type(file_path),
+            uploaded_at=datetime.fromtimestamp(file_path.stat().st_mtime).isoformat(),
+            document_type="unknown",
+            status="uploaded",
+        ))
+    return documents
+
+
+@router.get("/documents/{document_id}/file", tags=["documents"])
+async def get_document_file(document_id: str) -> FileResponse:
+    candidates = list(settings.upload_dir.glob(f"{document_id}.*"))
+    if not candidates:
+        raise HTTPException(status_code=404, detail=f"Document not found: {document_id}")
+
+    file_path = candidates[0]
+    return FileResponse(
+        path=file_path,
+        filename=file_path.name,
+        media_type=None,
+    )
+
+
 @router.post("/ocr", response_model=OcrResult, tags=["agents"])
 async def run_ocr(request: OcrRequest) -> OcrResult:
-    return await ocr_service.run(
-        document_id=request.document_id,
-        include_boxes=request.include_boxes,
-    )
+    try:
+        return await ocr_service.run(
+            document_id=request.document_id,
+            include_boxes=request.include_boxes,
+        )
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc))
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except RuntimeError as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
 
 
 @router.post("/extract", response_model=ExtractionResult, tags=["agents"])

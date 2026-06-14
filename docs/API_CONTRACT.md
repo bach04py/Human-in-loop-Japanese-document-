@@ -62,7 +62,34 @@ Request:
 }
 ```
 
-Response includes full text, OCR blocks, bounding boxes, orientation, and confidence.
+Response includes full text, OCR blocks, bounding boxes, orientation, and confidence. The frontend uses `blocks[].bbox` to render the OCR bounding-box overlay in the correction workspace.
+
+Example response:
+
+```json
+{
+  "document_id": "doc_invoice_001",
+  "text": "株式会社ABC\n請求書番号: INV001\nご請求金額: ￥120,000",
+  "blocks": [
+    {
+      "text": "株式会社ABC",
+      "confidence": 0.94,
+      "bbox": [48, 80, 220, 112],
+      "page": 1,
+      "orientation": "horizontal"
+    },
+    {
+      "text": "請求書番号: INV001",
+      "confidence": 0.91,
+      "bbox": [48, 122, 260, 154],
+      "page": 1,
+      "orientation": "horizontal"
+    }
+  ],
+  "confidence": 0.92,
+  "status": "ocr_completed"
+}
+```
 
 ### POST /extract
 

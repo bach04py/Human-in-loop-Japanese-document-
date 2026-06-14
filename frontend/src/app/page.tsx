@@ -1,16 +1,15 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  FileText, 
-  UploadCloud, 
-  Database, 
-  Settings, 
-  CheckCircle2, 
-  AlertCircle, 
-  Sparkles, 
-  Activity, 
-  TrendingDown, 
+import {
+  FileText,
+  UploadCloud,
+  Database,
+  CheckCircle2,
+  AlertCircle,
+  Sparkles,
+  Activity,
+  TrendingDown,
   ArrowRight,
   RefreshCw,
   Award,
@@ -20,98 +19,62 @@ import {
   Trash2,
   AlertTriangle,
   FileCheck,
-  ExternalLink
+  ExternalLink,
+  Maximize2,
+  X
 } from 'lucide-react';
-import { apiService, UploadResponse, PipelineRunResponse, ValidationIssue } from '../lib/api';
+import { apiService, UploadResponse, PipelineRunResponse, ValidationIssue, OcrBlock, HealthResponse } from '../lib/api';
 
-// Simple mock initial documents to populate the workspace on first load
-const INITIAL_MOCK_DOCUMENTS = [
-  {
-    document_id: 'doc_invoice_902f',
-    filename: 'tokyo_energy_june.pdf',
-    status: 'validated',
-    content_type: 'application/pdf',
-    uploaded_at: '2026-05-30T00:10:00Z',
-    document_type: 'invoice',
-    ocr_text: '東京電力エナジーパートナー株式会社\n請求書番号: 2026-990812\nご請求金額: ￥145,200',
-    data: {
-      company: '東京電力エナジーパートナー株式会社',
-      invoice_id: '2026-990812',
-      amount: 145200,
-      currency: 'JPY',
-      document_type: 'invoice'
-    },
-    validation: {
-      valid: true,
-      issues: []
-    }
-  },
-  {
-    document_id: 'doc_contract_a11b',
-    filename: 'shibuya_lease_agreement.png',
-    status: 'feedback_received',
-    content_type: 'image/png',
-    uploaded_at: '2026-05-29T18:32:00Z',
-    document_type: 'contract',
-    ocr_text: '賃貸借契約書\n貸主: 渋谷不動産開発株式会社\n借主: 株式会社AIシステムズ\n月額賃料: ￥350,000',
-    data: {
-      company: '渋谷不動産開発株式会社',
-      invoice_id: 'CONTRACT-2026-X',
-      amount: 350000,
-      currency: 'JPY',
-      document_type: 'contract'
-    },
-    validation: {
-      valid: false,
-      issues: [
-        {
-          field: 'invoice_id',
-          message: 'Format does not match standard invoice patterns.',
-          severity: 'warning'
-        }
-      ]
-    }
-  },
-  {
-    document_id: 'doc_form_4812',
-    filename: 'kyoto_tax_notice.jpg',
-    status: 'uploaded',
-    content_type: 'image/jpeg',
-    uploaded_at: '2026-05-30T00:15:23Z',
-    document_type: 'unknown',
-    ocr_text: '',
-    data: {},
-    validation: {
-      valid: false,
-      issues: []
-    }
-  }
-];
+type ExtractedData = Record<string, unknown>;
+
+interface LocalDocument {
+  document_id: string;
+  filename: string;
+  status: string;
+  content_type: string;
+  file_url?: string;
+  uploaded_at: string;
+  document_type: string;
+  ocr_text: string;
+  ocr_blocks: OcrBlock[];
+  data: ExtractedData;
+  validation: {
+    valid: boolean;
+    issues: ValidationIssue[];
+  };
+  summary?: string;
+}
+
+// Document list is loaded dynamically from the backend when available.
+const INITIAL_MOCK_DOCUMENTS: LocalDocument[] = [];
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'dashboard' | 'upload' | 'correction' | 'thesis'>('dashboard');
-  const [documents, setDocuments] = useState<any[]>(INITIAL_MOCK_DOCUMENTS);
-  const [selectedDocId, setSelectedDocId] = useState<string>('doc_invoice_902f');
-  
+  const [documents, setDocuments] = useState<LocalDocument[]>(INITIAL_MOCK_DOCUMENTS);
+  const [selectedDocId, setSelectedDocId] = useState<string>('');
+  const [fetchingDocuments, setFetchingDocuments] = useState(false);
+
   // Backend connection status
   const [backendConnected, setBackendConnected] = useState<boolean | null>(null);
-  const [healthInfo, setHealthInfo] = useState<any>(null);
-  
+  const [healthInfo, setHealthInfo] = useState<HealthResponse | null>(null);
+
   // Upload State
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadedResult, setUploadedResult] = useState<UploadResponse | null>(null);
-  
+
   // Correction / Review workspace state
+  const [documentSummary, setDocumentSummary] = useState('');
   const [ocrText, setOcrText] = useState('');
-  const [extractedData, setExtractedData] = useState<Record<string, any>>({});
+  const [ocrBlocks, setOcrBlocks] = useState<OcrBlock[]>([]);
+  const [extractedData, setExtractedData] = useState<ExtractedData>({});
   const [validationIssues, setValidationIssues] = useState<ValidationIssue[]>([]);
-  const [isValidating, setIsValidating] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notes, setNotes] = useState('');
-  const [reviewer, setReviewer] = useState('admin@human-in-the-loop.ai');
+  const reviewer = 'admin@human-in-the-loop.ai';
   const [pipelineRunning, setPipelineRunning] = useState(false);
+  const [fullscreenViewerOpen, setFullscreenViewerOpen] = useState(false);
+  const [documentImageSize, setDocumentImageSize] = useState<{ width: number; height: number } | null>(null);
 
   // Stats for Thesis Outline tab
   const [stats, setStats] = useState({
@@ -133,7 +96,7 @@ export default function Home() {
         const health = await apiService.getHealth();
         setBackendConnected(true);
         setHealthInfo(health);
-      } catch (error) {
+      } catch {
         console.warn("FastAPI backend is offline, running in mock simulation mode.");
         setBackendConnected(false);
       }
@@ -141,15 +104,40 @@ export default function Home() {
     checkHealth();
   }, []);
 
-  // Update Workspace elements when selected document changes
   useEffect(() => {
-    const doc = documents.find(d => d.document_id === selectedDocId);
-    if (doc) {
-      setOcrText(doc.ocr_text || '');
-      setExtractedData(doc.data || {});
-      setValidationIssues(doc.validation?.issues || []);
+    async function loadDocuments() {
+      if (!backendConnected) return;
+      setFetchingDocuments(true);
+      try {
+        const docs = await apiService.getDocuments();
+        const mapped = docs.map(doc => ({
+          ...doc,
+          file_url: apiService.getDocumentFileUrl(doc.document_id),
+          ocr_text: '',
+          ocr_blocks: [],
+          data: {},
+          validation: { valid: false, issues: [] },
+          summary: doc.summary || ''
+        }));
+        setDocuments(mapped);
+        if (mapped.length > 0) {
+          setSelectedDocId(mapped[0].document_id);
+        }
+      } catch (error) {
+        console.warn('Unable to load document list from backend.', error);
+      } finally {
+        setFetchingDocuments(false);
+      }
     }
-  }, [selectedDocId, documents]);
+
+    loadDocuments();
+  }, [backendConnected]);
+
+  useEffect(() => {
+    if (!selectedDocId && documents.length > 0) {
+      setSelectedDocId(documents[0].document_id);
+    }
+  }, [documents, selectedDocId]);
 
   // Handle Drag & Drop events
   const [dragOver, setDragOver] = useState(false);
@@ -178,12 +166,24 @@ export default function Home() {
     }
   };
 
+  const selectDocument = (docId: string) => {
+    const doc = documents.find(d => d.document_id === docId);
+    setSelectedDocId(docId);
+    if (!doc) return;
+    setOcrText(doc.ocr_text || '');
+    setOcrBlocks(doc.ocr_blocks || []);
+    setExtractedData(doc.data || {});
+    setValidationIssues(doc.validation?.issues || []);
+    setDocumentSummary(doc.summary || '');
+    setDocumentImageSize(null);
+  };
+
   // Perform document upload
   const handleUploadSubmit = async () => {
     if (!uploadFile) return;
     setUploading(true);
     setUploadProgress(10);
-    
+
     // Animate progress bar slightly
     const timer = setInterval(() => {
       setUploadProgress(prev => (prev < 90 ? prev + 15 : prev));
@@ -207,29 +207,36 @@ export default function Home() {
 
       clearInterval(timer);
       setUploadProgress(100);
-      setUploadedResult(result);
-      
+
       // Append to local docs list
-      const newDoc = {
+      const newDoc: LocalDocument = {
         document_id: result.document_id,
         filename: result.filename,
         status: 'uploaded',
         content_type: result.content_type || 'unknown',
+        file_url: backendConnected ? apiService.getDocumentFileUrl(result.document_id) : undefined,
         uploaded_at: new Date().toISOString(),
         document_type: 'unknown',
         ocr_text: '',
+        ocr_blocks: [],
         data: {},
-        validation: { valid: false, issues: [] }
+        validation: { valid: false, issues: [] },
+        summary: ''
       };
-      
+
       setDocuments(prev => [newDoc, ...prev]);
       setSelectedDocId(result.document_id);
-      
+      setOcrText('');
+      setOcrBlocks([]);
+      setExtractedData({});
+      setValidationIssues([]);
+      setDocumentSummary('');
+      setDocumentImageSize(null);
+
       // Move tab to Workspace to let them process
       setTimeout(() => {
         setUploading(false);
         setUploadFile(null);
-        setUploadedResult(null);
         setActiveTab('correction');
       }, 1000);
 
@@ -250,7 +257,7 @@ export default function Home() {
       } else {
         // Mock execution delay
         await new Promise(resolve => setTimeout(resolve, 2000));
-        
+
         // Simulating the actual response based on API_CONTRACT
         pipelineResult = {
           document_id: docId,
@@ -259,7 +266,9 @@ export default function Home() {
             text: '株式会社ABC\n請求書番号: INV001\nご請求金額: ￥120,000\n消費税率: 10%',
             blocks: [
               { text: '株式会社ABC', confidence: 0.94, bbox: [48, 80, 220, 112], page: 1, orientation: 'horizontal' },
-              { text: '請求書番号: INV001', confidence: 0.91, bbox: [48, 122, 260, 154], page: 1, orientation: 'horizontal' }
+              { text: '請求書番号: INV001', confidence: 0.91, bbox: [48, 122, 260, 154], page: 1, orientation: 'horizontal' },
+              { text: 'ご請求金額: ￥120,000', confidence: 0.9, bbox: [48, 210, 260, 246], page: 1, orientation: 'horizontal' },
+              { text: '消費税率: 10%', confidence: 0.86, bbox: [48, 260, 180, 292], page: 1, orientation: 'horizontal' }
             ],
             confidence: 0.92,
             status: 'ocr_completed'
@@ -283,7 +292,8 @@ export default function Home() {
             confidence: 0.93,
             issues: [],
             status: 'validated'
-          }
+          },
+          summary: `Tài liệu ${docType.toUpperCase()}. Đơn vị: 株式会社ABC. Số hóa đơn: INV001. Số tiền: 120,000 JPY. Ngày: ${new Date().toISOString().split('T')[0]}. Hợp lệ.`
         } as PipelineRunResponse;
       }
 
@@ -295,8 +305,10 @@ export default function Home() {
             status: 'validated',
             document_type: docType,
             ocr_text: pipelineResult.ocr.text,
+            ocr_blocks: pipelineResult.ocr.blocks,
             data: pipelineResult.extraction.data,
-            validation: pipelineResult.validation
+            validation: pipelineResult.validation,
+            summary: pipelineResult.summary || ''
           };
         }
         return d;
@@ -304,8 +316,10 @@ export default function Home() {
 
       // Update active Workspace input states
       setOcrText(pipelineResult.ocr.text);
+      setOcrBlocks(pipelineResult.ocr.blocks);
       setExtractedData(pipelineResult.extraction.data);
       setValidationIssues(pipelineResult.validation.issues);
+      setDocumentSummary(pipelineResult.summary || '');
 
     } catch (err) {
       alert('Pipeline execution failed: ' + (err instanceof Error ? err.message : 'Unknown error'));
@@ -337,11 +351,13 @@ export default function Home() {
             ...d,
             status: 'feedback_received',
             ocr_text: ocrText,
+            ocr_blocks: ocrBlocks,
             data: extractedData,
             validation: {
               valid: true,
               issues: [] // Clear issues since human approved it
-            }
+            },
+            summary: documentSummary
           };
         }
         return d;
@@ -384,9 +400,111 @@ export default function Home() {
     }
   };
 
+  const selectedDocument = documents.find(d => d.document_id === selectedDocId);
+  const selectedDocumentFileUrl = selectedDocument?.file_url;
+  const selectedDocumentIsImage = Boolean(selectedDocument?.content_type?.startsWith('image/'));
+  const selectedDocumentIsPdf = selectedDocument?.content_type === 'application/pdf' || selectedDocument?.filename.toLowerCase().endsWith('.pdf');
+  const visibleOcrBlocks = ocrBlocks.filter(block => block.bbox.length === 4);
+  const maxBoxX = Math.max(360, ...visibleOcrBlocks.map(block => block.bbox[2]));
+  const maxBoxY = Math.max(460, ...visibleOcrBlocks.map(block => block.bbox[3]));
+  const overlayWidth = Math.max(documentImageSize?.width || 0, maxBoxX);
+  const overlayHeight = Math.max(documentImageSize?.height || 0, maxBoxY);
+  const averageOcrConfidence = visibleOcrBlocks.length
+    ? visibleOcrBlocks.reduce((sum, block) => sum + block.confidence, 0) / visibleOcrBlocks.length
+    : 0;
+
+  const getBoxStyle = (block: OcrBlock): React.CSSProperties => {
+    const [x1, y1, x2, y2] = block.bbox;
+    return {
+      left: `${(x1 / overlayWidth) * 100}%`,
+      top: `${(y1 / overlayHeight) * 100}%`,
+      width: `${Math.max(((x2 - x1) / overlayWidth) * 100, 2)}%`,
+      height: `${Math.max(((y2 - y1) / overlayHeight) * 100, 2)}%`,
+    };
+  };
+
+  const resetOcrText = () => {
+    setOcrText(selectedDocument?.ocr_text || '');
+    setOcrBlocks(selectedDocument?.ocr_blocks || []);
+  };
+
+  const renderOcrBoxes = () => (
+    <>
+      {visibleOcrBlocks.map((block, idx) => (
+        <div
+          key={`${block.text}-${idx}`}
+          style={getBoxStyle(block)}
+          className="absolute rounded-sm border-2 border-indigo-500/90 bg-indigo-500/15 shadow-[0_0_18px_rgba(99,102,241,0.32)] transition-all hover:z-20 hover:border-emerald-500 hover:bg-emerald-400/20"
+          title={`${block.text} | Confidence: ${(block.confidence * 100).toFixed(1)}% | ${block.orientation}`}
+        >
+          <span className="absolute -top-5 left-0 max-w-[260px] truncate rounded bg-slate-950 px-1.5 py-0.5 text-[10px] font-semibold text-slate-100 shadow">
+            {(block.confidence * 100).toFixed(0)}% · {block.text}
+          </span>
+        </div>
+      ))}
+    </>
+  );
+
+  const renderDocumentSurface = (fullscreen = false) => (
+    <div className={`relative flex h-full w-full items-center justify-center overflow-auto bg-slate-950 ${fullscreen ? 'p-6' : 'p-3'}`}>
+      <div
+        className="relative max-h-full max-w-full overflow-hidden bg-white shadow-2xl"
+        style={{ aspectRatio: `${overlayWidth} / ${overlayHeight}`, width: 'min(100%, 920px)' }}
+      >
+        {selectedDocumentFileUrl && selectedDocumentIsImage ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={selectedDocumentFileUrl}
+            alt={selectedDocument?.filename || 'Uploaded document'}
+            className="absolute inset-0 h-full w-full object-fill"
+            onLoad={(event) => {
+              const image = event.currentTarget;
+              setDocumentImageSize({ width: image.naturalWidth, height: image.naturalHeight });
+            }}
+          />
+        ) : selectedDocumentFileUrl && selectedDocumentIsPdf ? (
+          <iframe
+            src={selectedDocumentFileUrl}
+            title={selectedDocument?.filename || 'Uploaded PDF'}
+            className="absolute inset-0 h-full w-full bg-white"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-slate-100">
+            <div className="absolute inset-0 bg-[linear-gradient(#e2e8f0_1px,transparent_1px),linear-gradient(90deg,#e2e8f0_1px,transparent_1px)] bg-[size:24px_24px] opacity-35" />
+            <div className="absolute inset-x-8 top-7 h-px bg-slate-300" />
+            <div className="absolute inset-x-8 bottom-7 h-px bg-slate-300" />
+            <div className="absolute left-8 top-10 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+              {selectedDocument?.filename || 'No document selected'}
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center p-8 text-center">
+              <div>
+                <FileCheck className="mx-auto h-8 w-8 text-slate-400" />
+                <p className="mt-3 text-sm font-semibold text-slate-600">No document preview file</p>
+                <p className="mt-1 text-xs text-slate-500">Upload a document to view the original scan behind OCR boxes.</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {visibleOcrBlocks.length > 0 ? (
+          <div className="absolute inset-0 z-10">
+            {renderOcrBoxes()}
+          </div>
+        ) : (
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-slate-950/5 p-8 text-center">
+            <div className="rounded border border-slate-300/80 bg-white/90 px-4 py-3 shadow">
+              <p className="text-sm font-semibold text-slate-700">No OCR boxes yet</p>
+              <p className="mt-1 text-xs text-slate-500">Run the agent pipeline to render detected bounding boxes.</p>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
   return (
     <div className="flex flex-1 min-h-screen bg-slate-950 text-slate-100 font-sans">
-      
+
       {/* LEFT SIDEBAR - premium Vercel-like styling */}
       <aside className="w-64 bg-slate-900/50 backdrop-blur-xl border-r border-slate-800 flex flex-col justify-between shrink-0">
         <div>
@@ -405,11 +523,10 @@ export default function Home() {
           <nav className="p-4 space-y-1">
             <button
               onClick={() => setActiveTab('dashboard')}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                activeTab === 'dashboard'
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${activeTab === 'dashboard'
                   ? 'bg-slate-800 text-white shadow-sm'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
-              }`}
+                }`}
             >
               <Database className="w-4.5 h-4.5" />
               Document Database
@@ -417,11 +534,10 @@ export default function Home() {
 
             <button
               onClick={() => setActiveTab('upload')}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                activeTab === 'upload'
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${activeTab === 'upload'
                   ? 'bg-slate-800 text-white shadow-sm'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
-              }`}
+                }`}
             >
               <UploadCloud className="w-4.5 h-4.5" />
               Upload Document
@@ -429,11 +545,10 @@ export default function Home() {
 
             <button
               onClick={() => setActiveTab('correction')}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                activeTab === 'correction'
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${activeTab === 'correction'
                   ? 'bg-slate-800 text-white shadow-sm'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
-              }`}
+                }`}
             >
               <FileText className="w-4.5 h-4.5" />
               HITL Correction Workspace
@@ -441,11 +556,10 @@ export default function Home() {
 
             <button
               onClick={() => setActiveTab('thesis')}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                activeTab === 'thesis'
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${activeTab === 'thesis'
                   ? 'bg-slate-800 text-white shadow-sm'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
-              }`}
+                }`}
             >
               <Award className="w-4.5 h-4.5" />
               Thesis & Metrics
@@ -483,7 +597,7 @@ export default function Home() {
 
       {/* MAIN VIEW AREA */}
       <main className="flex-1 flex flex-col min-w-0">
-        
+
         {/* HEADER BAR */}
         <header className="h-16 border-b border-slate-800 bg-slate-900/20 backdrop-blur-md px-8 flex items-center justify-between">
           <div className="flex items-center gap-2 text-sm text-slate-400">
@@ -582,15 +696,21 @@ export default function Home() {
                   </thead>
                   <tbody className="divide-y divide-slate-800/50 text-sm">
                     {documents.map((doc) => (
-                      <tr 
-                        key={doc.document_id} 
-                        className={`hover:bg-slate-900/20 transition-all ${
-                          selectedDocId === doc.document_id ? 'bg-slate-900/30' : ''
-                        }`}
+                      <tr
+                        key={doc.document_id}
+                        className={`hover:bg-slate-900/20 transition-all ${selectedDocId === doc.document_id ? 'bg-slate-900/30' : ''
+                          }`}
                       >
                         <td className="py-4 px-6 font-semibold text-slate-100 flex items-center gap-2.5">
                           <FileText className="w-4 h-4 text-slate-400 shrink-0" />
-                          <span className="truncate max-w-[200px]" title={doc.filename}>{doc.filename}</span>
+                          <div className="flex flex-col min-w-0">
+                            <span className="truncate max-w-[200px]" title={doc.filename}>{doc.filename}</span>
+                            {doc.summary && (
+                              <span className="text-[10px] text-slate-400 font-normal truncate max-w-[320px] mt-0.5" title={doc.summary}>
+                                {doc.summary}
+                              </span>
+                            )}
+                          </div>
                         </td>
                         <td className="py-4 px-6 font-mono text-xs text-slate-400">{doc.document_id}</td>
                         <td className="py-4 px-6 text-xs uppercase font-medium text-slate-300">
@@ -604,7 +724,7 @@ export default function Home() {
                           <div className="flex items-center justify-end gap-2">
                             <button
                               onClick={() => {
-                                setSelectedDocId(doc.document_id);
+                                selectDocument(doc.document_id);
                                 setActiveTab('correction');
                               }}
                               className="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-xs font-medium text-slate-200 transition-all"
@@ -627,7 +747,7 @@ export default function Home() {
                 </table>
                 {documents.length === 0 && (
                   <div className="p-12 text-center text-slate-500">
-                    No documents found. Click "Upload Document" to add files.
+                    No documents found. Click &quot;Upload Document&quot; to add files.
                   </div>
                 )}
               </div>
@@ -648,19 +768,18 @@ export default function Home() {
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 onClick={triggerFileSelect}
-                className={`p-10 rounded-2xl border-2 border-dashed flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 group ${
-                  dragOver 
-                    ? 'border-indigo-500 bg-indigo-500/5' 
-                    : uploadFile 
-                      ? 'border-slate-600 bg-slate-800/20' 
+                className={`p-10 rounded-2xl border-2 border-dashed flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 group ${dragOver
+                    ? 'border-indigo-500 bg-indigo-500/5'
+                    : uploadFile
+                      ? 'border-slate-600 bg-slate-800/20'
                       : 'border-slate-800 hover:border-slate-700 hover:bg-slate-900/10'
-                }`}
+                  }`}
               >
-                <input 
-                  type="file" 
-                  ref={fileInputRef} 
-                  onChange={handleFileChange} 
-                  className="hidden" 
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  className="hidden"
                   accept=".pdf,image/*"
                 />
 
@@ -691,7 +810,7 @@ export default function Home() {
                     <span className="text-indigo-400 font-bold">{uploadProgress}%</span>
                   </div>
                   <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
-                    <div 
+                    <div
                       className="h-full bg-indigo-600 transition-all duration-300 ease-out shadow-lg shadow-indigo-600/30"
                       style={{ width: `${uploadProgress}%` }}
                     />
@@ -719,7 +838,7 @@ export default function Home() {
           {/* 3. REVIEW AND CORRECTION WORKSPACE TAB */}
           {activeTab === 'correction' && (
             <div className="space-y-6 animate-in fade-in duration-300">
-              
+
               {/* HEADER SELECTOR */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/60 pb-5">
                 <div>
@@ -731,7 +850,7 @@ export default function Home() {
                   <span className="text-xs text-slate-500 font-semibold uppercase">Active Document:</span>
                   <select
                     value={selectedDocId}
-                    onChange={(e) => setSelectedDocId(e.target.value)}
+                    onChange={(e) => selectDocument(e.target.value)}
                     className="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs font-semibold text-slate-200 focus:outline-none focus:border-indigo-500"
                   >
                     {documents.map(d => (
@@ -745,58 +864,49 @@ export default function Home() {
 
               {/* MAIN LAYOUT */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                
+
                 {/* LEFT SIDE: OCR VISUALIZATION & RAW TEXT */}
                 <div className="lg:col-span-5 space-y-4 flex flex-col">
-                  
-                  {/* DOCUMENT VISUAL REPRESENTATION (MOCK WORKSPACE SCREENPLACE) */}
+
+                  {/* DOCUMENT VISUAL REPRESENTATION WITH OCR BOUNDING BOXES */}
                   <div className="p-5 rounded-2xl bg-slate-950 border border-slate-900 flex flex-col gap-4 aspect-[4/3] justify-between relative overflow-hidden group">
-                    
-                    {/* Visual glowing border accent */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none group-hover:bg-indigo-500/25 transition-all duration-300" />
-                    
                     <div className="flex items-center justify-between z-10">
-                      <span className="text-[11px] font-semibold tracking-wider text-indigo-400 uppercase bg-indigo-500/10 border border-indigo-500/25 px-2 py-0.5 rounded">
-                        Document Scan Preview
-                      </span>
-                      <span className="text-xs font-mono text-slate-500">Page 1 of 1</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[11px] font-semibold tracking-wider text-indigo-400 uppercase bg-indigo-500/10 border border-indigo-500/25 px-2 py-0.5 rounded">
+                          OCR Box Preview
+                        </span>
+                        <span className="max-w-[180px] truncate text-xs text-slate-500" title={selectedDocument?.filename}>
+                          {selectedDocument?.filename || 'No document selected'}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-mono text-slate-500">
+                          {visibleOcrBlocks.length} boxes
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setFullscreenViewerOpen(true)}
+                          className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-800 bg-slate-900 text-slate-300 transition-all hover:border-indigo-500 hover:text-white"
+                          title="Open fullscreen document viewer"
+                        >
+                          <Maximize2 className="h-4 w-4" />
+                        </button>
+                      </div>
                     </div>
 
-                    {/* MOCK INVOICE LAYOUT WITH OCR GLOWING BOUNDING BOXES */}
-                    <div className="border border-slate-800/80 bg-slate-900/10 rounded-xl flex-1 p-6 flex flex-col justify-between font-serif select-none z-10">
-                      <div className="flex justify-between items-start border-b border-slate-800 pb-3">
-                        <div className="space-y-1">
-                          {/* Hoverable bounding box */}
-                          <div className="px-2 py-1 rounded bg-indigo-500/10 border border-indigo-500/35 text-[14px] text-white font-sans inline-block cursor-help hover:bg-indigo-500/20 transition-all font-bold" title="Confidence: 94%">
-                            株式会社ABC
-                          </div>
-                          <p className="text-[10px] text-slate-500 font-sans">東京都新宿区西新宿 1-1-1</p>
-                        </div>
-                        <div className="text-right">
-                          <h4 className="text-lg font-bold text-slate-400 tracking-wider">請求書</h4>
-                          <div className="mt-1 px-1.5 py-0.5 rounded bg-indigo-500/10 border border-indigo-500/35 text-[10px] text-white font-sans inline-block cursor-help hover:bg-indigo-500/20 transition-all" title="Confidence: 91%">
-                            INV-001
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="my-4 space-y-2">
-                        <div className="h-2 w-full bg-slate-800 rounded-full" />
-                        <div className="h-2 w-3/4 bg-slate-800 rounded-full" />
-                        <div className="h-2 w-5/6 bg-slate-800 rounded-full" />
-                      </div>
-
-                      <div className="flex justify-between items-end border-t border-slate-850 pt-3">
-                        <span className="text-[10px] uppercase text-slate-500 font-sans tracking-wide">Total Amount Due:</span>
-                        <span className="text-lg font-bold text-slate-200 tracking-tight font-sans">￥120,000</span>
-                      </div>
+                    <div className="border border-slate-800/80 rounded-xl flex-1 relative overflow-hidden select-none z-10 shadow-inner">
+                      {renderDocumentSurface(false)}
                     </div>
 
                     <div className="flex items-center justify-between text-xs text-slate-500 border-t border-slate-900 pt-3 z-10">
-                      <span>PaddleOCR confidence: <b className="text-slate-300">92.0%</b></span>
+                      <span>
+                        OCR confidence: <b className="text-slate-300">
+                          {averageOcrConfidence ? `${(averageOcrConfidence * 100).toFixed(1)}%` : 'N/A'}
+                        </b>
+                      </span>
                       <span className="flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                        Interactive zones enabled
+                        Bounding boxes enabled
                       </span>
                     </div>
                   </div>
@@ -805,8 +915,8 @@ export default function Home() {
                   <div className="flex-1 flex flex-col space-y-2.5">
                     <div className="flex justify-between items-center">
                       <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Detected OCR Text Area</label>
-                      <button 
-                        onClick={() => setOcrText(prev => prev + '\n# Modified manually')}
+                      <button
+                        onClick={resetOcrText}
                         className="text-[11px] text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1 transition-all"
                       >
                         Reset text
@@ -823,16 +933,16 @@ export default function Home() {
 
                 {/* RIGHT SIDE: EXTRACTION FORM & PIPELINE ACTIONS */}
                 <div className="lg:col-span-7 space-y-6">
-                  
+
                   {/* TRIGGER CONTROLS CARD */}
                   <div className="p-5 rounded-2xl bg-slate-900/40 border border-slate-800/80 flex items-center justify-between gap-4">
                     <div>
                       <h4 className="font-semibold text-white">Agent Pipeline baseline execution</h4>
                       <p className="text-slate-400 text-xs mt-0.5">Start structural extraction & validate rules against the current file.</p>
                     </div>
-                    
+
                     <button
-                      onClick={() => runAgentPipeline(selectedDocId, 'invoice')}
+                      onClick={() => runAgentPipeline(selectedDocId, selectedDocument?.document_type || 'unknown')}
                       disabled={pipelineRunning}
                       className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 border border-slate-700 font-semibold text-sm px-4 py-2.5 rounded-xl shadow transition-all disabled:opacity-50 disabled:pointer-events-none"
                     >
@@ -850,6 +960,42 @@ export default function Home() {
                     </button>
                   </div>
 
+                  {/* SUMMARY GENERATION CARD */}
+                  <div className="bg-slate-900/25 border border-slate-800/80 rounded-2xl p-6 space-y-4">
+                    <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+                      <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                        <Sparkles className="w-4 h-4 text-indigo-400" />
+                        Summary Generation
+                      </h3>
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400">
+                        AI Agent Summary
+                      </span>
+                    </div>
+
+                    <div className="space-y-3">
+                      <textarea
+                        value={documentSummary}
+                        onChange={(e) => setDocumentSummary(e.target.value)}
+                        placeholder="Document Summary is empty. Run pipeline to generate summary..."
+                        className="w-full min-h-[100px] max-h-[200px] p-4 bg-slate-900/50 border border-slate-800 rounded-xl text-slate-200 text-sm focus:outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600 resize-y"
+                      />
+
+                      <div className="flex justify-between items-center text-xs text-slate-400">
+                        <span>Generates a concise Vietnamese summary of the Japanese document.</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const summaryText = `Tài liệu ${selectedDocument?.document_type?.toUpperCase() || 'Hóa đơn/Hợp đồng'} từ đơn vị ${extractedData.company || 'không rõ'}. Số hóa đơn: ${extractedData.invoice_id || 'không rõ'}. Số tiền: ${extractedData.amount ? Number(extractedData.amount).toLocaleString() : '0'} ${extractedData.currency || 'JPY'}.`;
+                            setDocumentSummary(summaryText);
+                          }}
+                          className="text-indigo-400 hover:text-indigo-300 font-semibold"
+                        >
+                          Auto Generate
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* EXTRACTION FIELDS EDITOR */}
                   <div className="bg-slate-900/25 border border-slate-800/80 rounded-2xl p-6 space-y-5">
                     <h3 className="text-sm font-bold text-white uppercase tracking-wider border-b border-slate-800 pb-3 flex items-center justify-between">
@@ -861,13 +1007,13 @@ export default function Home() {
 
                     {/* DYNAMIC FIELD INPUTS */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      
+
                       {/* Company Field */}
                       <div className="space-y-1.5">
                         <label className="text-xs font-semibold text-slate-400">Extracted Company (取引先)</label>
                         <input
                           type="text"
-                          value={extractedData.company || ''}
+                          value={String(extractedData.company || '')}
                           onChange={(e) => setExtractedData(prev => ({ ...prev, company: e.target.value }))}
                           placeholder="Empty"
                           className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
@@ -879,7 +1025,7 @@ export default function Home() {
                         <label className="text-xs font-semibold text-slate-400">Invoice / Contract Number (番号)</label>
                         <input
                           type="text"
-                          value={extractedData.invoice_id || ''}
+                          value={String(extractedData.invoice_id || '')}
                           onChange={(e) => setExtractedData(prev => ({ ...prev, invoice_id: e.target.value }))}
                           placeholder="Empty"
                           className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
@@ -891,7 +1037,7 @@ export default function Home() {
                         <label className="text-xs font-semibold text-slate-400">Total Amount (ご請求金額)</label>
                         <input
                           type="number"
-                          value={extractedData.amount || ''}
+                          value={typeof extractedData.amount === 'number' ? extractedData.amount : ''}
                           onChange={(e) => setExtractedData(prev => ({ ...prev, amount: Number(e.target.value) }))}
                           placeholder="0"
                           className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
@@ -902,7 +1048,7 @@ export default function Home() {
                       <div className="space-y-1.5">
                         <label className="text-xs font-semibold text-slate-400">Currency Code</label>
                         <select
-                          value={extractedData.currency || 'JPY'}
+                          value={String(extractedData.currency || 'JPY')}
                           onChange={(e) => setExtractedData(prev => ({ ...prev, currency: e.target.value }))}
                           className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
                         >
@@ -932,7 +1078,7 @@ export default function Home() {
 
                     {/* MOCK/REAL SUBMIT SECTION */}
                     <div className="pt-4 border-t border-slate-800/60 space-y-4">
-                      
+
                       {/* Notes / User Review Comments */}
                       <div className="space-y-1.5">
                         <label className="text-xs font-semibold text-slate-400">Reviewer Notes (Notes for feedback learning)</label>
@@ -953,6 +1099,7 @@ export default function Home() {
                             if (doc) {
                               setExtractedData(doc.data || {});
                               setOcrText(doc.ocr_text || '');
+                              setOcrBlocks(doc.ocr_blocks || []);
                               setNotes('');
                             }
                           }}
@@ -991,7 +1138,7 @@ export default function Home() {
           {/* 4. THESIS OUTLINE & EVALUATION METRICS TAB */}
           {activeTab === 'thesis' && (
             <div className="space-y-8 animate-in fade-in duration-300">
-              
+
               {/* INTRO */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
                 <div>
@@ -1008,7 +1155,7 @@ export default function Home() {
 
               {/* INTERACTIVE EVALUATION GRAPHS (HTML/CSS Sleek Representation of Charts) */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
+
                 {/* GRAPH 1: CER REDUCTION PATH */}
                 <div className="bg-slate-900/35 border border-slate-800 rounded-2xl p-6 space-y-4">
                   <div className="flex justify-between items-center">
@@ -1131,8 +1278,8 @@ export default function Home() {
                     <p className="leading-relaxed">
                       Addresses structural vertical writing formats (縦書き), dense tabular lines, and Kanji OCR mismatching in historical legacy Japanese documents. It models human interaction as a reinforcement reinforcement layer using Vector Correction Memory.
                     </p>
-                    <a 
-                      href="#" 
+                    <a
+                      href="#"
                       onClick={(e) => { e.preventDefault(); alert("File located in project folder: docs/THESIS_OUTLINE.md"); }}
                       className="text-xs text-indigo-400 hover:underline flex items-center gap-1 font-semibold"
                     >
@@ -1143,10 +1290,10 @@ export default function Home() {
                   <div className="space-y-2">
                     <h4 className="font-bold text-slate-200">Evaluation Plan Drafted (docs/EVALUATION_PLAN.md)</h4>
                     <p className="leading-relaxed">
-                      Establishes validation baselines on the NDL (National Diet Library) OCR Dataset and receipt forms. Key research focus is "Correction Reduction Rate" (CRR) - evaluating how memory caches limit future human intervention.
+                      Establishes validation baselines on the NDL (National Diet Library) OCR Dataset and receipt forms. Key research focus is &quot;Correction Reduction Rate&quot; (CRR) - evaluating how memory caches limit future human intervention.
                     </p>
-                    <a 
-                      href="#" 
+                    <a
+                      href="#"
                       onClick={(e) => { e.preventDefault(); alert("File located in project folder: docs/EVALUATION_PLAN.md"); }}
                       className="text-xs text-indigo-400 hover:underline flex items-center gap-1 font-semibold"
                     >
@@ -1161,6 +1308,32 @@ export default function Home() {
 
         </div>
       </main>
+
+      {fullscreenViewerOpen && (
+        <div className="fixed inset-0 z-50 flex flex-col bg-slate-950 text-slate-100">
+          <div className="flex h-14 shrink-0 items-center justify-between border-b border-slate-800 bg-slate-950 px-5">
+            <div className="min-w-0">
+              <div className="truncate text-sm font-semibold text-white">
+                {selectedDocument?.filename || 'Document viewer'}
+              </div>
+              <div className="mt-0.5 text-xs text-slate-500">
+                {visibleOcrBlocks.length} OCR boxes · confidence {averageOcrConfidence ? `${(averageOcrConfidence * 100).toFixed(1)}%` : 'N/A'}
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setFullscreenViewerOpen(false)}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-800 bg-slate-900 text-slate-300 transition-all hover:border-rose-500 hover:text-white"
+              title="Close fullscreen document viewer"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+          <div className="min-h-0 flex-1">
+            {renderDocumentSurface(true)}
+          </div>
+        </div>
+      )}
 
     </div>
   );

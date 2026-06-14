@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api/v1';
 
 export const apiClient = axios.create({
   baseURL: BASE_URL,
@@ -23,6 +23,15 @@ export interface UploadResponse {
   status: string;
 }
 
+export interface DocumentInfo {
+  document_id: string;
+  filename: string;
+  content_type: string | null;
+  uploaded_at: string;
+  document_type: string;
+  status: string;
+}
+
 export interface OcrBlock {
   text: string;
   confidence: number;
@@ -41,7 +50,7 @@ export interface OcrResult {
 
 export interface ExtractionResult {
   document_id: string;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
   confidence: number;
   status: string;
 }
@@ -69,7 +78,7 @@ export interface PipelineRunResponse {
 
 export interface FeedbackRequest {
   document_id: string;
-  corrections: Record<string, any>;
+  corrections: Record<string, unknown>;
   user?: string;
   notes?: string;
 }
@@ -81,6 +90,10 @@ export interface FeedbackResponse {
 }
 
 export const apiService = {
+  getDocumentFileUrl(documentId: string): string {
+    return `${BASE_URL}/documents/${documentId}/file`;
+  },
+
   /**
    * Get system health status
    */
@@ -100,6 +113,11 @@ export const apiService = {
         'Content-Type': 'multipart/form-data',
       },
     });
+    return response.data;
+  },
+
+  async getDocuments(): Promise<DocumentInfo[]> {
+    const response = await apiClient.get<DocumentInfo[]>('/documents');
     return response.data;
   },
 
