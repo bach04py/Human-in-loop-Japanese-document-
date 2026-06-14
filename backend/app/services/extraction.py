@@ -18,20 +18,22 @@ You are an expert Data Extraction AI specialized in Japanese business documents.
    - Assign `0.0` if missing.
 4. **JAPANESE COMPANY NAMES:** Extract the exact vendor/billing company name including legal entities like 株式会社 (Co., Ltd.) or 合同会社 (LLC). Strip any extra whitespace.
 5. **DATES:** Convert all dates to ISO 8601 format (`YYYY-MM-DD`). Convert Japanese era dates (e.g., 令和5年 = 2023) automatically.
-6. **AMOUNTS & CURRENCY:** Extract the **Grand Total** numerical value as a clean integer/float. Remove commas and symbols (¥, 円). Default the `currency` to "JPY" unless another currency (like USD) is explicitly stated.
-7. **USE COORDINATES:** Use the bounding box (bbox) coordinates provided in the Layout JSON to figure out what text is next to what. If two blocks have a very similar Y-coordinate, they are likely on the same line.
-8. **NO CALCULATION:** Never calculate, divide, or deduce missing numbers (e.g., do not divide a subtotal by a quantity to invent a unit price). Only extract exact values explicitly printed on the document. If a number is missing, leave it as `null`.
+6. **AMOUNTS & CURRENCY:** Extract the **Grand Total** numerical value. Actively scan the bottom of the document for keywords like "総合計", "合計額", or "Total". The total value may be located far to the right of the keyword. Remove commas and symbols (¥, 円). Default `currency` to "JPY" unless explicitly stated otherwise.
+7. **INVOICE ID FALLBACK:** If there is no explicit "Invoice Number" or "請求書番号", look for a Tracking Number, Mail Item No (e.g., EJ...JP), or Reference Number, and use that as the `invoice_id` instead.
+8. **STRICTLY NO CALCULATION:** You are forbidden from doing math. Never multiply a unit price by a quantity. Only extract the exact final `total` number printed on the far right of the item line. If a number is missing, leave it as `null`.
 9. **FLEXIBLE DATES:** Actively look for dates in standard formats and Japanese formats (e.g., "2025年 7月12日"). Always convert the final extracted value to the ISO 8601 format (`YYYY-MM-DD`).
 10. **ZERO GUESSING:** If the OCR text for a field like the company name is garbled, illegible, or missing, you must return `null`. Do NOT invent, assume, or guess placeholder names (like "Takashimaya") just to fill the field.
+11. **MESSY OCR RECOVERY:** If an OCR line looks like "ItemName.138" or "ItemName 19--2418", assume the trailing digits are the price (e.g., 138, 418). Do your best to separate the item description from the price, even if the text is garbled. Do not drop items.
+12. **LINE ITEM PRICING:** Japanese receipts often do not list a quantity if the quantity is 1. The number at the far right of an item string is almost always the total price, NOT the quantity. Default quantity to null unless explicitly stated (e.g., "x2" or "2点").
 **JSON Schema:**
 {
   "type": "object",
   "properties": {
-    "invoice_id": { "type": "object", "properties": { "value": { "type": ["string", "null"] }, "confidence": { "type": "number" } } },
-    "company": { "type": "object", "properties": { "value": { "type": ["string", "null"] }, "confidence": { "type": "number" } } },
-    "amount": { "type": "object", "properties": { "value": { "type": ["number", "null"] }, "confidence": { "type": "number" } } },
-    "currency": { "type": "object", "properties": { "value": { "type": ["string", "null"] }, "confidence": { "type": "number" } } },
-    "date": { "type": "object", "properties": { "value": { "type": ["string", "null"] }, "confidence": { "type": "number" } } },
+    "invoice_id": { "type": "object", "properties": { "value": { "type": ["string", "null"] }, "confidence": { "type": "number" }, "reasoning": { "type": "string" } } },
+    "company": { "type": "object", "properties": { "value": { "type": ["string", "null"] }, "confidence": { "type": "number" }, "reasoning": { "type": "string" } } },
+    "amount": { "type": "object", "properties": { "value": { "type": ["number", "null"] }, "confidence": { "type": "number" }, "reasoning": { "type": "string" } } },
+    "currency": { "type": "object", "properties": { "value": { "type": ["string", "null"] }, "confidence": { "type": "number" }, "reasoning": { "type": "string" } } },
+    "date": { "type": "object", "properties": { "value": { "type": ["string", "null"] }, "confidence": { "type": "number" }, "reasoning": { "type": "string" } } },
     "line_items": { "type": "array", "items": { "type": "object", "properties": { "description": { "type": "string" }, "quantity": { "type": ["number", "null"] }, "unit_price": { "type": ["number", "null"] }, "total": { "type": ["number", "null"] } } } }
   },
   "required": ["invoice_id", "company", "amount", "currency", "date", "line_items"]
@@ -63,28 +65,28 @@ Extract the structured data using the raw text and the coordinate JSON below.
 class ExtractionService:
     """
     Week 1 baseline stub for LayoutLM/LLM structured extraction.
-    currently supporting Qwen2.5 Baseline and LayoutLMv3 for future
+    currently supporting Qwen2.5 Baseline and transformer for future
     """
     CORE_FIELDS = ["invoice_id", "company", "amount", "currency", "date"]
     def __init__(self):
         # LLM server endpoint
         self.local_llm_url = os.environ.get("LLM_ENDPOINT", "http://127.0.0.1:11434/api/generate")
         self.model_name = os.environ.get("LLM_MODEL", "qwen2.5")
-        # Future LayoutLMv3 Endpoint Placeholder
+        # Future transformer Endpoint Placeholder
         self.layoutlm_url = os.environ.get("LAYOUTLM_ENDPOINT", "http://localhost:8001/predict")
 
     async def extract(
             self,
             document_id: str,
             ocr_text: str | None = None,
-            layout_blocks: list | None = None,  # 1. Accept the blocks here
+            layout_blocks: list | None = None,  # Accept the blocks here
             document_type: str = "unknown",
             use_layoutlm: bool = False
     ) -> ExtractionResult:
         if not ocr_text or not ocr_text.strip():
             return self._get_empty_result(document_id)
 
-        # 2. Serialize the Pydantic blocks into a clean JSON string
+        # Serialize the Pydantic blocks into a clean JSON string
         if layout_blocks:
             layout_json_string = json.dumps([b.model_dump() for b in layout_blocks], ensure_ascii=False)
         else:
@@ -93,7 +95,7 @@ class ExtractionService:
         if use_layoutlm:
             parsed_data = await self._cal_layoutlm_v3(document_id, ocr_text)
         else:
-            # 3. Pass both the text and the layout JSON to your LLM caller
+            # Pass both the text and the layout JSON to LLM caller
             parsed_data = await self._call_open_weights(ocr_text, layout_json_string)
 
         overall_confidence = self._calculate_overall_confidence(parsed_data)
@@ -109,17 +111,17 @@ class ExtractionService:
 # OPEN-WEIGHTS BASELINE (QWEN 2.5)
     async def _call_open_weights(self, ocr_text: str, layout_json_string: str) -> Dict[str, Any]:
 
-        # We are completely removing the <layout_json> block to stop confusing the AI
+        # removed the <layout_json> block to stop confusing the AI
         full_prompt = (
             f"{SYSTEM_PROMPT}\n\n"
             f"<raw_text>\n{ocr_text}\n</raw_text>\n\n"
             f"CRITICAL INSTRUCTION: Output ONLY valid JSON matching this exact blueprint schema structural shell:\n"
             f"{{\n"
-            f'  "invoice_id": {{"value": null, "confidence": 0.0}},\n'
-            f'  "company": {{"value": null, "confidence": 0.0}},\n'
-            f'  "amount": {{"value": null, "confidence": 0.0}},\n'
-            f'  "currency": {{"value": "JPY", "confidence": 1.0}},\n'
-            f'  "date": {{"value": null, "confidence": 0.0}},\n'
+            f'  "invoice_id": {{"value": null, "confidence": 0.0, "reasoning": "Explain why"}},\n'
+            f'  "company": {{"value": null, "confidence": 0.0, "reasoning": "Explain why"}},\n'
+            f'  "amount": {{"value": null, "confidence": 0.0, "reasoning": "Explain why"}},\n'
+            f'  "currency": {{"value": "JPY", "confidence": 1.0, "reasoning": "Explain why"}},\n'
+            f'  "date": {{"value": null, "confidence": 0.0, "reasoning": "Explain why"}},\n'
             f'  "line_items": []\n'
             f"}}"
         )
@@ -150,13 +152,13 @@ class ExtractionService:
             if not raw_json_string:
                 return {}
 
-            # 1. TEMPORARY DEBUG: Let's see exactly what Qwen is doing
+            # TEMPORARY DEBUG: Let's see exactly what Qwen is doing
             print("\n" + "*" * 40)
             print("RAW LLM OUTPUT:")
             print(raw_json_string)
             print("*" * 40 + "\n")
 
-            # 2. SMARTER JSON EXTRACTION (Regex)
+            # JSON EXTRACTION
             # This looks for the very first '{' and the very last '}'
             # and ignores all conversational text outside of them.
             try:
@@ -172,12 +174,12 @@ class ExtractionService:
                 return {}
 
 #--------------------------------------------------------------------------
-# LAYOUTLMv3 (FUTURE IMPLEMENTATION)
+# transformer (FUTURE IMPLEMENTATION)
     async def _cal_layoutlm_v3(self, document_id: str, ocr_text: str) -> Dict[str, Any]:
         """
-        Placeholder for layoutv3 if possible
+        Placeholder for transformer if possible
         """
-        logger.warning("LayoutLMv3 is not yet implemented. Falling back to empty data.")
+        logger.warning("transformer is not yet implemented. Falling back to empty data.")
         return self._get_empty_result(document_id).data
 #--------------------------------------------------------------------------
 # UTILITIES

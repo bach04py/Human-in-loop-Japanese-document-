@@ -106,3 +106,4 @@ class PipelineRunResponse(BaseModel):
     ocr: OcrResult
     extraction: ExtractionResult
     validation: ValidationResult
+    summary: str | None = None
