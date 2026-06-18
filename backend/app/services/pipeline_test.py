@@ -1,73 +1,87 @@
+# app/services/pipeline_test.py
 import asyncio
 import json
 import sys
+import httpx
 from pathlib import Path
 
-# Path fix
 backend_path = str(Path(__file__).resolve().parents[2])
 if backend_path not in sys.path:
     sys.path.insert(0, backend_path)
 
 from app.services.validation import ValidationService
-from app.services.ocr import OcrService
 from app.services.extraction import ExtractionService
-from app.services.summary import SummaryService  # <-- NEW IMPORT
+from app.services.summary import SummaryService
+from app.services.classification import ClassificationService
 from app.services.orchestrator import OrchestratorService
+from app.schemas import OcrResult
+
+
+async def fetch_ocr_from_microservice(document_id: str) -> OcrResult:
+    """Makes an HTTP GET request to our isolated OCR server."""
+    url = f"http://localhost:8000/api/v1/ocr/{document_id}"
+
+    async with httpx.AsyncClient(timeout=60.0) as client:
+        response = await client.get(url)
+        response.raise_for_status()  # Throw error if server fails
+
+        # Convert the JSON response back into Pydantic model
+        return OcrResult(**response.json())
 
 
 async def test_full_pipeline():
-    print("Booting Pipeline...")
+    print("Booting PyTorch Pipeline...")
 
-    # all the individual services
-    ocr = OcrService()
+    classifier = ClassificationService()
     extractor = ExtractionService()
     validator = ValidationService()
     summary = SummaryService()
 
-    # Hand to the Orchestrator
+    target_document_id = "real_invoice_01"
+
+    print(f"\n Requesting OCR from Microservice for: {target_document_id}...")
+    try:
+        ocr_result = await fetch_ocr_from_microservice(target_document_id)
+        print("Successfully received OCR JSON from server")
+    except Exception as e:
+        print(f"Failed to reach OCR Microservice. Is it running? Error: {e}")
+        return
+
+    # Pass the pre-computed OCR result to your orchestrator
     orchestrator = OrchestratorService(
-        ocr_service=ocr,
         extraction_service=extractor,
         validation_service=validator,
-        summary_service=summary
+        summary_service=summary,
+        classification_service=classifier,
     )
 
-    target_document_id = "real_invoice_01"
-    print(f"\nRunning Full Pipeline on: {target_document_id}")
-    print("Step 1: Running OCR...")
-    print("Step 2: Feeding OCR Text & Layout into LLM Extractor...")
-    print("Step 3: Validating Math & Logic...")
-    print("Step 4: Generating Summary...")
-
     try:
-        result = await orchestrator.run_pipeline(document_id=target_document_id)
+        result = await orchestrator.run_pipeline(
+            document_id=target_document_id,
+            precomputed_ocr=ocr_result
+        )
 
         print("\n" + "=" * 50)
         print("PIPELINE SUCCESSFUL")
         print("=" * 50)
 
-        print("\n[NODE 1] RAW OCR TEXT TRANSCRIPT (Preview):")
-        print(result.ocr.text[:150] + "...\n")
+        print("\n[VALIDATION RESULTS]")
+        print(f"Status: {'Valid' if result.validation.valid else 'Invalid'}")
+        print(f"Confidence: {result.validation.confidence}")
 
-        print("-" * 50)
-        print("[NODE 2] LLM EXTRACTION RESULT:")
-        print(json.dumps(result.extraction.data, ensure_ascii=False, indent=2))
-
-        print("-" * 50)
-        print("[NODE 3] VALIDATION RESULT:")
-        print(f"Is Valid: {result.validation.valid}")
-        print(f"Confidence Penalty/Score: {result.validation.confidence * 100}%")
         if result.validation.issues:
-            print("Issues Found:")
+            print("\nIssues Found:")
             for issue in result.validation.issues:
                 print(f"  - [{issue.severity.upper()}] {issue.field}: {issue.message}")
         else:
-            print("  - No issues found.")
+            print("\nIssues Found: None")
 
-        print("-" * 50)
-        print("[NODE 4] SUMMARY:")
+        print("\n[AI SUMMARY]")
         print(result.summary)
         print("\n" + "=" * 50)
+
+    except Exception as e:
+        print(f"\n PIPELINE FAILED: {e}")
 
     except Exception as e:
         print(f"\n PIPELINE FAILED: {e}")

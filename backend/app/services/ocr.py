@@ -40,8 +40,9 @@ class OcrService:
         )
 
     def _find_uploaded_document(self, document_id: str) -> Path:
-        #upload_dir = settings.upload_dir
-        upload_dir = Path("data/samples/ocr")
+        current_dir = Path(__file__).resolve().parent
+        upload_dir = current_dir.parent.parent.parent / "data" / "samples" / "ocr"
+
         if not upload_dir.exists():
             raise FileNotFoundError(f"Upload directory not found: {upload_dir}")
 

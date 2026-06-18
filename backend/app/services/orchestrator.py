@@ -5,6 +5,7 @@ from app.schemas import PipelineRunResponse, OcrResult, ExtractionResult, Valida
 from app.services.extraction import ExtractionService
 from app.services.ocr import OcrService
 from app.services.validation import ValidationService
+from app.services.classification import ClassificationService
 
 
 # Define the Global State Dictionary
@@ -19,19 +20,21 @@ class GraphState(TypedDict):
 
 
 class OrchestratorService:
-    """Coordinates the baseline OCR -> extraction -> validation -> summary workflow."""
+    """Coordinates the autonomous document processing workflow."""
 
     def __init__(
             self,
-            ocr_service: OcrService,
             extraction_service: ExtractionService,
             validation_service: ValidationService,
-            summary_service: Any,
+            classification_service: ClassificationService,
+            summary_service: Any = None,
+            ocr_service: Optional[OcrService] = None,
     ) -> None:
         self.ocr_service = ocr_service
         self.extraction_service = extraction_service
         self.validation_service = validation_service
         self.summary_service = summary_service
+        self.classification_service = classification_service
 
         # Compile the graph when the service initializes
         self.workflow = self._build_graph()
@@ -40,13 +43,29 @@ class OrchestratorService:
         """Builds and compiles the LangGraph state machine."""
         workflow = StateGraph(GraphState)
 
-        # Define the Agent Nodes
+        # ==========================================
+        # 1. Define the Agent Nodes
+        # ==========================================
         async def ocr_node(state: GraphState):
+            if state.get("ocr"):
+                print("[Orchestrator] Using pre-computed OCR data from Microservice...")
+                return {"ocr": state["ocr"]}
+
             try:
+                print("[Orchestrator] Running local OCR engine...")
                 result = await self.ocr_service.run(document_id=state["document_id"])
                 return {"ocr": result}
             except Exception as e:
                 return {"error": f"OCR Node Failed: {str(e)}"}
+
+        async def classification_node(state: GraphState):
+            if state.get("error"): return {}
+            try:
+                # Dynamically determine the document type using OCR text
+                doc_type = await self.classification_service.classify(state["ocr"].text)
+                return {"document_type": doc_type}
+            except Exception as e:
+                return {"error": f"Classification Node Failed: {str(e)}"}
 
         async def extraction_node(state: GraphState):
             if state.get("error"): return {}
@@ -83,61 +102,59 @@ class OrchestratorService:
             except Exception as e:
                 return {"error": f"Summary Node Failed: {str(e)}"}
 
-        # Define Conditional Routing
-        def route_after_ocr(state: GraphState):
-            if state.get("error"): return END
-            return "extraction_agent"
-
-        def route_after_extraction(state: GraphState):
-            if state.get("error"): return END
-            return "validation_agent"
-
+        # ==========================================
         # Wire the Topology
+        # ==========================================
         workflow.add_node("ocr_agent", ocr_node)
+        workflow.add_node("classification_agent", classification_node)
         workflow.add_node("extraction_agent", extraction_node)
         workflow.add_node("validation_agent", validation_node)
         workflow.add_node("summary_agent", summary_node)
 
-        # starting point
         workflow.set_entry_point("ocr_agent")
 
-        # Conditional Edges
-        workflow.add_conditional_edges("ocr_agent", route_after_ocr, {
-            "extraction_agent": "extraction_agent",
-            END: END
-        })
-        workflow.add_conditional_edges("extraction_agent", route_after_extraction, {
-            "validation_agent": "validation_agent",
-            END: END
-        })
+        # ==========================================
+        # Define the Flow
+        # ==========================================
+        def route_on_error(state: GraphState, next_node: str):
+            if state.get("error"):
+                return END
+            return next_node
 
-        workflow.add_edge("validation_agent", "summary_agent")
+        workflow.add_conditional_edges("ocr_agent", lambda s: route_on_error(s, "classification_agent"))
+        workflow.add_conditional_edges("classification_agent", lambda s: route_on_error(s, "extraction_agent"))
+        workflow.add_conditional_edges("extraction_agent", lambda s: route_on_error(s, "validation_agent"))
+        workflow.add_conditional_edges("validation_agent", lambda s: route_on_error(s, "summary_agent"))
         workflow.add_edge("summary_agent", END)
 
         return workflow.compile()
 
     async def run_pipeline(
-            self, document_id: str, document_type: str = "unknown"
+            self,
+            document_id: str,
+            precomputed_ocr: Optional[OcrResult] = None
     ) -> PipelineRunResponse:
-        """Triggers the compiled LangGraph pipeline dynamically."""
+        """Triggers the compiled LangGraph pipeline."""
 
-        # Initialize the state
+        #Inject the precomputed OCR directly into LangGraph's starting state
         initial_state: GraphState = {
             "document_id": document_id,
-            "document_type": document_type,
-            "ocr": None,
+            "document_type": "unknown",
+            "ocr": precomputed_ocr,  # <--- INJECTED HERE
             "extraction": None,
             "validation": None,
+            "summary": None,
             "error": None
         }
 
         # Execute the graph
         final_state = await self.workflow.ainvoke(initial_state)
 
+        # Catch pipeline halts
         if final_state.get("error"):
-            raise RuntimeError(f"Pipeline Execution Halted: {final_state['error']}")
+            raise RuntimeError(final_state['error'])
 
-        # Return expected
+        # Package and return the successful response
         return PipelineRunResponse(
             document_id=document_id,
             ocr=final_state["ocr"],
