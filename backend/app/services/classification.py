@@ -20,8 +20,6 @@ class ClassificationService:
     async def classify(self, ocr_text: str) -> str:
         if not ocr_text:
             return "document_pdf"  # Safe fallback
-
-        # We only need the first 1500 characters to know what a document is
         sample_text = ocr_text[:1500]
 
         prompt = (
