@@ -38,8 +38,10 @@ def get_poppler_path() -> str | None:
                 for p_dir in winget_packages_dir.glob("*Poppler*"):
                     for bd in list(p_dir.glob("**/Library/bin")) + list(p_dir.glob("**/bin")):
                         if (bd / "pdftoppm.exe").exists() or (bd / "pdfinfo.exe").exists():
-                            return str(bd)
+                            return r"C:\Users\fish\poppler-26.02.0"
     return None
+
+
 
 
 def init_ocr() -> "PaddleOCR":
@@ -52,6 +54,17 @@ def init_ocr() -> "PaddleOCR":
         enable_mkldnn=False,
     )
 
+"""
+def init_ocr() -> "PaddleOCR":
+    if PaddleOCR is None:
+        raise RuntimeError("PaddleOCR chưa được cài. Chạy: pip install paddleocr paddlepaddle")
+
+    return PaddleOCR(
+        use_textline_orientation=True,
+        lang="japan",
+        enable_mkldnn=False,
+    )
+"""
 
 def process_and_ocr(ocr: "PaddleOCR", img: Image.Image, include_boxes: bool = True) -> list[dict[str, Any]]:
     orig_w, orig_h = img.size
