@@ -6,6 +6,8 @@ from fastapi.responses import FileResponse
 
 from app.core.config import settings
 from app.schemas import (
+    ChatRequest,
+    ChatResponse,
     ExtractionRequest,
     ExtractionResult,
     FeedbackRequest,
@@ -15,10 +17,13 @@ from app.schemas import (
     OcrResult,
     PipelineRunRequest,
     PipelineRunResponse,
+    StoredDocument,
     UploadResponse,
     ValidationRequest,
     ValidationResult,
 )
+from app.services import document_store
+from app.services.chat import ChatService
 from app.services.extraction import ExtractionService
 from app.services.memory import CorrectionMemoryService
 from app.services.ocr import OcrService
@@ -33,6 +38,7 @@ extraction_service = ExtractionService()
 validation_service = ValidationService()
 memory_service = CorrectionMemoryService()
 summary_service = SummaryService()
+chat_service = ChatService()
 orchestrator = OrchestratorService(
     ocr_service=ocr_service,
     extraction_service=extraction_service,
@@ -135,7 +141,52 @@ async def submit_feedback(request: FeedbackRequest) -> FeedbackResponse:
 
 @router.post("/pipeline/run", response_model=PipelineRunResponse, tags=["workflow"])
 async def run_pipeline(request: PipelineRunRequest) -> PipelineRunResponse:
-    return await orchestrator.run_pipeline(
+    result = await orchestrator.run_pipeline(
         document_id=request.document_id,
         document_type=request.document_type,
     )
+
+    # Persist the extracted document as JSON so the chatbot can answer about it.
+    document_store.save_document(
+        result.document_id,
+        {
+            "document_id": result.document_id,
+            "document_type": request.document_type,
+            "data": result.extraction.data,
+            "ocr_text": result.ocr.text,
+            "validation": result.validation.model_dump(),
+            "summary": result.summary,
+        },
+    )
+
+    return result
+
+
+@router.get(
+    "/documents/extracted",
+    response_model=list[StoredDocument],
+    tags=["chat"],
+)
+async def list_extracted_documents() -> list[StoredDocument]:
+    """List documents that have been extracted and stored for chatting."""
+    return [StoredDocument(**doc) for doc in document_store.list_documents()]
+
+
+@router.post("/chat", response_model=ChatResponse, tags=["chat"])
+async def chat_with_document(request: ChatRequest) -> ChatResponse:
+    document = document_store.load_document(request.document_id)
+    if document is None:
+        raise HTTPException(
+            status_code=404,
+            detail=(
+                f"No extracted data found for '{request.document_id}'. "
+                "Run the pipeline on this document first."
+            ),
+        )
+
+    reply = await chat_service.answer(
+        document=document,
+        message=request.message,
+        history=request.history,
+    )
+    return ChatResponse(document_id=request.document_id, reply=reply)

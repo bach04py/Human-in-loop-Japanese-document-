@@ -107,3 +107,29 @@ class PipelineRunResponse(BaseModel):
     extraction: ExtractionResult
     validation: ValidationResult
     summary: str | None = None
+
+
+class StoredDocument(BaseModel):
+    """An extracted document persisted to JSON, used as the chatbot's knowledge."""
+
+    document_id: str
+    document_type: str | None = None
+    data: dict[str, Any] = Field(default_factory=dict)
+    summary: str | None = None
+    saved_at: str | None = None
+
+
+class ChatMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str
+
+
+class ChatRequest(BaseModel):
+    document_id: str
+    message: str
+    history: list[ChatMessage] = Field(default_factory=list)
+
+
+class ChatResponse(BaseModel):
+    document_id: str
+    reply: str

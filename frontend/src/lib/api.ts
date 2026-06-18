@@ -80,6 +80,24 @@ export interface FeedbackResponse {
   status: string;
 }
 
+export interface StoredDocument {
+  document_id: string;
+  document_type: string | null;
+  data: Record<string, unknown>;
+  summary: string | null;
+  saved_at: string | null;
+}
+
+export interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+export interface ChatResponse {
+  document_id: string;
+  reply: string;
+}
+
 export const apiService = {
   getDocumentFileUrl(documentId: string): string {
     return `${BASE_URL}/documents/${documentId}/file`;
@@ -123,6 +141,30 @@ export const apiService = {
    */
   async submitFeedback(feedback: FeedbackRequest): Promise<FeedbackResponse> {
     const response = await apiClient.post<FeedbackResponse>('/feedback', feedback);
+    return response.data;
+  },
+
+  /**
+   * List documents that have been extracted and stored for the chatbot
+   */
+  async listExtractedDocuments(): Promise<StoredDocument[]> {
+    const response = await apiClient.get<StoredDocument[]>('/documents/extracted');
+    return response.data;
+  },
+
+  /**
+   * Ask the Qwen2.5 chatbot a question about a specific extracted document
+   */
+  async chatWithDocument(
+    documentId: string,
+    message: string,
+    history: ChatMessage[] = []
+  ): Promise<ChatResponse> {
+    const response = await apiClient.post<ChatResponse>('/chat', {
+      document_id: documentId,
+      message,
+      history,
+    });
     return response.data;
   },
 };

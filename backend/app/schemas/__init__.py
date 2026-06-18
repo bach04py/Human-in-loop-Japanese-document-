@@ -1,4 +1,7 @@
 from app.schemas.documents import (
+    ChatMessage,
+    ChatRequest,
+    ChatResponse,
     DocumentStatus,
     ExtractionRequest,
     ExtractionResult,
@@ -10,6 +13,7 @@ from app.schemas.documents import (
     OcrResult,
     PipelineRunRequest,
     PipelineRunResponse,
+    StoredDocument,
     UploadResponse,
     ValidationIssue,
     ValidationRequest,
@@ -17,6 +21,9 @@ from app.schemas.documents import (
 )
 
 __all__ = [
+    "ChatMessage",
+    "ChatRequest",
+    "ChatResponse",
     "DocumentStatus",
     "ExtractionRequest",
     "ExtractionResult",
@@ -28,6 +35,7 @@ __all__ = [
     "OcrResult",
     "PipelineRunRequest",
     "PipelineRunResponse",
+    "StoredDocument",
     "UploadResponse",
     "ValidationIssue",
     "ValidationRequest",

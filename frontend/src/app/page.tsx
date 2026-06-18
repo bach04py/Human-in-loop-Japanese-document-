@@ -21,8 +21,10 @@ import {
   FileCheck,
   ExternalLink,
   Maximize2,
+  MessageSquare,
   X
 } from 'lucide-react';
+import Link from 'next/link';
 import { apiService, UploadResponse, PipelineRunResponse, ValidationIssue, OcrBlock, HealthResponse } from '../lib/api';
 
 type ExtractedData = Record<string, unknown>;
@@ -596,6 +598,14 @@ export default function Home() {
               <Award className="w-4.5 h-4.5" />
               Thesis & Metrics
             </button>
+
+            <Link
+              href="/chat"
+              className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
+            >
+              <MessageSquare className="w-4.5 h-4.5" />
+              Document Chat
+            </Link>
           </nav>
         </div>
 
