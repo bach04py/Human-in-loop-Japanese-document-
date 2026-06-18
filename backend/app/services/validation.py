@@ -11,8 +11,16 @@ class ValidationService:
         data = extracted_data or {}
         is_valid = True
 
+        def field_value(key):
+            # Extraction may emit a flat value (baseline / flattened LLM output)
+            # or a nested {"value": ...} dict (empty-result blueprint). Accept both.
+            raw = data.get(key)
+            if isinstance(raw, dict):
+                return raw.get("value")
+            return raw
+
         # Invoice ID Check
-        if data and not data.get("invoice_id", {}).get("value"):
+        if data and not field_value("invoice_id"):
             issues.append(
                 ValidationIssue(
                     field="invoice_id",
@@ -22,8 +30,7 @@ class ValidationService:
             )
 
         # Grand Total Existence Check
-        amount_dict = data.get("amount", {})
-        grand_total = amount_dict.get("value")
+        grand_total = field_value("amount")
 
         if grand_total is None:
             is_valid = False

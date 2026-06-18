@@ -23,6 +23,7 @@ from app.services.extraction import ExtractionService
 from app.services.memory import CorrectionMemoryService
 from app.services.ocr import OcrService
 from app.services.orchestrator import OrchestratorService
+from app.services.summary import SummaryService
 from app.services.validation import ValidationService
 
 router = APIRouter()
@@ -31,10 +32,12 @@ ocr_service = OcrService()
 extraction_service = ExtractionService()
 validation_service = ValidationService()
 memory_service = CorrectionMemoryService()
+summary_service = SummaryService()
 orchestrator = OrchestratorService(
     ocr_service=ocr_service,
     extraction_service=extraction_service,
     validation_service=validation_service,
+    summary_service=summary_service,
 )
 
 
