@@ -13,6 +13,8 @@ Week 1 leader deliverables covered here:
 
 ## Quick Start
 
+Encoding note: source files and documentation are UTF-8 because the project includes Japanese OCR text and Vietnamese planning notes. If PowerShell shows mojibake, set the console to UTF-8 with `chcp 65001` or use an editor that honors `.editorconfig`.
+
 1. Create local environment settings:
 
 ```bash

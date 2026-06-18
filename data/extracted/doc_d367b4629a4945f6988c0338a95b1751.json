@@ -1,0 +1,36 @@
+{
+  "document_id": "doc_d367b4629a4945f6988c0338a95b1751",
+  "document_type": "invoice",
+  "data": {
+    "invoice_id": null,
+    "company": null,
+    "date": null,
+    "due_date": null,
+    "amount": null,
+    "tax": null,
+    "currency": "JPY",
+    "document_type": "invoice",
+    "line_items": []
+  },
+  "ocr_text": "",
+  "validation": {
+    "document_id": "doc_d367b4629a4945f6988c0338a95b1751",
+    "valid": false,
+    "confidence": 0.6,
+    "issues": [
+      {
+        "field": "invoice_id",
+        "message": "Missing invoice number.",
+        "severity": "warning"
+      },
+      {
+        "field": "amount",
+        "message": "Grand total amount is missing. Cannot verify document math.",
+        "severity": "error"
+      }
+    ],
+    "status": "validated"
+  },
+  "summary": "Sentence 1: The extracted JSON document is missing the company name, grand total, and date; all of these fields are null. The currency is listed as JPY, but there is no invoice ID or due date provided.\nSentence 2: Given the missing invoice number and the absence of the grand total amount, this document requires human review to ensure accuracy and completeness.",
+  "saved_at": "2026-06-18T08:42:02.110180+00:00"
+}

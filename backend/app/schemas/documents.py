@@ -3,6 +3,12 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
+# Supported document types. "form"/"unknown" are kept for backward compatibility
+# and resolve to the generic "other" schema in the extraction service.
+DocumentType = Literal[
+    "invoice", "contract", "bill", "document", "other", "form", "unknown"
+]
+
 
 class HealthResponse(BaseModel):
     status: Literal["ok"]
@@ -54,7 +60,7 @@ class OcrResult(BaseModel):
 class ExtractionRequest(BaseModel):
     document_id: str
     ocr_text: str | None = None
-    document_type: Literal["invoice", "contract", "form", "unknown"] = "unknown"
+    document_type: DocumentType = "unknown"
 
 
 class ExtractionResult(BaseModel):
@@ -98,7 +104,7 @@ class FeedbackResponse(BaseModel):
 
 class PipelineRunRequest(BaseModel):
     document_id: str
-    document_type: Literal["invoice", "contract", "form", "unknown"] = "unknown"
+    document_type: DocumentType = "unknown"
 
 
 class PipelineRunResponse(BaseModel):
@@ -107,3 +113,29 @@ class PipelineRunResponse(BaseModel):
     extraction: ExtractionResult
     validation: ValidationResult
     summary: str | None = None
+
+
+class StoredDocument(BaseModel):
+    """An extracted document persisted to JSON, used as the chatbot's knowledge."""
+
+    document_id: str
+    document_type: str | None = None
+    data: dict[str, Any] = Field(default_factory=dict)
+    summary: str | None = None
+    saved_at: str | None = None
+
+
+class ChatMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str
+
+
+class ChatRequest(BaseModel):
+    document_id: str
+    message: str
+    history: list[ChatMessage] = Field(default_factory=list)
+
+
+class ChatResponse(BaseModel):
+    document_id: str
+    reply: str

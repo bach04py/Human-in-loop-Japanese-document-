@@ -1,0 +1,19 @@
+{
+  "document_id": "doc_1275252e152d442dae9fd2b85405e2f4",
+  "document_type": "other",
+  "data": {
+    "name": null,
+    "main_information": null,
+    "document_type": "other"
+  },
+  "ocr_text": "",
+  "validation": {
+    "document_id": "doc_1275252e152d442dae9fd2b85405e2f4",
+    "valid": true,
+    "confidence": 1.0,
+    "issues": [],
+    "status": "validated"
+  },
+  "summary": "The company name and main information are missing from the extracted JSON, while the document type is listed as \"other\". Since there are no validation issues provided, the document does not require human review.",
+  "saved_at": "2026-06-18T09:10:07.994853+00:00"
+}

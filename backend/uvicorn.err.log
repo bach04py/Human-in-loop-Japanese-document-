@@ -1,0 +1,14 @@
+INFO:     Started server process [12744]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+LLM extraction unavailable, using baseline fallback: Client error '404 Not Found' for url 'http://127.0.0.1:11434/api/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+LLM extraction unavailable, using baseline fallback: Client error '404 Not Found' for url 'http://127.0.0.1:11434/api/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+LLM extraction unavailable, using baseline fallback: Client error '404 Not Found' for url 'http://127.0.0.1:11434/api/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+LLM extraction unavailable, using baseline fallback: Client error '404 Not Found' for url 'http://127.0.0.1:11434/api/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+LLM extraction unavailable, using baseline fallback: Client error '404 Not Found' for url 'http://127.0.0.1:11434/api/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404

@@ -1,0 +1,35 @@
+{
+  "document_id": "doc_smoke",
+  "document_type": "contract",
+  "data": {
+    "company": null,
+    "contract_id": null,
+    "effective_date": null,
+    "expiration_date": null,
+    "amount": null,
+    "currency": "JPY",
+    "governing_law": null,
+    "document_type": "contract"
+  },
+  "ocr_text": "",
+  "validation": {
+    "document_id": "doc_smoke",
+    "valid": false,
+    "confidence": 0.6,
+    "issues": [
+      {
+        "field": "contract_id",
+        "message": "Missing contract number.",
+        "severity": "warning"
+      },
+      {
+        "field": "amount",
+        "message": "Grand total amount is missing. Cannot verify document math.",
+        "severity": "error"
+      }
+    ],
+    "status": "validated"
+  },
+  "summary": "Sentence 1: The extracted JSON lacks the company name, grand total amount, and several key details such as the contract ID, effective date, expiration date, and governing law; the currency is listed as JPY but no specific document type other than \"contract\" is provided.\nSentence 2: Given the missing critical information like the grand total amount and contract ID, this document requires human review to ensure its completeness and accuracy.",
+  "saved_at": "2026-06-18T09:08:58.010505+00:00"
+}
