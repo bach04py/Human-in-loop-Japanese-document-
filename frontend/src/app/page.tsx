@@ -122,6 +122,91 @@ const INITIAL_MOCK_DOCUMENTS: LocalDocument[] = [
   }
 ];
 
+// ---------------------------------------------------------------------------
+// DOCUMENT TYPE SCHEMAS
+// Each enterprise document type exposes its own structured field set in the
+// extraction editor. `key` maps to a field in the extracted JSON `data`.
+// ---------------------------------------------------------------------------
+type EditorFieldType = 'text' | 'number' | 'date' | 'select' | 'textarea';
+
+interface EditorField {
+  key: string;
+  label: string;
+  type: EditorFieldType;
+  options?: string[];
+}
+
+interface DocumentTypeSchema {
+  label: string;
+  fields: EditorField[];
+}
+
+const CURRENCY_OPTIONS = ['JPY', 'USD', 'EUR', 'CNY', 'GBP'];
+
+const DOCUMENT_TYPE_SCHEMAS: Record<string, DocumentTypeSchema> = {
+  invoice: {
+    label: 'Invoice (請求書)',
+    fields: [
+      { key: 'company', label: 'Vendor / Company (取引先)', type: 'text' },
+      { key: 'invoice_id', label: 'Invoice Number (請求書番号)', type: 'text' },
+      { key: 'date', label: 'Issue Date (発行日)', type: 'date' },
+      { key: 'due_date', label: 'Due Date (支払期限)', type: 'date' },
+      { key: 'amount', label: 'Total Amount (ご請求金額)', type: 'number' },
+      { key: 'tax', label: 'Tax (消費税)', type: 'number' },
+      { key: 'currency', label: 'Currency', type: 'select', options: CURRENCY_OPTIONS },
+    ],
+  },
+  contract: {
+    label: 'Contract (契約書)',
+    fields: [
+      { key: 'company', label: 'Counterparty (相手方)', type: 'text' },
+      { key: 'contract_id', label: 'Contract Number (契約番号)', type: 'text' },
+      { key: 'effective_date', label: 'Effective Date (発効日)', type: 'date' },
+      { key: 'expiration_date', label: 'Expiration Date (満了日)', type: 'date' },
+      { key: 'amount', label: 'Contract Value (契約金額)', type: 'number' },
+      { key: 'currency', label: 'Currency', type: 'select', options: CURRENCY_OPTIONS },
+      { key: 'governing_law', label: 'Governing Law (準拠法)', type: 'text' },
+    ],
+  },
+  bill: {
+    label: 'Bill / Receipt (請求・領収)',
+    fields: [
+      { key: 'company', label: 'Biller (請求元)', type: 'text' },
+      { key: 'bill_id', label: 'Account / Bill No. (お客様番号)', type: 'text' },
+      { key: 'billing_period', label: 'Billing Period (請求期間)', type: 'text' },
+      { key: 'date', label: 'Issue Date (発行日)', type: 'date' },
+      { key: 'due_date', label: 'Due Date (お支払期限)', type: 'date' },
+      { key: 'amount', label: 'Amount Due (請求金額)', type: 'number' },
+      { key: 'currency', label: 'Currency', type: 'select', options: CURRENCY_OPTIONS },
+    ],
+  },
+  document: {
+    label: 'Enterprise Document (社内文書)',
+    fields: [
+      { key: 'title', label: 'Title (件名)', type: 'text' },
+      { key: 'document_id', label: 'Document No. (文書番号)', type: 'text' },
+      { key: 'company', label: 'Organization (発行元)', type: 'text' },
+      { key: 'author', label: 'Author / Owner (担当者)', type: 'text' },
+      { key: 'date', label: 'Date (日付)', type: 'date' },
+      { key: 'reference', label: 'Reference (参照番号)', type: 'text' },
+    ],
+  },
+  other: {
+    label: 'Other / General (その他)',
+    fields: [
+      { key: 'name', label: 'Document Name (名称)', type: 'text' },
+      { key: 'main_information', label: 'Main Information (主な情報)', type: 'textarea' },
+    ],
+  },
+};
+
+// Resolve a document_type string to a schema. Anything unrecognised
+// ('unknown'/'form') falls back to 'other' (name + summary).
+function resolveSchemaType(documentType: string | undefined): string {
+  if (documentType && DOCUMENT_TYPE_SCHEMAS[documentType]) return documentType;
+  return 'other';
+}
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'dashboard' | 'upload' | 'correction' | 'thesis'>('dashboard');
   const [documents, setDocuments] = useState<LocalDocument[]>(INITIAL_MOCK_DOCUMENTS);
@@ -140,6 +225,7 @@ export default function Home() {
   const [ocrText, setOcrText] = useState(INITIAL_MOCK_DOCUMENTS[0].ocr_text);
   const [ocrBlocks, setOcrBlocks] = useState<OcrBlock[]>(INITIAL_MOCK_DOCUMENTS[0].ocr_blocks);
   const [extractedData, setExtractedData] = useState<ExtractedData>(INITIAL_MOCK_DOCUMENTS[0].data);
+  const [editorType, setEditorType] = useState<string>(resolveSchemaType(INITIAL_MOCK_DOCUMENTS[0].document_type));
   const [validationIssues, setValidationIssues] = useState<ValidationIssue[]>(INITIAL_MOCK_DOCUMENTS[0].validation.issues);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notes, setNotes] = useState('');
@@ -210,6 +296,7 @@ export default function Home() {
     setOcrText(doc.ocr_text || '');
     setOcrBlocks(doc.ocr_blocks || []);
     setExtractedData(doc.data || {});
+    setEditorType(resolveSchemaType(doc.document_type));
     setValidationIssues(doc.validation?.issues || []);
     setDocumentImageSize(null);
   };
@@ -350,6 +437,7 @@ export default function Home() {
       setOcrText(pipelineResult.ocr.text);
       setOcrBlocks(pipelineResult.ocr.blocks);
       setExtractedData(pipelineResult.extraction.data);
+      setEditorType(resolveSchemaType(docType));
       setValidationIssues(pipelineResult.validation.issues);
 
     } catch (err) {
@@ -975,11 +1063,13 @@ export default function Home() {
                   <div className="p-5 rounded-2xl bg-slate-900/40 border border-slate-800/80 flex items-center justify-between gap-4">
                     <div>
                       <h4 className="font-semibold text-white">Agent Pipeline baseline execution</h4>
-                      <p className="text-slate-400 text-xs mt-0.5">Start structural extraction & validate rules against the current file.</p>
+                      <p className="text-slate-400 text-xs mt-0.5">
+                        Extracts as <span className="text-indigo-400 font-semibold">{DOCUMENT_TYPE_SCHEMAS[editorType]?.label || editorType}</span> (change via Document Type below) & validates the current file.
+                      </p>
                     </div>
                     
                     <button
-                      onClick={() => runAgentPipeline(selectedDocId, 'invoice')}
+                      onClick={() => runAgentPipeline(selectedDocId, editorType)}
                       disabled={pipelineRunning}
                       className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 border border-slate-700 font-semibold text-sm px-4 py-2.5 rounded-xl shadow transition-all disabled:opacity-50 disabled:pointer-events-none"
                     >
@@ -1002,62 +1092,72 @@ export default function Home() {
                     <h3 className="text-sm font-bold text-white uppercase tracking-wider border-b border-slate-800 pb-3 flex items-center justify-between">
                       <span>Structured Extraction Editor</span>
                       <span className="text-[11px] font-semibold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 normal-case font-mono">
-                        Pydantic model schema
+                        {DOCUMENT_TYPE_SCHEMAS[editorType]?.label || 'Schema'}
                       </span>
                     </h3>
 
-                    {/* DYNAMIC FIELD INPUTS */}
+                    {/* DOCUMENT TYPE SELECTOR */}
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-slate-400">Document Type (文書タイプ)</label>
+                      <select
+                        value={editorType}
+                        onChange={(e) => setEditorType(e.target.value)}
+                        className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
+                      >
+                        {Object.entries(DOCUMENT_TYPE_SCHEMAS).map(([key, schema]) => (
+                          <option key={key} value={key}>{schema.label}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* DYNAMIC FIELD INPUTS — driven by the selected document type */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      
-                      {/* Company Field */}
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-semibold text-slate-400">Extracted Company (取引先)</label>
-                        <input
-                          type="text"
-                          value={String(extractedData.company || '')}
-                          onChange={(e) => setExtractedData(prev => ({ ...prev, company: e.target.value }))}
-                          placeholder="Empty"
-                          className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
-                        />
-                      </div>
-
-                      {/* Invoice ID Field */}
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-semibold text-slate-400">Invoice / Contract Number (番号)</label>
-                        <input
-                          type="text"
-                          value={String(extractedData.invoice_id || '')}
-                          onChange={(e) => setExtractedData(prev => ({ ...prev, invoice_id: e.target.value }))}
-                          placeholder="Empty"
-                          className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
-                        />
-                      </div>
-
-                      {/* Amount Field */}
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-semibold text-slate-400">Total Amount (ご請求金額)</label>
-                        <input
-                          type="number"
-                          value={typeof extractedData.amount === 'number' ? extractedData.amount : ''}
-                          onChange={(e) => setExtractedData(prev => ({ ...prev, amount: Number(e.target.value) }))}
-                          placeholder="0"
-                          className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
-                        />
-                      </div>
-
-                      {/* Currency Field */}
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-semibold text-slate-400">Currency Code</label>
-                        <select
-                          value={String(extractedData.currency || 'JPY')}
-                          onChange={(e) => setExtractedData(prev => ({ ...prev, currency: e.target.value }))}
-                          className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
-                        >
-                          <option value="JPY">JPY (￥)</option>
-                          <option value="USD">USD ($)</option>
-                          <option value="EUR">EUR (€)</option>
-                        </select>
-                      </div>
+                      {(DOCUMENT_TYPE_SCHEMAS[editorType]?.fields || []).map((field) => {
+                        const rawValue = extractedData[field.key];
+                        return (
+                          <div key={field.key} className={`space-y-1.5 ${field.type === 'textarea' ? 'md:col-span-2' : ''}`}>
+                            <label className="text-xs font-semibold text-slate-400">{field.label}</label>
+                            {field.type === 'textarea' ? (
+                              <textarea
+                                value={rawValue == null ? '' : String(rawValue)}
+                                onChange={(e) => setExtractedData(prev => ({ ...prev, [field.key]: e.target.value || null }))}
+                                placeholder="Empty"
+                                rows={4}
+                                className="w-full resize-y bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
+                              />
+                            ) : field.type === 'select' ? (
+                              <select
+                                value={String(rawValue ?? (field.key === 'currency' ? 'JPY' : ''))}
+                                onChange={(e) => setExtractedData(prev => ({ ...prev, [field.key]: e.target.value }))}
+                                className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
+                              >
+                                {(field.options || []).map((opt) => (
+                                  <option key={opt} value={opt}>{opt}</option>
+                                ))}
+                              </select>
+                            ) : field.type === 'number' ? (
+                              <input
+                                type="number"
+                                value={typeof rawValue === 'number' ? rawValue : (rawValue ? Number(rawValue) : '')}
+                                onChange={(e) => setExtractedData(prev => ({
+                                  ...prev,
+                                  [field.key]: e.target.value === '' ? null : Number(e.target.value),
+                                }))}
+                                placeholder="—"
+                                className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
+                              />
+                            ) : (
+                              <input
+                                type={field.type === 'date' ? 'date' : 'text'}
+                                value={rawValue == null ? '' : String(rawValue)}
+                                onChange={(e) => setExtractedData(prev => ({ ...prev, [field.key]: e.target.value || null }))}
+                                placeholder="Empty"
+                                className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
+                              />
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
 
                     {/* VALIDATION WARNINGS DISPLAY */}

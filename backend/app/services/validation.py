@@ -1,8 +1,16 @@
 from app.schemas import ValidationIssue, ValidationResult
 
+# Friendly names for the per-type identifier field.
+ID_LABELS = {
+    "invoice_id": "invoice number",
+    "contract_id": "contract number",
+    "bill_id": "account / bill number",
+    "document_id": "document number",
+}
+
 
 class ValidationService:
-    """Week 3 Validation Agent: Mathematical and Logical Checks."""
+    """Validation Agent: type-aware mathematical and logical checks."""
 
     async def validate(
             self, document_id: str, extracted_data: dict | None = None
@@ -19,20 +27,25 @@ class ValidationService:
                 return raw.get("value")
             return raw
 
-        # Invoice ID Check
-        if data and not field_value("invoice_id"):
+        # Identifier Check (type-aware: invoice_id / contract_id / bill_id / document_id)
+        id_key = next((k for k in data if k.endswith("_id")), None)
+        if id_key and not field_value(id_key):
             issues.append(
                 ValidationIssue(
-                    field="invoice_id",
-                    message="Missing invoice identifier.",
+                    field=id_key,
+                    message=f"Missing {ID_LABELS.get(id_key, 'identifier')}.",
                     severity="warning",
                 )
             )
 
-        # Grand Total Existence Check
-        grand_total = field_value("amount")
+        # Amount / math checks apply only to types that carry an amount field
+        # (invoice, contract, bill). General documents skip this entirely.
+        if "amount" not in data:
+            grand_total = None
+        else:
+            grand_total = field_value("amount")
 
-        if grand_total is None:
+        if "amount" in data and grand_total is None:
             is_valid = False
             issues.append(
                 ValidationIssue(
@@ -41,7 +54,7 @@ class ValidationService:
                     severity="error",
                 )
             )
-        else:
+        elif grand_total is not None:
             # Mathematical Check: Line Items == Grand Total
             line_items = data.get("line_items", [])
             calculated_total = 0.0

@@ -3,72 +3,105 @@ import logging
 import os
 import re
 from typing import Any, Dict
-import httpx
-from app.schemas.documents import ExtractionResult, DocumentStatus
-import re
-logger = logging.getLogger(__name__)
-SYSTEM_PROMPT = """
-**Role / System Prompt:**
-You are an expert Data Extraction AI specialized in Japanese business documents. Your task is to process raw OCR text from an invoice and convert it into a strictly formatted JSON object.
 
-**Extraction Rules:**
-1. **JSON ONLY:** Output nothing but valid JSON. No markdown blocks, no explanations.
-2. **MISSING VALUES:** If a field is not found in the text, set its `value` to `null` and `confidence` to `0.0`. Do not hallucinate or guess.
-3. **CONFIDENCE SCORING:** - Assign `1.0` if the value is explicitly clear.
-   - Assign `0.5` - `0.8` if the OCR text is messy, contains typos, or requires deduction.
-   - Assign `0.0` if missing.
-4. **JAPANESE COMPANY NAMES:** Extract the exact vendor/billing company name including legal entities like 株式会社 (Co., Ltd.) or 合同会社 (LLC). Strip any extra whitespace.
-5. **DATES:** Convert all dates to ISO 8601 format (`YYYY-MM-DD`). Convert Japanese era dates (e.g., 令和5年 = 2023) automatically.
-6. **AMOUNTS & CURRENCY:** Extract the **Grand Total** numerical value. Actively scan the bottom of the document for keywords like "総合計", "合計額", or "Total". The total value may be located far to the right of the keyword. Remove commas and symbols (¥, 円). Default `currency` to "JPY" unless explicitly stated otherwise.
-7. **INVOICE ID FALLBACK:** If there is no explicit "Invoice Number" or "請求書番号", look for a Tracking Number, Mail Item No (e.g., EJ...JP), or Reference Number, and use that as the `invoice_id` instead.
-8. **STRICTLY NO CALCULATION:** You are forbidden from doing math. Never multiply a unit price by a quantity. Only extract the exact final `total` number printed on the far right of the item line. If a number is missing, leave it as `null`.
-9. **FLEXIBLE DATES:** Actively look for dates in standard formats and Japanese formats (e.g., "2025年 7月12日"). Always convert the final extracted value to the ISO 8601 format (`YYYY-MM-DD`).
-10. **ZERO GUESSING:** If the OCR text for a field like the company name is garbled, illegible, or missing, you must return `null`. Do NOT invent, assume, or guess placeholder names (like "Takashimaya") just to fill the field.
-11. **MESSY OCR RECOVERY:** If an OCR line looks like "ItemName.138" or "ItemName 19--2418", assume the trailing digits are the price (e.g., 138, 418). Do your best to separate the item description from the price, even if the text is garbled. Do not drop items.
-12. **LINE ITEM PRICING:** Japanese receipts often do not list a quantity if the quantity is 1. The number at the far right of an item string is almost always the total price, NOT the quantity. Default quantity to null unless explicitly stated (e.g., "x2" or "2点").
-**JSON Schema:**
-{
-  "type": "object",
-  "properties": {
-    "invoice_id": { "type": "object", "properties": { "value": { "type": ["string", "null"] }, "confidence": { "type": "number" }, "reasoning": { "type": "string" } } },
-    "company": { "type": "object", "properties": { "value": { "type": ["string", "null"] }, "confidence": { "type": "number" }, "reasoning": { "type": "string" } } },
-    "amount": { "type": "object", "properties": { "value": { "type": ["number", "null"] }, "confidence": { "type": "number" }, "reasoning": { "type": "string" } } },
-    "currency": { "type": "object", "properties": { "value": { "type": ["string", "null"] }, "confidence": { "type": "number" }, "reasoning": { "type": "string" } } },
-    "date": { "type": "object", "properties": { "value": { "type": ["string", "null"] }, "confidence": { "type": "number" }, "reasoning": { "type": "string" } } },
-    "line_items": { "type": "array", "items": { "type": "object", "properties": { "description": { "type": "string" }, "quantity": { "type": ["number", "null"] }, "unit_price": { "type": ["number", "null"] }, "total": { "type": ["number", "null"] } } } }
-  },
-  "required": ["invoice_id", "company", "amount", "currency", "date", "line_items"]
+import httpx
+
+from app.schemas.documents import ExtractionResult, DocumentStatus
+
+logger = logging.getLogger(__name__)
+
+# ---------------------------------------------------------------------------
+# PER-TYPE FIELD SCHEMAS
+# Keys MUST match the frontend Structured Extraction Editor schemas so the
+# extracted JSON populates the right inputs. `desc` guides the LLM; `type` is
+# either "string" or "number".
+# ---------------------------------------------------------------------------
+FIELD_SCHEMAS: Dict[str, list[dict[str, str]]] = {
+    "invoice": [
+        {"key": "invoice_id", "type": "string", "desc": "Invoice number (請求書番号). If absent, use a tracking/reference number (e.g. EJ...JP)."},
+        {"key": "company", "type": "string", "desc": "Vendor / billing company name (取引先), including legal entity such as 株式会社."},
+        {"key": "date", "type": "string", "desc": "Issue date (発行日), ISO 8601 YYYY-MM-DD."},
+        {"key": "due_date", "type": "string", "desc": "Payment due date (支払期限), ISO 8601 YYYY-MM-DD."},
+        {"key": "amount", "type": "number", "desc": "Grand total (ご請求金額/合計) as a number, commas and ¥/円 stripped."},
+        {"key": "tax", "type": "number", "desc": "Consumption tax amount (消費税) as a number, if shown."},
+        {"key": "currency", "type": "string", "desc": "Currency code, default JPY."},
+    ],
+    "contract": [
+        {"key": "company", "type": "string", "desc": "Counterparty / other party (相手方/甲乙) company name, with legal entity."},
+        {"key": "contract_id", "type": "string", "desc": "Contract number (契約番号) or reference id."},
+        {"key": "effective_date", "type": "string", "desc": "Effective / commencement date (発効日/契約開始日), ISO 8601."},
+        {"key": "expiration_date", "type": "string", "desc": "Expiration / end date (満了日/契約終了日), ISO 8601."},
+        {"key": "amount", "type": "number", "desc": "Contract value / total amount (契約金額) as a number."},
+        {"key": "currency", "type": "string", "desc": "Currency code, default JPY."},
+        {"key": "governing_law", "type": "string", "desc": "Governing law (準拠法), e.g. 日本法 / Japanese law."},
+    ],
+    "bill": [
+        {"key": "company", "type": "string", "desc": "Biller / issuing company (請求元/発行者)."},
+        {"key": "bill_id", "type": "string", "desc": "Account or customer number (お客様番号) / bill number."},
+        {"key": "billing_period", "type": "string", "desc": "Billing period (請求期間/ご利用期間), kept as printed."},
+        {"key": "date", "type": "string", "desc": "Issue date (発行日), ISO 8601."},
+        {"key": "due_date", "type": "string", "desc": "Payment due date (お支払期限), ISO 8601."},
+        {"key": "amount", "type": "number", "desc": "Amount due (請求金額/ご請求額) as a number."},
+        {"key": "currency", "type": "string", "desc": "Currency code, default JPY."},
+    ],
+    "document": [
+        {"key": "title", "type": "string", "desc": "Document title or subject (件名/タイトル)."},
+        {"key": "document_id", "type": "string", "desc": "Document / control number (文書番号), if any."},
+        {"key": "company", "type": "string", "desc": "Issuing organization or department (発行元/部署)."},
+        {"key": "author", "type": "string", "desc": "Author / person in charge (担当者/作成者), if any."},
+        {"key": "date", "type": "string", "desc": "Document date (日付), ISO 8601."},
+        {"key": "reference", "type": "string", "desc": "Reference number or related document (参照番号), if any."},
+    ],
+    # Catch-all for documents that do not fit any structured type. Instead of
+    # forcing rigid fields, capture a name and a faithful free-text summary.
+    "other": [
+        {"key": "name", "type": "string", "desc": "A short name/title describing what this document is (名称)."},
+        {"key": "main_information", "type": "string", "desc": "A faithful 2-4 sentence summary of the document's key information (主な情報). Summarise only what is actually written; do not invent."},
+    ],
 }
 
-**Example Interaction:**
-<document>
-請求書
-株式会社テストベンダー
-2023年10月5日
-請求番号: INV-992
-合計金額: ¥15,000
-</document>
+# Document types that also carry an itemised list.
+LINE_ITEM_TYPES = {"invoice", "bill"}
 
-{"invoice_id": {"value": "INV-992", "confidence": 1.0}, "company": {"value": "株式会社テストベンダー", "confidence": 1.0}, "amount": {"value": 15000, "confidence": 1.0}, "currency": {"value": "JPY", "confidence": 1.0}, "date": {"value": "2023-10-05", "confidence": 1.0}, "line_items": []}
+TYPE_LABELS = {
+    "invoice": "invoice (請求書)",
+    "contract": "contract (契約書)",
+    "bill": "bill / receipt (請求・領収書)",
+    "document": "enterprise document (社内文書)",
+    "other": "other / general document (その他)",
+}
 
-**User Request:**
-Extract the structured data using the raw text and the coordinate JSON below.
+BASE_RULES = """**Role:**
+You are an expert data-extraction AI specialised in Japanese business documents
+(invoices, contracts, bills/receipts and general enterprise documents). You read
+raw OCR text and return a single, strictly-formatted JSON object.
 
-<raw_text>
-{ocr_text}
-</raw_text>
+**Rules:**
+1. JSON ONLY: output nothing but valid JSON — no markdown, no commentary.
+2. MISSING VALUES: if a field is not present in the text, set its "value" to null
+   and "confidence" to 0.0. Never hallucinate or guess.
+3. CONFIDENCE: 1.0 when explicit and clear; 0.5-0.8 when messy/typo'd/deduced; 0.0 when missing.
+4. JAPANESE NAMES: keep legal entities (株式会社, 合同会社, etc.) and trim whitespace.
+5. DATES: convert every date to ISO 8601 (YYYY-MM-DD); convert Japanese era dates
+   (e.g. 令和5年 -> 2023) and formats like "2025年7月12日".
+6. AMOUNTS: extract the printed number only; strip commas and symbols (¥, 円). Never
+   do arithmetic. Default currency to "JPY" unless another currency is explicit.
+7. ZERO GUESSING: if a value is garbled or absent, return null. Do NOT invent
+   placeholder names or numbers.
+8. LINE ITEMS (only when a "line_items" field is requested): the number at the far
+   right of an item line is the total price, not the quantity. Default quantity to
+   null unless explicit (e.g. "x2"). Recover prices from messy lines like
+   "ItemName.138" -> 138. Do not drop items."""
 
-<layout_json>
-{layout_json}
-</layout_json>
-"""
 
 class ExtractionService:
+    """Type-aware structured extraction backed by Qwen2.5 (Ollama).
+
+    The field set, prompt and JSON blueprint adapt to the document_type so that
+    invoices, contracts, bills and enterprise documents each get their own
+    structure filled automatically.
     """
-    Week 1 baseline stub for LayoutLM/LLM structured extraction.
-    currently supporting Qwen2.5 Baseline and transformer for future
-    """
-    CORE_FIELDS = ["invoice_id", "company", "amount", "currency", "date"]
+
     def __init__(self):
         # LLM server endpoint
         self.local_llm_url = os.environ.get("LLM_ENDPOINT", "http://127.0.0.1:11434/api/generate")
@@ -77,6 +110,27 @@ class ExtractionService:
         # Future LayoutLMv3 Endpoint Placeholder
         self.layoutlm_url = os.environ.get("LAYOUTLM_ENDPOINT", "http://localhost:8001/predict")
 
+    # ------------------------------------------------------------------
+    # Type helpers
+    # ------------------------------------------------------------------
+    @staticmethod
+    def _resolve_type(document_type: str | None) -> str:
+        """Map an incoming document_type to a schema.
+
+        Anything unrecognised ('unknown', 'form', etc.) falls back to 'other',
+        which captures a name plus a free-text summary instead of forcing the
+        document into a rigid structure it does not match.
+        """
+        if document_type and document_type in FIELD_SCHEMAS:
+            return document_type
+        return "other"
+
+    def _fields_for(self, document_type: str) -> list[dict[str, str]]:
+        return FIELD_SCHEMAS[self._resolve_type(document_type)]
+
+    # ------------------------------------------------------------------
+    # Public entry point
+    # ------------------------------------------------------------------
     async def extract(
             self,
             document_id: str,
@@ -85,8 +139,10 @@ class ExtractionService:
             document_type: str = "unknown",
             use_layoutlm: bool = False
     ) -> ExtractionResult:
+        dtype = self._resolve_type(document_type)
+
         if not ocr_text or not ocr_text.strip():
-            return self._get_empty_result(document_id)
+            return self._get_empty_result(document_id, dtype)
 
         # Serialize the Pydantic blocks into a clean JSON string
         if layout_blocks:
@@ -97,13 +153,15 @@ class ExtractionService:
         if use_layoutlm:
             parsed_data = await self._cal_layoutlm_v3(document_id, ocr_text)
         else:
-            # Pass both the text and the layout JSON to LLM caller
-            parsed_data = await self._call_open_weights(ocr_text, layout_json_string)
+            parsed_data = await self._call_open_weights(dtype, ocr_text, layout_json_string)
 
         if not parsed_data:
-            parsed_data = self._baseline_extract(ocr_text, document_type)
+            parsed_data = self._baseline_extract(ocr_text, dtype)
 
-        overall_confidence = self._calculate_overall_confidence(parsed_data)
+        # Tag the resolved type so downstream consumers know the schema used.
+        parsed_data.setdefault("document_type", dtype)
+
+        overall_confidence = self._calculate_overall_confidence(parsed_data, dtype)
 
         return ExtractionResult(
             document_id=document_id,
@@ -112,24 +170,69 @@ class ExtractionService:
             status=DocumentStatus.extracted
         )
 
-#--------------------------------------------------------------------------
-# OPEN-WEIGHTS BASELINE (QWEN 2.5)
-    async def _call_open_weights(self, ocr_text: str, layout_json_string: str) -> Dict[str, Any]:
+    # ------------------------------------------------------------------
+    # Prompt building
+    # ------------------------------------------------------------------
+    def _build_prompt(self, document_type: str, ocr_text: str, layout_json_string: str) -> str:
+        dtype = self._resolve_type(document_type)
+        fields = FIELD_SCHEMAS[dtype]
+        has_line_items = dtype in LINE_ITEM_TYPES
 
-        # removed the <layout_json> block to stop confusing the AI
-        full_prompt = (
-            f"{SYSTEM_PROMPT}\n\n"
-            f"<raw_text>\n{ocr_text}\n</raw_text>\n\n"
-            f"CRITICAL INSTRUCTION: Output ONLY valid JSON matching this exact blueprint schema structural shell:\n"
-            f"{{\n"
-            f'  "invoice_id": {{"value": null, "confidence": 0.0, "reasoning": "Explain why"}},\n'
-            f'  "company": {{"value": null, "confidence": 0.0, "reasoning": "Explain why"}},\n'
-            f'  "amount": {{"value": null, "confidence": 0.0, "reasoning": "Explain why"}},\n'
-            f'  "currency": {{"value": "JPY", "confidence": 1.0, "reasoning": "Explain why"}},\n'
-            f'  "date": {{"value": null, "confidence": 0.0, "reasoning": "Explain why"}},\n'
-            f'  "line_items": []\n'
-            f"}}"
+        field_doc = "\n".join(
+            f'- "{f["key"]}" ({f["type"]}): {f["desc"]}' for f in fields
         )
+
+        blueprint_lines = []
+        for f in fields:
+            if f["key"] == "currency":
+                blueprint_lines.append(
+                    '  "currency": {"value": "JPY", "confidence": 1.0, "reasoning": "..."}'
+                )
+            else:
+                blueprint_lines.append(
+                    f'  "{f["key"]}": {{"value": null, "confidence": 0.0, "reasoning": "..."}}'
+                )
+        if has_line_items:
+            blueprint_lines.append('  "line_items": []')
+        blueprint = "{\n" + ",\n".join(blueprint_lines) + "\n}"
+
+        line_item_note = (
+            '\nFor "line_items", return an array of objects with keys '
+            '"description", "quantity", "unit_price", "total".'
+            if has_line_items else ""
+        )
+
+        if dtype == "other":
+            intro = (
+                "This document does not fit a standard structure (it is not a "
+                "plain invoice, contract or bill). Do NOT force it into rigid "
+                "fields. Instead, populate EXACTLY the following fields, where "
+                '"main_information" is a faithful summary of the actual content:'
+            )
+        else:
+            intro = (
+                f"This is a {TYPE_LABELS.get(dtype, dtype)}. "
+                f"Extract EXACTLY the following fields:"
+            )
+
+        return (
+            f"{BASE_RULES}\n\n"
+            f"{intro}\n"
+            f"{field_doc}\n"
+            f"{line_item_note}\n\n"
+            f"<raw_text>\n{ocr_text}\n</raw_text>\n\n"
+            f"<layout_json>\n{layout_json_string}\n</layout_json>\n\n"
+            f"Output ONLY valid JSON matching this exact shell (each field is an object "
+            f'with "value", "confidence" and "reasoning"):\n{blueprint}'
+        )
+
+    # ------------------------------------------------------------------
+    # OPEN-WEIGHTS BASELINE (QWEN 2.5)
+    # ------------------------------------------------------------------
+    async def _call_open_weights(
+        self, document_type: str, ocr_text: str, layout_json_string: str
+    ) -> Dict[str, Any]:
+        full_prompt = self._build_prompt(document_type, ocr_text, layout_json_string)
 
         payload = {
             "model": self.model_name,
@@ -137,9 +240,9 @@ class ExtractionService:
             "format": "json",
             "stream": False,
             "options": {
-                "temperature": 0.1,  # <-- Change to 0.1 to clear Ollama's cache
-                "top_p": 0.9,  # <-- Add this to help it think
-                "seed": 42  # <-- Add a random seed to force a fresh run
+                "temperature": 0.1,
+                "top_p": 0.9,
+                "seed": 42,
             }
         }
 
@@ -184,58 +287,62 @@ class ExtractionService:
             logger.warning("LLM extraction unavailable, using baseline fallback: %s", exc)
             return {}
 
-#--------------------------------------------------------------------------
-# transformer (FUTURE IMPLEMENTATION)
+    # ------------------------------------------------------------------
+    # transformer (FUTURE IMPLEMENTATION)
+    # ------------------------------------------------------------------
     async def _cal_layoutlm_v3(self, document_id: str, ocr_text: str) -> Dict[str, Any]:
-        """
-        Placeholder for transformer if possible
-        """
+        """Placeholder for a future transformer-based extractor."""
         logger.warning("transformer is not yet implemented. Falling back to empty data.")
-        return self._get_empty_result(document_id).data
-#--------------------------------------------------------------------------
-# UTILITIES
-    def _calculate_overall_confidence(self, parsed_data: Dict[str, Any]) -> float:
-        """
-        Calculates average confidence.
-        """
+        return self._get_empty_result(document_id, "document").data
+
+    # ------------------------------------------------------------------
+    # UTILITIES
+    # ------------------------------------------------------------------
+    def _calculate_overall_confidence(
+        self, parsed_data: Dict[str, Any], document_type: str = "unknown"
+    ) -> float:
+        """Average the per-field confidences; fall back to a presence ratio."""
         if not parsed_data:
             return 0.0
 
-        # Uses assignment expression (walrus operator)
-        confidence_scores = [
-            field["confidence"]
-            for key in self.CORE_FIELDS
-            if isinstance(field := parsed_data.get(key), dict) and "confidence" in field
+        keys = [f["key"] for f in self._fields_for(document_type)]
+
+        scores = [
+            float(conf)
+            for key in keys
+            if isinstance(conf := parsed_data.get(f"{key}_confidence"), (int, float))
         ]
+        if scores:
+            return round(sum(scores) / len(scores), 2)
 
-        if not confidence_scores:
-            present_fields = [key for key in self.CORE_FIELDS if parsed_data.get(key)]
-            return round(len(present_fields) / len(self.CORE_FIELDS), 2)
-
-        return round(sum(confidence_scores) / len(confidence_scores), 2)
+        present = [key for key in keys if parsed_data.get(key) not in (None, "")]
+        return round(len(present) / len(keys), 2) if keys else 0.0
 
     def _get_empty_result(
         self,
         document_id: str,
-        status: DocumentStatus = DocumentStatus.extracted
+        document_type: str = "unknown",
+        status: DocumentStatus = DocumentStatus.extracted,
     ) -> ExtractionResult:
-        """
-        Dynamically builds the empty state structure from CORE_FIELDS.
-        """
-        empty_data = {
-            key: {"value": None, "confidence": 0.0}
-            for key in self.CORE_FIELDS
+        """Build an empty (flat) result whose keys match the type's schema."""
+        dtype = self._resolve_type(document_type)
+        data: Dict[str, Any] = {
+            f["key"]: ("JPY" if f["key"] == "currency" else None)
+            for f in FIELD_SCHEMAS[dtype]
         }
-        empty_data["line_items"] = []
+        data["document_type"] = dtype
+        if dtype in LINE_ITEM_TYPES:
+            data["line_items"] = []
 
         return ExtractionResult(
             document_id=document_id,
-            data=empty_data,
+            data=data,
             confidence=0.0,
-            status=status
+            status=status,
         )
 
     def _flatten_llm_result(self, parsed_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Flatten {field: {value, confidence}} into {field: value, field_confidence: x}."""
         flat: Dict[str, Any] = {}
         for key, value in parsed_data.items():
             if isinstance(value, dict) and "value" in value:
@@ -246,15 +353,42 @@ class ExtractionService:
         return flat
 
     def _baseline_extract(self, ocr_text: str, document_type: str) -> Dict[str, Any]:
-        invoice_match = re.search(r"(?:請求書番号|請求番号|番号)\s*[:：]\s*([A-Za-z0-9-]+)", ocr_text)
-        company_match = re.search(r"(?:取引先|会社|vendor|company)\s*[:：]\s*(.+)", ocr_text, re.IGNORECASE)
-        amount_match = re.search(r"(?:ご請求金額|合計金額|金額|amount)\s*[:：]\s*[¥￥]?\s*([0-9,]+)", ocr_text, re.IGNORECASE)
+        """Regex fallback used only when the LLM is unavailable.
 
-        return {
-            "document_type": document_type,
-            "invoice_id": invoice_match.group(1) if invoice_match else "DEV-001",
-            "company": company_match.group(1).strip() if company_match else "株式会社サンプル",
-            "amount": int(amount_match.group(1).replace(",", "")) if amount_match else 120000,
-            "currency": "JPY",
-            "line_items": [],
+        Produces the type's flat field set; fills id/company/amount via regex
+        where possible and leaves everything else null (never fabricated).
+        """
+        dtype = self._resolve_type(document_type)
+        fields = FIELD_SCHEMAS[dtype]
+        data: Dict[str, Any] = {
+            f["key"]: ("JPY" if f["key"] == "currency" else None) for f in fields
         }
+
+        id_match = re.search(
+            r"(?:請求書番号|請求番号|契約番号|文書番号|お客様番号|番号|No\.?)\s*[:：]\s*([A-Za-z0-9\-]+)",
+            ocr_text,
+            re.IGNORECASE,
+        )
+        company_match = re.search(
+            r"(?:取引先|請求元|相手方|発行元|会社|vendor|company)\s*[:：]\s*(.+)",
+            ocr_text,
+            re.IGNORECASE,
+        )
+        amount_match = re.search(
+            r"(?:ご請求金額|請求金額|合計金額|契約金額|金額|amount)\s*[:：]\s*[¥￥]?\s*([0-9,]+)",
+            ocr_text,
+            re.IGNORECASE,
+        )
+
+        id_key = next((f["key"] for f in fields if f["key"].endswith("_id")), None)
+        if id_key and id_match:
+            data[id_key] = id_match.group(1)
+        if "company" in data and company_match:
+            data["company"] = company_match.group(1).strip()
+        if "amount" in data and amount_match:
+            data["amount"] = int(amount_match.group(1).replace(",", ""))
+
+        data["document_type"] = dtype
+        if dtype in LINE_ITEM_TYPES:
+            data["line_items"] = []
+        return data

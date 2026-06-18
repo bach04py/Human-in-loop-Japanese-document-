@@ -1,7 +1,10 @@
-﻿from pathlib import Path
+﻿import logging
+from pathlib import Path
 
 from app.core.config import settings
 from app.schemas import DocumentStatus, OcrBlock, OcrResult
+
+logger = logging.getLogger(__name__)
 from app.services.ocr_helpers import (
     IMAGE_EXTS,
     PDF_EXTS,
@@ -56,27 +59,22 @@ class OcrService:
         return candidates[0]
 
     def _baseline_result(self, document_id: str, file_path: Path) -> OcrResult:
-        text = (
-            "請求書\n"
-            f"ファイル名: {file_path.name}\n"
-            "請求書番号: DEV-001\n"
-            "取引先: 株式会社サンプル\n"
-            "ご請求金額: ¥120,000\n"
-            "通貨: JPY"
+        """Returned only when the OCR engine (PaddleOCR) is unavailable.
+
+        Deliberately empty: fabricating placeholder text here would make every
+        document extract to the same fake values. An empty result instead lets
+        the rest of the pipeline report honestly that nothing was read.
+        """
+        logger.warning(
+            "PaddleOCR is unavailable; returning empty OCR for %s (%s). "
+            "Install paddleocr/paddlepaddle to enable real OCR.",
+            document_id,
+            file_path.name,
         )
         return OcrResult(
             document_id=document_id,
-            text=text,
-            blocks=[
-                OcrBlock(
-                    text=line,
-                    confidence=0.5,
-                    bbox=[],
-                    page=1,
-                    orientation="horizontal",
-                )
-                for line in text.splitlines()
-            ],
-            confidence=0.5,
+            text="",
+            blocks=[],
+            confidence=0.0,
             status=DocumentStatus.ocr_completed,
         )

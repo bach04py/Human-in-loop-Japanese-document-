@@ -1,0 +1,27 @@
+{
+  "document_id": "doc_2236002ee25b45af8a8049e099121a0f",
+  "document_type": "invoice",
+  "data": {
+    "invoice_id": "DEV-001",
+    "invoice_id_confidence": 1.0,
+    "company": "株式会社サンプル",
+    "company_confidence": 1.0,
+    "amount": 120000,
+    "amount_confidence": 1.0,
+    "currency": "JPY",
+    "currency_confidence": 1.0,
+    "date": null,
+    "date_confidence": 0.0,
+    "line_items": []
+  },
+  "ocr_text": "請求書\nファイル名: doc_2236002ee25b45af8a8049e099121a0f.jpg\n請求書番号: DEV-001\n取引先: 株式会社サンプル\nご請求金額: ¥120,000\n通貨: JPY",
+  "validation": {
+    "document_id": "doc_2236002ee25b45af8a8049e099121a0f",
+    "valid": true,
+    "confidence": 1.0,
+    "issues": [],
+    "status": "validated"
+  },
+  "summary": "The document belongs to the company \"株式会社サンプル\" with a grand total of 120,000 JPY; however, the date is missing. Since there are no validation issues provided, this document does not require human review.",
+  "saved_at": "2026-06-18T07:51:20.585078+00:00"
+}
