@@ -83,9 +83,5 @@ async def test_full_pipeline():
     except Exception as e:
         print(f"\n PIPELINE FAILED: {e}")
 
-    except Exception as e:
-        print(f"\n PIPELINE FAILED: {e}")
-
-
 if __name__ == "__main__":
     asyncio.run(test_full_pipeline())
