@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from fastapi import APIRouter, File, HTTPException, UploadFile, status
 from fastapi.responses import FileResponse
-
+from app.services.classification import ClassificationService
 from app.core.config import settings
 from app.schemas import (
     ChatRequest,
@@ -39,13 +39,15 @@ validation_service = ValidationService()
 memory_service = CorrectionMemoryService()
 summary_service = SummaryService()
 chat_service = ChatService()
+classification_service = ClassificationService()
+
 orchestrator = OrchestratorService(
     ocr_service=ocr_service,
     extraction_service=extraction_service,
     validation_service=validation_service,
     summary_service=summary_service,
+    classification_service=classification_service,
 )
-
 
 @router.get("/healthz", response_model=HealthResponse, tags=["system"])
 async def healthz() -> HealthResponse:
@@ -143,7 +145,6 @@ async def submit_feedback(request: FeedbackRequest) -> FeedbackResponse:
 async def run_pipeline(request: PipelineRunRequest) -> PipelineRunResponse:
     result = await orchestrator.run_pipeline(
         document_id=request.document_id,
-        document_type=request.document_type,
     )
 
     # Persist the extracted document as JSON so the chatbot can answer about it.

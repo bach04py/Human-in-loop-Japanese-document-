@@ -48,9 +48,9 @@ def init_ocr() -> PaddleOCR:
         use_textline_orientation=True,  # detect horizontal / vertical text
         lang="japan",                   # Japanese model
         enable_mkldnn=False,             # Avoid oneDNN NotImplementedError on CPU
-        det_db_thresh=0.3,              
+        det_db_thresh=0.3,
         det_db_box_thresh=0.5,
-        rec_batch_num=6             
+        rec_batch_num=6
     )
     print("[INFO] Model loaded.\n")
     return ocr
@@ -89,7 +89,7 @@ def process_and_ocr(ocr: PaddleOCR, img: Image.Image, include_boxes: bool = True
         img_temp = img
         resized_w, resized_h = orig_w, orig_h
 
-    
+
     # Save to a temporary file in the current directory
     # In Colab, the current working directory is /content/
     tmp_filename = f"_tmp_ocr_{uuid.uuid4().hex}.png"
@@ -141,7 +141,7 @@ def process_and_ocr(ocr: PaddleOCR, img: Image.Image, include_boxes: bool = True
     return blocks
 
 
-def run_ocr_on_image(ocr: PaddleOCR, image_path: Path) -> dict:
+def run_ocr_on_image(ocr: PaddleOCR, image_path: Path, include_boxes: bool = True) -> dict:
     """Run OCR on an image file, returning a dict in OcrResult format."""
     start = time.time()
     try:
@@ -179,7 +179,7 @@ def run_ocr_on_image(ocr: PaddleOCR, image_path: Path) -> dict:
     }
 
 
-def run_ocr_on_pdf(ocr: PaddleOCR, pdf_path: Path, max_pages: int = 3) -> dict:
+def run_ocr_on_pdf(ocr: PaddleOCR, pdf_path: Path, include_boxes: bool = True, max_pages: int = 3) -> dict:
     start = time.time()
     all_blocks = []
     try:

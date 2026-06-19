@@ -40,7 +40,6 @@ class LiltService:
         # Prepare tokens and normalized boxes
         texts = [b.text for b in blocks]
 
-        # Change 'b.box' to 'b.bbox' to match your OcrBlock schema
         boxes = [self._normalize_box(b.bbox) for b in blocks]
 
         inputs = self.tokenizer(texts, boxes=boxes, return_tensors="pt", padding=True).to(self.device)

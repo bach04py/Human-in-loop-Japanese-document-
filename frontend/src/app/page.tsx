@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  FileText, 
-  UploadCloud, 
-  Database, 
-  CheckCircle2, 
-  AlertCircle, 
-  Sparkles, 
-  Activity, 
-  TrendingDown, 
+import {
+  FileText,
+  UploadCloud,
+  Database,
+  CheckCircle2,
+  AlertCircle,
+  Sparkles,
+  Activity,
+  TrendingDown,
   ArrowRight,
   RefreshCw,
   Award,
@@ -211,16 +211,16 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<'dashboard' | 'upload' | 'correction' | 'thesis'>('dashboard');
   const [documents, setDocuments] = useState<LocalDocument[]>(INITIAL_MOCK_DOCUMENTS);
   const [selectedDocId, setSelectedDocId] = useState<string>(INITIAL_MOCK_DOCUMENTS[0].document_id);
-  
+
   // Backend connection status
   const [backendConnected, setBackendConnected] = useState<boolean | null>(null);
   const [healthInfo, setHealthInfo] = useState<HealthResponse | null>(null);
-  
+
   // Upload State
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
-  
+
   // Correction / Review workspace state
   const [ocrText, setOcrText] = useState(INITIAL_MOCK_DOCUMENTS[0].ocr_text);
   const [ocrBlocks, setOcrBlocks] = useState<OcrBlock[]>(INITIAL_MOCK_DOCUMENTS[0].ocr_blocks);
@@ -306,7 +306,7 @@ export default function Home() {
     if (!uploadFile) return;
     setUploading(true);
     setUploadProgress(10);
-    
+
     // Animate progress bar slightly
     const timer = setInterval(() => {
       setUploadProgress(prev => (prev < 90 ? prev + 15 : prev));
@@ -330,7 +330,7 @@ export default function Home() {
 
       clearInterval(timer);
       setUploadProgress(100);
-      
+
       // Append to local docs list
       const newDoc: LocalDocument = {
         document_id: result.document_id,
@@ -345,7 +345,7 @@ export default function Home() {
         data: {},
         validation: { valid: false, issues: [] }
       };
-      
+
       setDocuments(prev => [newDoc, ...prev]);
       setSelectedDocId(result.document_id);
       setOcrText('');
@@ -353,7 +353,7 @@ export default function Home() {
       setExtractedData({});
       setValidationIssues([]);
       setDocumentImageSize(null);
-      
+
       // Move tab to Workspace to let them process
       setTimeout(() => {
         setUploading(false);
@@ -378,7 +378,7 @@ export default function Home() {
       } else {
         // Mock execution delay
         await new Promise(resolve => setTimeout(resolve, 2000));
-        
+
         // Simulating the actual response based on API_CONTRACT
         pipelineResult = {
           document_id: docId,
@@ -622,7 +622,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-1 min-h-screen bg-slate-950 text-slate-100 font-sans">
-      
+
       {/* LEFT SIDEBAR - premium Vercel-like styling */}
       <aside className="w-64 bg-slate-900/50 backdrop-blur-xl border-r border-slate-800 flex flex-col justify-between shrink-0">
         <div>
@@ -727,7 +727,7 @@ export default function Home() {
 
       {/* MAIN VIEW AREA */}
       <main className="flex-1 flex flex-col min-w-0">
-        
+
         {/* HEADER BAR */}
         <header className="h-16 border-b border-slate-800 bg-slate-900/20 backdrop-blur-md px-8 flex items-center justify-between">
           <div className="flex items-center gap-2 text-sm text-slate-400">
@@ -826,8 +826,8 @@ export default function Home() {
                   </thead>
                   <tbody className="divide-y divide-slate-800/50 text-sm">
                     {documents.map((doc) => (
-                      <tr 
-                        key={doc.document_id} 
+                      <tr
+                        key={doc.document_id}
                         className={`hover:bg-slate-900/20 transition-all ${
                           selectedDocId === doc.document_id ? 'bg-slate-900/30' : ''
                         }`}
@@ -893,18 +893,18 @@ export default function Home() {
                 onDrop={handleDrop}
                 onClick={triggerFileSelect}
                 className={`p-10 rounded-2xl border-2 border-dashed flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 group ${
-                  dragOver 
-                    ? 'border-indigo-500 bg-indigo-500/5' 
-                    : uploadFile 
-                      ? 'border-slate-600 bg-slate-800/20' 
+                  dragOver
+                    ? 'border-indigo-500 bg-indigo-500/5'
+                    : uploadFile
+                      ? 'border-slate-600 bg-slate-800/20'
                       : 'border-slate-800 hover:border-slate-700 hover:bg-slate-900/10'
                 }`}
               >
-                <input 
-                  type="file" 
-                  ref={fileInputRef} 
-                  onChange={handleFileChange} 
-                  className="hidden" 
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  className="hidden"
                   accept=".pdf,image/*"
                 />
 
@@ -935,7 +935,7 @@ export default function Home() {
                     <span className="text-indigo-400 font-bold">{uploadProgress}%</span>
                   </div>
                   <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
-                    <div 
+                    <div
                       className="h-full bg-indigo-600 transition-all duration-300 ease-out shadow-lg shadow-indigo-600/30"
                       style={{ width: `${uploadProgress}%` }}
                     />
@@ -963,7 +963,7 @@ export default function Home() {
           {/* 3. REVIEW AND CORRECTION WORKSPACE TAB */}
           {activeTab === 'correction' && (
             <div className="space-y-6 animate-in fade-in duration-300">
-              
+
               {/* HEADER SELECTOR */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/60 pb-5">
                 <div>
@@ -989,10 +989,10 @@ export default function Home() {
 
               {/* MAIN LAYOUT */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                
+
                 {/* LEFT SIDE: OCR VISUALIZATION & RAW TEXT */}
                 <div className="lg:col-span-5 space-y-4 flex flex-col">
-                  
+
                   {/* DOCUMENT VISUAL REPRESENTATION WITH OCR BOUNDING BOXES */}
                   <div className="p-5 rounded-2xl bg-slate-950 border border-slate-900 flex flex-col gap-4 aspect-[4/3] justify-between relative overflow-hidden group">
                     <div className="flex items-center justify-between z-10">
@@ -1040,7 +1040,7 @@ export default function Home() {
                   <div className="flex-1 flex flex-col space-y-2.5">
                     <div className="flex justify-between items-center">
                       <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Detected OCR Text Area</label>
-                      <button 
+                      <button
                         onClick={resetOcrText}
                         className="text-[11px] text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1 transition-all"
                       >
@@ -1058,7 +1058,7 @@ export default function Home() {
 
                 {/* RIGHT SIDE: EXTRACTION FORM & PIPELINE ACTIONS */}
                 <div className="lg:col-span-7 space-y-6">
-                  
+
                   {/* TRIGGER CONTROLS CARD */}
                   <div className="p-5 rounded-2xl bg-slate-900/40 border border-slate-800/80 flex items-center justify-between gap-4">
                     <div>
@@ -1067,7 +1067,7 @@ export default function Home() {
                         Extracts as <span className="text-indigo-400 font-semibold">{DOCUMENT_TYPE_SCHEMAS[editorType]?.label || editorType}</span> (change via Document Type below) & validates the current file.
                       </p>
                     </div>
-                    
+
                     <button
                       onClick={() => runAgentPipeline(selectedDocId, editorType)}
                       disabled={pipelineRunning}
@@ -1113,21 +1113,42 @@ export default function Home() {
                     {/* DYNAMIC FIELD INPUTS — driven by the selected document type */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {(DOCUMENT_TYPE_SCHEMAS[editorType]?.fields || []).map((field) => {
-                        const rawValue = extractedData[field.key];
+                        const rawData = extractedData[field.key];
+
+                        let unwrappedValue = rawData;
+                        if (typeof rawData === 'object' && rawData !== null) {
+                          if ('value' in rawData) {
+                            unwrappedValue = (rawData as any).value; // Pull out the nested string/number
+                          } else {
+                            unwrappedValue = JSON.stringify(rawData, null, 2);
+                          }
+                        }
+
+                        // CLEAN NUMBERS FOR NUMBER INPUTS
+                        let safeNumberValue: number | string = '';
+                        if (field.type === 'number') {
+                          if (typeof unwrappedValue === 'number') {
+                            safeNumberValue = unwrappedValue;
+                          } else if (typeof unwrappedValue === 'string') {
+                            const cleanedString = unwrappedValue.replace(/[^0-9.-]+/g, '');
+                            safeNumberValue = cleanedString !== '' ? Number(cleanedString) : '';
+                          }
+                        }
+
                         return (
                           <div key={field.key} className={`space-y-1.5 ${field.type === 'textarea' ? 'md:col-span-2' : ''}`}>
                             <label className="text-xs font-semibold text-slate-400">{field.label}</label>
                             {field.type === 'textarea' ? (
                               <textarea
-                                value={rawValue == null ? '' : String(rawValue)}
+                                value={unwrappedValue == null ? '' : String(unwrappedValue)}
                                 onChange={(e) => setExtractedData(prev => ({ ...prev, [field.key]: e.target.value || null }))}
                                 placeholder="Empty"
                                 rows={4}
-                                className="w-full resize-y bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
+                                className="w-full resize-y bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 font-mono"
                               />
                             ) : field.type === 'select' ? (
                               <select
-                                value={String(rawValue ?? (field.key === 'currency' ? 'JPY' : ''))}
+                                value={String(unwrappedValue ?? (field.key === 'currency' ? 'JPY' : ''))}
                                 onChange={(e) => setExtractedData(prev => ({ ...prev, [field.key]: e.target.value }))}
                                 className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
                               >
@@ -1138,7 +1159,7 @@ export default function Home() {
                             ) : field.type === 'number' ? (
                               <input
                                 type="number"
-                                value={typeof rawValue === 'number' ? rawValue : (rawValue ? Number(rawValue) : '')}
+                                value={safeNumberValue}
                                 onChange={(e) => setExtractedData(prev => ({
                                   ...prev,
                                   [field.key]: e.target.value === '' ? null : Number(e.target.value),
@@ -1149,7 +1170,7 @@ export default function Home() {
                             ) : (
                               <input
                                 type={field.type === 'date' ? 'date' : 'text'}
-                                value={rawValue == null ? '' : String(rawValue)}
+                                value={unwrappedValue == null ? '' : String(unwrappedValue)}
                                 onChange={(e) => setExtractedData(prev => ({ ...prev, [field.key]: e.target.value || null }))}
                                 placeholder="Empty"
                                 className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
@@ -1159,6 +1180,147 @@ export default function Home() {
                         );
                       })}
                     </div>
+
+                   {/*  AI DISCOVERED EXTRA FIELDS  */}
+                    {(() => {
+                      // Get keys
+                      const schemaKeys = (DOCUMENT_TYPE_SCHEMAS[editorType]?.fields || []).map(f => f.key);
+                      const ignoreKeys = ['document_type'];
+
+                      let dynamicEntries: { key: string, value: any }[] = [];
+
+                      //  Look inside the LLM's 'dynamic_extra_fields' object if it exists
+                      if (extractedData.dynamic_extra_fields && typeof extractedData.dynamic_extra_fields === 'object') {
+                        Object.entries(extractedData.dynamic_extra_fields as Record<string, any>).forEach(([k, v]) => {
+                          dynamicEntries.push({ key: k, value: v });
+                        });
+                      }
+
+                      // Look for flat extra keys sitting in the root data object
+                      Object.entries(extractedData).forEach(([k, v]) => {
+                        if (!schemaKeys.includes(k) && !ignoreKeys.includes(k) && k !== 'dynamic_extra_fields') {
+                           if (!dynamicEntries.find(e => e.key === k)) {
+                             dynamicEntries.push({ key: k, value: v });
+                           }
+                        }
+                      });
+
+                      // If the LLM didn't find any extra fields, don't render this section
+                      if (dynamicEntries.length === 0) return null;
+
+                      return (
+                        <div className="mt-6 space-y-4 animate-in fade-in duration-500">
+                          <h4 className="text-xs font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-2 border-b border-indigo-500/20 pb-2">
+                            <Sparkles className="w-4 h-4" />
+                            AI Discovered Extra Fields
+                          </h4>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 bg-indigo-500/5 border border-indigo-500/20 rounded-2xl shadow-inner">
+                            {dynamicEntries.map(({ key, value }) => {
+
+                              // 1. Safely unwrap LLM format & determine if it's complex
+                              let unwrappedValue = value;
+                              let isComplex = false;
+
+                              if (typeof value === 'object' && value !== null) {
+                                if ('value' in value && typeof value.value !== 'object') {
+                                  unwrappedValue = value.value;
+                                } else {
+                                  // It's a complex array or object (like line_items)
+                                  isComplex = true;
+                                  unwrappedValue = JSON.stringify(value, null, 2);
+                                }
+                              } else if (typeof value === 'string' && (value.trim().startsWith('[') || value.trim().startsWith('{'))) {
+                                // If it's already a string but looks like JSON array/object, treat it as complex
+                                isComplex = true;
+                                unwrappedValue = value;
+                              }
+
+                              // Format the key to look like a clean label
+                              const label = key.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
+                              return (
+                                <div key={key} className={`space-y-1.5 flex flex-col relative group ${isComplex ? 'md:col-span-2' : ''}`}>
+                                  <div className="flex justify-between items-center">
+                                     <label className="text-xs font-semibold text-indigo-300/80">{label}</label>
+
+                                     {/* HITL Deletion Button for Hallucinations */}
+                                     <button
+                                       onClick={() => {
+                                         setExtractedData(prev => {
+                                           const newData = { ...prev };
+                                           if (newData.dynamic_extra_fields && (newData.dynamic_extra_fields as any)[key]) {
+                                             delete (newData.dynamic_extra_fields as any)[key];
+                                           } else {
+                                             delete newData[key];
+                                           }
+                                           return newData;
+                                         });
+                                       }}
+                                       className="text-slate-500 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-all"
+                                       title="Remove this extra field"
+                                     >
+                                       <Trash2 className="w-3.5 h-3.5" />
+                                     </button>
+                                  </div>
+
+                                  {isComplex ? (
+                                    <textarea
+                                      value={unwrappedValue == null ? '' : String(unwrappedValue)}
+                                      onChange={(e) => {
+                                        const rawText = e.target.value;
+                                        let updatedValue: any = rawText;
+
+                                        // Try to parse it back into a real JSON object so the backend gets clean data
+                                        try {
+                                          updatedValue = JSON.parse(rawText);
+                                        } catch (err) {
+
+                                          updatedValue = rawText;
+                                        }
+
+                                        setExtractedData(prev => {
+                                          const newData = { ...prev };
+                                          if (newData.dynamic_extra_fields && (newData.dynamic_extra_fields as any)[key]) {
+                                             (newData.dynamic_extra_fields as any)[key] = updatedValue;
+                                          } else {
+                                             newData[key] = updatedValue;
+                                          }
+                                          return newData;
+                                        });
+                                      }}
+                                      rows={6}
+                                      className="w-full bg-slate-900 border border-indigo-500/30 rounded-xl px-3.5 py-2 text-sm text-indigo-100 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-slate-600 font-mono resize-y"
+                                      placeholder="Enter JSON array or object..."
+                                    />
+                                  ) : (
+                                    <input
+                                      type="text"
+                                      value={unwrappedValue == null ? '' : String(unwrappedValue)}
+                                      onChange={(e) => {
+                                        setExtractedData(prev => {
+                                          const newData = { ...prev };
+                                          if (newData.dynamic_extra_fields && (newData.dynamic_extra_fields as any)[key]) {
+                                             (newData.dynamic_extra_fields as any)[key] = {
+                                               ...(newData.dynamic_extra_fields as any)[key],
+                                               value: e.target.value
+                                             };
+                                          } else {
+                                             newData[key] = e.target.value;
+                                          }
+                                          return newData;
+                                        });
+                                      }}
+                                      className="w-full bg-slate-900 border border-indigo-500/30 rounded-xl px-3.5 py-2 text-sm text-indigo-100 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-slate-600"
+                                      placeholder="Enter value..."
+                                    />
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    })()}
 
                     {/* VALIDATION WARNINGS DISPLAY */}
                     {validationIssues.length > 0 && (
@@ -1179,7 +1341,7 @@ export default function Home() {
 
                     {/* MOCK/REAL SUBMIT SECTION */}
                     <div className="pt-4 border-t border-slate-800/60 space-y-4">
-                      
+
                       {/* Notes / User Review Comments */}
                       <div className="space-y-1.5">
                         <label className="text-xs font-semibold text-slate-400">Reviewer Notes (Notes for feedback learning)</label>
@@ -1236,10 +1398,10 @@ export default function Home() {
             </div>
           )}
 
-          {/* 4. THESIS OUTLINE & EVALUATION METRICS TAB */}
+          {/* THESIS OUTLINE & EVALUATION METRICS TAB */}
           {activeTab === 'thesis' && (
             <div className="space-y-8 animate-in fade-in duration-300">
-              
+
               {/* INTRO */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
                 <div>
@@ -1256,7 +1418,7 @@ export default function Home() {
 
               {/* INTERACTIVE EVALUATION GRAPHS (HTML/CSS Sleek Representation of Charts) */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
+
                 {/* GRAPH 1: CER REDUCTION PATH */}
                 <div className="bg-slate-900/35 border border-slate-800 rounded-2xl p-6 space-y-4">
                   <div className="flex justify-between items-center">
@@ -1379,8 +1541,8 @@ export default function Home() {
                     <p className="leading-relaxed">
                       Addresses structural vertical writing formats (縦書き), dense tabular lines, and Kanji OCR mismatching in historical legacy Japanese documents. It models human interaction as a reinforcement reinforcement layer using Vector Correction Memory.
                     </p>
-                    <a 
-                      href="#" 
+                    <a
+                      href="#"
                       onClick={(e) => { e.preventDefault(); alert("File located in project folder: docs/THESIS_OUTLINE.md"); }}
                       className="text-xs text-indigo-400 hover:underline flex items-center gap-1 font-semibold"
                     >
@@ -1393,8 +1555,8 @@ export default function Home() {
                     <p className="leading-relaxed">
                       Establishes validation baselines on the NDL (National Diet Library) OCR Dataset and receipt forms. Key research focus is &quot;Correction Reduction Rate&quot; (CRR) - evaluating how memory caches limit future human intervention.
                     </p>
-                    <a 
-                      href="#" 
+                    <a
+                      href="#"
                       onClick={(e) => { e.preventDefault(); alert("File located in project folder: docs/EVALUATION_PLAN.md"); }}
                       className="text-xs text-indigo-400 hover:underline flex items-center gap-1 font-semibold"
                     >

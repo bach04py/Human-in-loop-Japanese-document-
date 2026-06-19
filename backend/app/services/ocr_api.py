@@ -14,7 +14,6 @@ from app.services.ocr import OcrService
 # Initialize the FastAPI app
 app = FastAPI(title="PaddleOCR Microservice")
 
-# Load the OCR model ONCE when the server starts
 print("Booting PaddleOCR Engine...")
 ocr_service = OcrService()
 

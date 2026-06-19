@@ -7,6 +7,8 @@ from app.services.ocr import OcrService
 from app.services.validation import ValidationService
 from app.services.classification import ClassificationService
 
+# NEW: Import the document store to save our results
+from app.services.document_store import save_document
 
 # Define the Global State Dictionary
 class GraphState(TypedDict):
@@ -136,7 +138,7 @@ class OrchestratorService:
     ) -> PipelineRunResponse:
         """Triggers the compiled LangGraph pipeline."""
 
-        #Inject the precomputed OCR directly into LangGraph's starting state
+        # Inject the precomputed OCR directly into LangGraph's starting state
         initial_state: GraphState = {
             "document_id": document_id,
             "document_type": "unknown",
@@ -153,6 +155,14 @@ class OrchestratorService:
         # Catch pipeline halts
         if final_state.get("error"):
             raise RuntimeError(final_state['error'])
+
+        payload = {
+            "document_type": final_state.get("document_type"),
+            "data": final_state["extraction"].data if final_state.get("extraction") else {},
+            "summary": final_state.get("summary")
+        }
+        save_document(document_id, payload)
+        print(f"[Orchestrator] Document '{document_id}' saved to database successfully.")
 
         # Package and return the successful response
         return PipelineRunResponse(

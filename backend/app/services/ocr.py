@@ -40,8 +40,8 @@ class OcrService:
         )
 
     def _find_uploaded_document(self, document_id: str) -> Path:
-        current_dir = Path(__file__).resolve().parent
-        upload_dir = current_dir.parent.parent.parent / "data" / "samples" / "ocr"
+        # Use the global settings upload directory where the API route actually saves files
+        upload_dir = settings.upload_dir
 
         if not upload_dir.exists():
             raise FileNotFoundError(f"Upload directory not found: {upload_dir}")
