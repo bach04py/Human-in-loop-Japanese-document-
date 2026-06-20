@@ -455,6 +455,8 @@ export default function Home() {
         await apiService.submitFeedback({
           document_id: selectedDocId,
           corrections: extractedData,
+          ocr_text: ocrText,
+          document_type: selectedDocument?.document_type,
           user: reviewer,
           notes: notes
         });

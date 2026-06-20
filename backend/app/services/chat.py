@@ -34,10 +34,10 @@ SYSTEM_PROMPT = (
 class ChatService:
     def __init__(self) -> None:
         self.local_llm_url = os.environ.get(
-            "LLM_ENDPOINT", "http://192.168.0.176:11434/api/generate"
+            "LLM_ENDPOINT", "http://127.0.0.1:11434/api/generate"
         )
-        # Update the default fallback to include :32b
-        self.model_name = os.environ.get("LLM_MODEL", "qwen2.5:32b")
+        # Default to local Ollama (qwen2.5)
+        self.model_name = os.environ.get("LLM_MODEL", "qwen2.5")
         self.timeout_seconds = float(os.environ.get("LLM_TIMEOUT_SECONDS", "60"))
 
     def _build_prompt(

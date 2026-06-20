@@ -70,6 +70,8 @@ export interface PipelineRunResponse {
 export interface FeedbackRequest {
   document_id: string;
   corrections: Record<string, unknown>;
+  ocr_text?: string;
+  document_type?: string;
   user?: string;
   notes?: string;
 }
@@ -77,6 +79,8 @@ export interface FeedbackRequest {
 export interface FeedbackResponse {
   document_id: string;
   stored: boolean;
+  applied?: boolean;
+  revision?: number;
   status: string;
 }
 

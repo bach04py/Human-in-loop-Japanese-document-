@@ -103,8 +103,8 @@ class ExtractionService:
     """
 
     def __init__(self):
-        self.local_llm_url = os.environ.get("LLM_ENDPOINT", "http://192.168.0.176:11434/api/generate")
-        self.model_name = os.environ.get("LLM_MODEL", "qwen2.5:32b")
+        self.local_llm_url = os.environ.get("LLM_ENDPOINT", "http://127.0.0.1:11434/api/generate")
+        self.model_name = os.environ.get("LLM_MODEL", "qwen2.5")
         self.layoutlm_url = os.environ.get("LAYOUTLM_ENDPOINT", "http://localhost:8001/predict")
 
     def _normalize_doc_type(self, raw_type: str) -> str:

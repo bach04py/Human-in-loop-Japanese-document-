@@ -92,6 +92,8 @@ class ValidationResult(BaseModel):
 class FeedbackRequest(BaseModel):
     document_id: str
     corrections: dict[str, Any]
+    ocr_text: str | None = None  # validator-corrected OCR text (if edited)
+    document_type: str | None = None
     user: str | None = None
     notes: str | None = None
 
@@ -99,6 +101,8 @@ class FeedbackRequest(BaseModel):
 class FeedbackResponse(BaseModel):
     document_id: str
     stored: bool
+    applied: bool = False  # whether the correction updated the stored document
+    revision: int = 0  # number of feedback revisions recorded for this document
     status: DocumentStatus = DocumentStatus.feedback_received
 
 

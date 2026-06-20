@@ -9,8 +9,8 @@ class ClassificationService:
     """Reads raw OCR text and routes it to the correct document schema."""
 
     def __init__(self):
-        self.local_llm_url = os.environ.get("LLM_ENDPOINT", "http://192.168.0.176:11434/api/generate")
-        self.model_name = os.environ.get("LLM_MODEL", "qwen2.5:32b")
+        self.local_llm_url = os.environ.get("LLM_ENDPOINT", "http://127.0.0.1:11434/api/generate")
+        self.model_name = os.environ.get("LLM_MODEL", "qwen2.5")
 
         self.valid_categories = [
             "invoice", "contract", "patent", "internal_form",

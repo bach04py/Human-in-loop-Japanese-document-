@@ -8,8 +8,8 @@ class SummaryService:
     """Dynamic Summary Agent: Generates summaries based on document context."""
 
     def __init__(self):
-        self.local_llm_url = os.environ.get("LLM_ENDPOINT", "http://192.168.0.176:11434/api/generate")
-        self.model_name = os.environ.get("LLM_MODEL", "qwen2.5:32b")
+        self.local_llm_url = os.environ.get("LLM_ENDPOINT", "http://127.0.0.1:11434/api/generate")
+        self.model_name = os.environ.get("LLM_MODEL", "qwen2.5")
 
     async def generate(self, extracted_data: Dict[str, Any], validation_issues: List[Any],
                        document_type: str = "document") -> str:
