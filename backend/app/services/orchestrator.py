@@ -88,6 +88,7 @@ class OrchestratorService:
                 result = await self.validation_service.validate(
                     document_id=state["document_id"],
                     extracted_data=state["extraction"].data,
+                    document_type=state["document_type"],
                 )
                 return {"validation": result}
             except Exception as e:
@@ -167,6 +168,7 @@ class OrchestratorService:
         # Package and return the successful response
         return PipelineRunResponse(
             document_id=document_id,
+            document_type=final_state.get("document_type"),
             ocr=final_state["ocr"],
             extraction=final_state["extraction"],
             validation=final_state["validation"],

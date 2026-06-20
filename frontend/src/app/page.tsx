@@ -143,68 +143,93 @@ interface DocumentTypeSchema {
 
 const CURRENCY_OPTIONS = ['JPY', 'USD', 'EUR', 'CNY', 'GBP'];
 
+// Field keys MUST match the backend `DOCUMENT_CONFIGS.core_fields` so extracted
+// values land in the right inputs. (backend/app/services/extraction.py)
 const DOCUMENT_TYPE_SCHEMAS: Record<string, DocumentTypeSchema> = {
   invoice: {
     label: 'Invoice (請求書)',
     fields: [
-      { key: 'company', label: 'Vendor / Company (取引先)', type: 'text' },
       { key: 'invoice_id', label: 'Invoice Number (請求書番号)', type: 'text' },
-      { key: 'date', label: 'Issue Date (発行日)', type: 'date' },
-      { key: 'due_date', label: 'Due Date (支払期限)', type: 'date' },
-      { key: 'amount', label: 'Total Amount (ご請求金額)', type: 'number' },
-      { key: 'tax', label: 'Tax (消費税)', type: 'number' },
+      { key: 'company', label: 'Company (取引先)', type: 'text' },
+      { key: 'amount', label: 'Total Amount (合計金額)', type: 'number' },
       { key: 'currency', label: 'Currency', type: 'select', options: CURRENCY_OPTIONS },
+      { key: 'date', label: 'Date (日付)', type: 'date' },
     ],
   },
   contract: {
     label: 'Contract (契約書)',
     fields: [
-      { key: 'company', label: 'Counterparty (相手方)', type: 'text' },
       { key: 'contract_id', label: 'Contract Number (契約番号)', type: 'text' },
+      { key: 'party_a', label: 'Party A / Client (甲)', type: 'text' },
+      { key: 'party_b', label: 'Party B / Provider (乙)', type: 'text' },
       { key: 'effective_date', label: 'Effective Date (発効日)', type: 'date' },
-      { key: 'expiration_date', label: 'Expiration Date (満了日)', type: 'date' },
-      { key: 'amount', label: 'Contract Value (契約金額)', type: 'number' },
-      { key: 'currency', label: 'Currency', type: 'select', options: CURRENCY_OPTIONS },
-      { key: 'governing_law', label: 'Governing Law (準拠法)', type: 'text' },
+      { key: 'total_value', label: 'Total Value (契約金額)', type: 'number' },
     ],
   },
-  bill: {
-    label: 'Bill / Receipt (請求・領収)',
+  patent: {
+    label: 'Patent (特許)',
     fields: [
-      { key: 'company', label: 'Biller (請求元)', type: 'text' },
-      { key: 'bill_id', label: 'Account / Bill No. (お客様番号)', type: 'text' },
-      { key: 'billing_period', label: 'Billing Period (請求期間)', type: 'text' },
-      { key: 'date', label: 'Issue Date (発行日)', type: 'date' },
-      { key: 'due_date', label: 'Due Date (お支払期限)', type: 'date' },
-      { key: 'amount', label: 'Amount Due (請求金額)', type: 'number' },
-      { key: 'currency', label: 'Currency', type: 'select', options: CURRENCY_OPTIONS },
+      { key: 'patent_number', label: 'Patent / Publication No. (特許番号)', type: 'text' },
+      { key: 'title', label: 'Title of Invention (発明の名称)', type: 'text' },
+      { key: 'applicant', label: 'Applicant (出願人)', type: 'text' },
+      { key: 'publication_date', label: 'Publication Date (公開日)', type: 'date' },
     ],
   },
-  document: {
-    label: 'Enterprise Document (社内文書)',
+  internal_form: {
+    label: 'Internal Form (社内申請書)',
     fields: [
-      { key: 'title', label: 'Title (件名)', type: 'text' },
-      { key: 'document_id', label: 'Document No. (文書番号)', type: 'text' },
-      { key: 'company', label: 'Organization (発行元)', type: 'text' },
-      { key: 'author', label: 'Author / Owner (担当者)', type: 'text' },
+      { key: 'form_title', label: 'Form Title (申請書名)', type: 'text' },
+      { key: 'employee_name', label: 'Employee Name (氏名)', type: 'text' },
+      { key: 'department', label: 'Department (部署)', type: 'text' },
+      { key: 'date_submitted', label: 'Date Submitted (提出日)', type: 'date' },
+    ],
+  },
+  fax: {
+    label: 'Fax (FAX)',
+    fields: [
+      { key: 'sender', label: 'Sender (差出人)', type: 'text' },
+      { key: 'recipient', label: 'Recipient (宛先)', type: 'text' },
+      { key: 'fax_number', label: 'Fax Number (FAX番号)', type: 'text' },
       { key: 'date', label: 'Date (日付)', type: 'date' },
-      { key: 'reference', label: 'Reference (参照番号)', type: 'text' },
+      { key: 'subject', label: 'Subject (件名)', type: 'text' },
     ],
   },
-  other: {
-    label: 'Other / General (その他)',
+  pdf_document: {
+    label: 'PDF Document (PDF文書)',
     fields: [
-      { key: 'name', label: 'Document Name (名称)', type: 'text' },
-      { key: 'main_information', label: 'Main Information (主な情報)', type: 'textarea' },
+      { key: 'document_title', label: 'Title (タイトル)', type: 'text' },
+      { key: 'date', label: 'Date (日付)', type: 'date' },
+      { key: 'author_or_sender', label: 'Author / Sender (作成者・差出人)', type: 'text' },
+      { key: 'summary', label: 'Summary (要約)', type: 'textarea' },
+    ],
+  },
+  scanned_document: {
+    label: 'Scanned Document (スキャン文書)',
+    fields: [
+      { key: 'document_title', label: 'Title (タイトル)', type: 'text' },
+      { key: 'date', label: 'Date (日付)', type: 'date' },
+      { key: 'author_or_sender', label: 'Author / Sender (作成者・差出人)', type: 'text' },
+      { key: 'summary', label: 'Summary (要約)', type: 'textarea' },
+    ],
+  },
+  legacy_document: {
+    label: 'Legacy Document (旧式文書)',
+    fields: [
+      { key: 'document_title', label: 'Title (タイトル)', type: 'text' },
+      { key: 'date', label: 'Date (日付)', type: 'date' },
+      { key: 'author_or_sender', label: 'Author / Sender (作成者・差出人)', type: 'text' },
+      { key: 'summary', label: 'Summary (要約)', type: 'textarea' },
     ],
   },
 };
 
-// Resolve a document_type string to a schema. Anything unrecognised
-// ('unknown'/'form') falls back to 'other' (name + summary).
+// Resolve a document_type string to a schema. Matches the backend, which
+// normalises unknown types to 'pdf_document'.
 function resolveSchemaType(documentType: string | undefined): string {
-  if (documentType && DOCUMENT_TYPE_SCHEMAS[documentType]) return documentType;
-  return 'other';
+  if (!documentType) return 'pdf_document';
+  const key = documentType.trim().toLowerCase().replace(/[\s-]+/g, '_');
+  if (DOCUMENT_TYPE_SCHEMAS[key]) return key;
+  return 'pdf_document';
 }
 
 export default function Home() {
@@ -417,13 +442,17 @@ export default function Home() {
         } as PipelineRunResponse;
       }
 
+      // The backend classifies the document itself; trust that over the
+      // requested type so the editor shows the schema matching the data.
+      const classifiedType = pipelineResult.document_type || docType;
+
       // Update documents array
       setDocuments(prev => prev.map(d => {
         if (d.document_id === docId) {
           return {
             ...d,
             status: 'validated',
-            document_type: docType,
+            document_type: classifiedType,
             ocr_text: pipelineResult.ocr.text,
             ocr_blocks: pipelineResult.ocr.blocks,
             data: pipelineResult.extraction.data,
@@ -437,7 +466,7 @@ export default function Home() {
       setOcrText(pipelineResult.ocr.text);
       setOcrBlocks(pipelineResult.ocr.blocks);
       setExtractedData(pipelineResult.extraction.data);
-      setEditorType(resolveSchemaType(docType));
+      setEditorType(resolveSchemaType(classifiedType));
       setValidationIssues(pipelineResult.validation.issues);
 
     } catch (err) {
@@ -445,6 +474,22 @@ export default function Home() {
     } finally {
       setPipelineRunning(false);
     }
+  };
+
+  // Write an edited core field back in the backend's nested {value, confidence,
+  // reasoning} shape (preserving any existing metadata) so the corrections stay
+  // consistent with the extraction format and survive a re-validation.
+  const updateField = (key: string, newValue: unknown) => {
+    setExtractedData(prev => {
+      const existing = prev[key];
+      const base = (existing && typeof existing === 'object' && 'value' in (existing as object))
+        ? (existing as Record<string, unknown>)
+        : {};
+      return {
+        ...prev,
+        [key]: { ...base, value: newValue, confidence: 1.0, reasoning: 'Human corrected' },
+      };
+    });
   };
 
   // Submit corrections / Human Feedback
@@ -1143,7 +1188,7 @@ export default function Home() {
                             {field.type === 'textarea' ? (
                               <textarea
                                 value={unwrappedValue == null ? '' : String(unwrappedValue)}
-                                onChange={(e) => setExtractedData(prev => ({ ...prev, [field.key]: e.target.value || null }))}
+                                onChange={(e) => updateField(field.key, e.target.value || null)}
                                 placeholder="Empty"
                                 rows={4}
                                 className="w-full resize-y bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 font-mono"
@@ -1151,7 +1196,7 @@ export default function Home() {
                             ) : field.type === 'select' ? (
                               <select
                                 value={String(unwrappedValue ?? (field.key === 'currency' ? 'JPY' : ''))}
-                                onChange={(e) => setExtractedData(prev => ({ ...prev, [field.key]: e.target.value }))}
+                                onChange={(e) => updateField(field.key, e.target.value)}
                                 className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
                               >
                                 {(field.options || []).map((opt) => (
@@ -1162,10 +1207,7 @@ export default function Home() {
                               <input
                                 type="number"
                                 value={safeNumberValue}
-                                onChange={(e) => setExtractedData(prev => ({
-                                  ...prev,
-                                  [field.key]: e.target.value === '' ? null : Number(e.target.value),
-                                }))}
+                                onChange={(e) => updateField(field.key, e.target.value === '' ? null : Number(e.target.value))}
                                 placeholder="—"
                                 className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
                               />
@@ -1173,7 +1215,7 @@ export default function Home() {
                               <input
                                 type={field.type === 'date' ? 'date' : 'text'}
                                 value={unwrappedValue == null ? '' : String(unwrappedValue)}
-                                onChange={(e) => setExtractedData(prev => ({ ...prev, [field.key]: e.target.value || null }))}
+                                onChange={(e) => updateField(field.key, e.target.value || null)}
                                 placeholder="Empty"
                                 className="w-full bg-slate-900 border border-slate-800/80 rounded-xl px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
                               />

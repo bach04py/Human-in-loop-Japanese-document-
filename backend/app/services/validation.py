@@ -59,14 +59,14 @@ class ValidationService:
         return None
 
     async def validate(
-            self, document_id: str, extracted_data: dict | None = None, document_type: str = "invoice"
+            self, document_id: str, extracted_data: dict | None = None, document_type: str | None = "invoice"
     ) -> ValidationResult:
         issues: list[ValidationIssue] = []
         data = extracted_data or {}
         is_valid = True
 
-        # Normalize type key
-        doc_type = document_type.strip().lower()
+        # Normalize type key (tolerate None / spaces / hyphens)
+        doc_type = re.sub(r"[\s\-]+", "_", (document_type or "").strip().lower())
         required_fields = REQUIRED_FIELDS_BY_TYPE.get(doc_type, [])
 
         # Checks all fields, even dynamic ones

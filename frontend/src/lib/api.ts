@@ -62,9 +62,11 @@ export interface ValidationResult {
 
 export interface PipelineRunResponse {
   document_id: string;
+  document_type?: string | null;
   ocr: OcrResult;
   extraction: ExtractionResult;
   validation: ValidationResult;
+  summary?: string | null;
 }
 
 export interface FeedbackRequest {

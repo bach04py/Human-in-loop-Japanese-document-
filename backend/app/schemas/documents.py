@@ -73,6 +73,7 @@ class ExtractionResult(BaseModel):
 class ValidationRequest(BaseModel):
     document_id: str
     extracted_data: dict[str, Any] | None = None
+    document_type: str | None = None
 
 
 class ValidationIssue(BaseModel):
@@ -113,6 +114,7 @@ class PipelineRunRequest(BaseModel):
 
 class PipelineRunResponse(BaseModel):
     document_id: str
+    document_type: str | None = None  # type chosen by the classification agent
     ocr: OcrResult
     extraction: ExtractionResult
     validation: ValidationResult

@@ -133,6 +133,7 @@ async def validate_extraction(request: ValidationRequest) -> ValidationResult:
     return await validation_service.validate(
         document_id=request.document_id,
         extracted_data=request.extracted_data,
+        document_type=request.document_type,
     )
 
 
@@ -148,11 +149,13 @@ async def run_pipeline(request: PipelineRunRequest) -> PipelineRunResponse:
     )
 
     # Persist the extracted document as JSON so the chatbot can answer about it.
+    # Use the type chosen by the classification agent (falling back to the
+    # requested type) so the stored metadata matches the extracted fields.
     document_store.save_document(
         result.document_id,
         {
             "document_id": result.document_id,
-            "document_type": request.document_type,
+            "document_type": result.document_type or request.document_type,
             "data": result.extraction.data,
             "ocr_text": result.ocr.text,
             "validation": result.validation.model_dump(),
